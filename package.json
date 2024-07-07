@@ -5,15 +5,17 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"build": "tsc -b && vite build",
+		"build": "yarn run rm && tsc -b && vite build",
 		"lint": "eslint --fix \"src/**/*.{js,jsx,ts,tsx,json}\"",
 		"preview": "vite preview",
+		"preview:build": "yarn run check && yarn run build && vite preview",
 		"stylelint": "stylelint \"src/**/*.{css,scss}\"",
 		"stylelint:fix": "stylelint \"src/**/*.{css,scss}\" --fix",
 		"format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\" --ignore-path ./.prettierignore",
 		"check": "yarn run stylelint:fix && yarn run lint && yarn run format",
 		"prepare": "husky install",
-		"commit": "yarn run check && cz"
+		"commit": "yarn run check && cz",
+		"rm": "rimraf ./dist"
 	},
 	"lint-staged": {
 		"*.{css,scss}": "yarn run stylelint:fix",
@@ -26,15 +28,18 @@
 		}
 	},
 	"dependencies": {
+		"clsx": "^2.1.1",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1"
 	},
 	"devDependencies": {
+		"@eslint/compat": "^1.1.0",
 		"@types/react": "^18.3.3",
 		"@types/react-dom": "^18.3.0",
 		"@typescript-eslint/eslint-plugin": "^7.15.0",
 		"@typescript-eslint/parser": "^7.15.0",
 		"@vitejs/plugin-react": "^4.3.1",
+		"autoprefixer": "^10.4.19",
 		"commitizen": "^4.3.0",
 		"cz-conventional-changelog": "^3.3.0",
 		"eslint": "^9.6.0",
@@ -46,15 +51,17 @@
 		"eslint-plugin-react": "^7.34.3",
 		"eslint-plugin-react-hooks": "^4.6.2",
 		"eslint-plugin-react-refresh": "^0.4.7",
-		"@eslint/compat": "^1.1.0",
 		"husky": "^9.0.11",
 		"lint-staged": "^15.2.7",
+		"postcss": "^8.4.39",
 		"prettier": "^3.3.2",
+		"rimraf": "^5.0.8",
 		"sass": "^1.77.6",
 		"stylelint": "^16.6.1",
 		"stylelint-config-standard": "^36.0.1",
 		"stylelint-config-standard-scss": "^13.1.0",
 		"stylelint-order": "^6.0.4",
+		"tailwindcss": "^3.4.4",
 		"typescript": "^5.2.2",
 		"vite": "^5.3.1"
 	}
