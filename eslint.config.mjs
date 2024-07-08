@@ -70,7 +70,6 @@ export default [
 						['@components', './src/components'],
 						['@pages', './src/pages'],
 						['@services', './src/services'],
-						['@ui', './src/components/ui'],
 						['@utils', './src/utils'],
 					],
 					extensions: ['.ts', '.tsx', '.js', '.jsx'],
