@@ -71,6 +71,7 @@ export default [
 						['@pages', './src/pages'],
 						['@services', './src/services'],
 						['@utils', './src/utils'],
+						['@configs', './src/configs'],
 					],
 					extensions: ['.ts', '.tsx', '.js', '.jsx'],
 				},

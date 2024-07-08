@@ -1,3 +1,9 @@
+@import '../styles/variables';
+
 .red__text {
 	@apply text-red-800 font-bold;
+}
+
+.blue__text {
+	color: $tertiary-color;
 }
