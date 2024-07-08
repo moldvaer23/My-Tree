@@ -63,8 +63,17 @@ export default [
 				version: 'detect',
 			},
 			'import/resolver': {
-				node: {
-					extensions: ['.js', '.jsx', '.ts', '.tsx'],
+				alias: {
+					map: [
+						['@app', './src/app/App.tsx'],
+						['@assets', './src/assets'],
+						['@components', './src/components'],
+						['@pages', './src/pages'],
+						['@services', './src/services'],
+						['@ui', './src/components/ui'],
+						['@utils', './src/utils'],
+					],
+					extensions: ['.ts', '.tsx', '.js', '.jsx'],
 				},
 			},
 		},
