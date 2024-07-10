@@ -23,6 +23,7 @@ export const Outlined: Story = {
 
 export const Сontained: Story = {
 	args: {
+		className: 'button__form',
 		children: 'Сохранить',
 		variant: 'contained',
 		size: 'small',

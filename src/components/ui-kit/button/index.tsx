@@ -1,8 +1,8 @@
 import { clsx } from 'clsx'
-import { FC, HTMLAttributes, ReactNode } from 'react'
+import { ButtonHTMLAttributes, FC, ReactNode } from 'react'
 import style from './styles.module.scss'
 
-type TProps = HTMLAttributes<HTMLButtonElement> & {
+type TProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 	children: string | ReactNode
 	variant: 'outlined' | 'contained'
 	size: 'small' | 'medium' | 'large'
@@ -16,16 +16,20 @@ export const Button: FC<TProps> = ({
 	className = 'undefined',
 	...args
 }) => {
-	const classNameWrapper = clsx(style.button, {
-		[className]: className !== 'undefined',
+	const classNameWrapper = clsx(
+		{
+			[className]: className !== 'undefined',
+		},
+		style.button,
+		{
+			[style.contained]: variant === 'contained',
+			[style.outlined]: variant === 'outlined',
 
-		[style.contained]: variant === 'contained',
-		[style.outlined]: variant === 'outlined',
-
-		[style.small]: size === 'small',
-		[style.medium]: size === 'medium',
-		[style.large]: size === 'large',
-	})
+			[style.small]: size === 'small',
+			[style.medium]: size === 'medium',
+			[style.large]: size === 'large',
+		}
+	)
 
 	return (
 		<button className={classNameWrapper} {...args}>
