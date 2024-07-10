@@ -24,9 +24,12 @@ export const BlockText: FC<TProps> = ({
 	const [isHover, setIsHover] = useState<boolean>(false)
 	const [activeGateway, setActiveGateway] = useState<TActiveGatewayState>(null)
 
-	const classNameWrapper = clsx(style.block_text, {
-		[className]: className !== 'undefined',
-	})
+	const classNameWrapper = clsx(
+		{
+			[className]: className !== 'undefined',
+		},
+		style.block_text
+	)
 
 	const styleWrapper: CSSProperties | undefined = {
 		backgroundColor: bgColor,
