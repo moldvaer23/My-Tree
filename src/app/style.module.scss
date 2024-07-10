@@ -7,3 +7,8 @@
 .blue__text {
 	color: $tertiary-color;
 }
+
+.app {
+	min-height: 100vh;
+	background-color: $quaternary-color;
+}
