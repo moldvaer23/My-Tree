@@ -10,6 +10,9 @@ type TIconData = {
 type TProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 	iconData: TIconData
 	size: 'small' | 'medium' | 'large'
+	iconColorRevert?: boolean
+	animateHover?: boolean
+	animateRotate?: boolean
 	onClick: (e: MouseEventHandler<HTMLButtonElement>) => void
 	className?: string
 }
@@ -17,21 +20,31 @@ type TProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 export const ButtonIcon: FC<TProps> = ({
 	iconData,
 	size,
-	onClick,
+	iconColorRevert = true,
+	animateHover = true,
+	animateRotate,
 	className = 'undefined',
+	onClick,
+
 	...args
 }) => {
 	const classNameButtonWrapper = clsx(
 		{
 			[className]: className !== 'undefined',
 		},
-		style.button_icon
+		style.button_icon,
+		{
+			[style.animate_hover]: animateHover === true && !animateRotate,
+			[style.animate_rotate]: animateRotate === true,
+		}
 	)
 
-	const classNameIconWrapper = clsx(style.icon, {
+	const classNameIconWrapper = clsx({
 		[style.small]: size === 'small',
 		[style.medium]: size === 'medium',
 		[style.large]: size === 'large',
+
+		[style.icon_color_revert]: iconColorRevert === true,
 	})
 
 	return (
