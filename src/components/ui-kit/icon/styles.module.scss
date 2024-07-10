@@ -1,0 +1,18 @@
+.icon_color_revert {
+	mix-blend-mode: difference;
+	filter: invert(1);
+}
+
+/* Sizes */
+
+.small {
+	width: 45px;
+}
+
+.medium {
+	width: 60px;
+}
+
+.large {
+	width: 90px;
+}

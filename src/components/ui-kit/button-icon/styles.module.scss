@@ -4,9 +4,7 @@
 	padding: 5px;
 	border-radius: 5px;
 	transition: all 0.2s;
-}
 
-.animate_hover {
 	&:hover {
 		background-color: $secondary-color;
 	}
@@ -14,29 +12,4 @@
 	&:active {
 		filter: brightness(110%);
 	}
-}
-
-.animate_rotate {
-	&:hover {
-		transform: rotate(360deg);
-	}
-}
-
-.icon_color_revert {
-	mix-blend-mode: difference;
-	filter: invert(1);
-}
-
-/* Sizes */
-
-.small {
-	width: 45px;
-}
-
-.medium {
-	width: 60px;
-}
-
-.large {
-	width: 90px;
 }
