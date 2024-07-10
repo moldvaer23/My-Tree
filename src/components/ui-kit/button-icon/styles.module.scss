@@ -1,9 +1,9 @@
-@import '/src/styles/variables.scss';
+@import '/src/styles/variables';
 
 .button_icon {
-	transition: all 0.2s;
-	border-radius: 5px;
 	padding: 5px;
+	border-radius: 5px;
+	transition: all 0.2s;
 
 	&:hover {
 		background-color: $secondary-color;
@@ -15,8 +15,8 @@
 }
 
 .icon {
-	filter: invert(1);
 	mix-blend-mode: difference;
+	filter: invert(1);
 }
 
 /* Sizes */
