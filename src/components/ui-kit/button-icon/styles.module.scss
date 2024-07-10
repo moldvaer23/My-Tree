@@ -1,0 +1,34 @@
+@import '/src/styles/variables.scss';
+
+.button_icon {
+	transition: all 0.2s;
+	border-radius: 5px;
+	padding: 5px;
+
+	&:hover {
+		background-color: $secondary-color;
+	}
+
+	&:active {
+		filter: brightness(110%);
+	}
+}
+
+.icon {
+	filter: invert(1);
+	mix-blend-mode: difference;
+}
+
+/* Sizes */
+
+.small {
+	width: 30px;
+}
+
+.medium {
+	width: 60px;
+}
+
+.large {
+	width: 90px;
+}
