@@ -12,7 +12,7 @@ import {
 } from '@assets/index'
 import { ButtonIcon } from '@components/ui-kit/button-icon'
 import style from './style.module.scss'
-import { DropDownMenu } from '@components/ui-kit/Drop-down-menu'
+import { DropDownMenu } from '@components/ui-kit/drop-down-menu'
 import { LayoutWrapper } from '@components/ui-kit/layout-wrapper'
 
 export const MainPage: FC = () => (
