@@ -1,5 +1,7 @@
 import { FC, MouseEvent, useEffect, useRef, useState } from 'react'
 
+import { Tooltip } from 'react-tooltip'
+
 import { ICON_ARROW_DOWN } from '@assets/index'
 import { TIconData, TSize } from '@utils/ui-kit-types'
 
@@ -39,10 +41,10 @@ export const DropDownMenu: FC<TProps> = ({
 			}
 		}
 
-		document.addEventListener('mousedown', handleOutClick)
+		if (isOpen) document.addEventListener('mousedown', handleOutClick)
 
 		return () => document.removeEventListener('mousedown', handleOutClick)
-	}, [])
+	}, [isOpen])
 
 	if (activeMenuItem + 1 > menuItems.length) return <div>Пустое меню</div>
 
@@ -55,12 +57,18 @@ export const DropDownMenu: FC<TProps> = ({
 				}}
 				size={size}
 				onClick={() => setIsOpen((prev) => !prev)}
+				data-tooltip-id={`button-${menuItems[activeMenuItem].type}`}
+				data-tooltip-content={menuItems[activeMenuItem].alt}
 			/>
 			<Icon
 				className={style.icon_arrow}
 				iconData={{ cdn: ICON_ARROW_DOWN, alt: 'Развернуть меню' }}
 				size='small'
 				iconColorRevert
+			/>
+			<Tooltip
+				id={`button-${menuItems[activeMenuItem].type}`}
+				variant='light'
 			/>
 
 			{isOpen && (
@@ -73,9 +81,12 @@ export const DropDownMenu: FC<TProps> = ({
 										iconData={{ cdn: item.cdn, alt: item.alt }}
 										size={size}
 										iconColorRevert
-										data-item-type={item.type}
 										onClick={onClickMenuItemWrapper}
+										data-item-type={item.type}
+										data-tooltip-id={`button-${item.type}`}
+										data-tooltip-content={item.alt}
 									/>
+									<Tooltip id={`button-${item.type}`} variant='light' />
 									{item.text && <span>{item.text}</span>}
 								</li>
 							) : null

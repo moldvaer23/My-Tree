@@ -14,6 +14,7 @@ import { ButtonIcon } from '@components/ui-kit/button-icon'
 import style from './style.module.scss'
 import { DropDownMenu } from '@components/ui-kit/drop-down-menu'
 import { LayoutWrapper } from '@components/ui-kit/layout-wrapper'
+import { Tooltip } from 'react-tooltip'
 
 export const MainPage: FC = () => (
 	<div className={style.app}>
@@ -42,7 +43,10 @@ export const MainPage: FC = () => (
 			iconData={{ alt: 'q', cdn: ICON_BACK_ARROW }}
 			size='large'
 			onClick={() => {}}
+			data-tooltip-id='my-tooltip'
+			data-tooltip-content='Вернутся назад'
 		/>
+		<Tooltip id='my-tooltip' variant='light' />
 		<DropDownMenu
 			menuItems={[
 				{
