@@ -4,9 +4,15 @@ import { Button } from '@components/ui-kit/button'
 import { BlockText } from '@components/ui-kit/block-text'
 import { Input } from '@components/ui-kit/input'
 import { Icon } from '@components/ui-kit/icon'
-import { ICON_BACK_ARROW } from '@assets/index'
+import {
+	ICON_BACK_ARROW,
+	ICON_CURVED_LINE,
+	ICON_DOTTED_LINE,
+	ICON_STRAIGHT_LINE,
+} from '@assets/index'
 import { ButtonIcon } from '@components/ui-kit/button-icon'
 import style from './style.module.scss'
+import { DropDownMenu } from '@components/ui-kit/Drop-down-menu'
 
 export const MainPage: FC = () => (
 	<div className={style.app}>
@@ -35,6 +41,30 @@ export const MainPage: FC = () => (
 			iconData={{ alt: 'q', cdn: ICON_BACK_ARROW }}
 			size='large'
 			onClick={() => {}}
+		/>
+		<DropDownMenu
+			menuItems={[
+				{
+					cdn: ICON_DOTTED_LINE,
+					alt: 'Пунктирная линия',
+					type: 'dotted',
+				},
+				{
+					cdn: ICON_CURVED_LINE,
+					alt: 'Кривая линия',
+					type: 'curved',
+				},
+				{
+					cdn: ICON_STRAIGHT_LINE,
+					alt: 'Прямая линия',
+					type: 'straight',
+				},
+			]}
+			activeMenuItem={0}
+			onClickMenuItem={(e) =>
+				console.log(e.currentTarget.getAttribute('data-type-line'))
+			}
+			size={'small'}
 		/>
 	</div>
 )

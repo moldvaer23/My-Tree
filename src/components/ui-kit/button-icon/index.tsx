@@ -1,12 +1,12 @@
 import { clsx } from 'clsx'
-import { ButtonHTMLAttributes, FC, MouseEventHandler } from 'react'
-import { TIconProps } from '@utils/ui-kit-types'
+import { ButtonHTMLAttributes, FC, MouseEvent } from 'react'
 import style from './styles.module.scss'
 import { Icon } from '../icon'
+import { TIconProps } from '@utils/ui-kit-types'
 
 type TProps = ButtonHTMLAttributes<HTMLButtonElement> &
 	TIconProps & {
-		onClick: (e: MouseEventHandler<HTMLButtonElement>) => void
+		onClick?: (e: MouseEvent<HTMLButtonElement>) => void
 		className?: string
 	}
 

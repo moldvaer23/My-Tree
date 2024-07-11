@@ -3,8 +3,11 @@ export type TIconData = {
 	alt: string
 }
 
+export type TSize = 'small' | 'medium' | 'large'
+
 export type TIconProps = {
 	iconData: TIconData
-	size: 'small' | 'medium' | 'large'
+	size: TSize
 	iconColorRevert?: boolean
+	className?: string
 }
