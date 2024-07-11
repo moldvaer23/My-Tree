@@ -13,6 +13,7 @@ import {
 import { ButtonIcon } from '@components/ui-kit/button-icon'
 import style from './style.module.scss'
 import { DropDownMenu } from '@components/ui-kit/Drop-down-menu'
+import { LayoutWrapper } from '@components/ui-kit/layout-wrapper'
 
 export const MainPage: FC = () => (
 	<div className={style.app}>
@@ -66,5 +67,36 @@ export const MainPage: FC = () => (
 			}
 			size={'small'}
 		/>
+		<LayoutWrapper>
+			<div>
+				<Input
+					id='q'
+					labelText='Текст блока'
+					placeholder='Введите текст блока'
+					inputType='text'
+					onChange={(e) => console.log(e.target.value)}
+				/>
+				<Input
+					id='q'
+					labelText='Текст блока'
+					placeholder='Введите текст блока'
+					inputType='text'
+					onChange={(e) => console.log(e.target.value)}
+				/>
+				<Input
+					id='q'
+					labelText='Текст блока'
+					placeholder='Введите текст блока'
+					inputType='text'
+					onChange={(e) => console.log(e.target.value)}
+				/>
+				<Button className='qwe' variant='contained' size='small'>
+					Сохранить
+				</Button>
+				<Button className='qwe' variant='outlined' size='small'>
+					Сохранить
+				</Button>
+			</div>
+		</LayoutWrapper>
 	</div>
 )
