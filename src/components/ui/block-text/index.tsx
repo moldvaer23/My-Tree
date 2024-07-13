@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, MouseEvent } from 'react'
 import style from './styles.module.scss'
 import { TActiveGatewayState } from '@utils/ui-kit-types'
 import { clsx } from 'clsx'
