@@ -5,11 +5,19 @@
 	border-radius: 5px;
 	transition: all 0.2s;
 
+	&:active {
+		filter: brightness(110%);
+	}
+}
+
+.animated_hover {
 	&:hover {
 		background-color: $secondary-color;
 	}
+}
 
-	&:active {
-		filter: brightness(110%);
+.animated_rotation {
+	&:hover {
+		transform: rotate(360deg);
 	}
 }

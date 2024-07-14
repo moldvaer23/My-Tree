@@ -6,13 +6,15 @@ import { TIconProps } from '@utils/ui-kit-types'
 
 type TProps = ButtonHTMLAttributes<HTMLButtonElement> &
 	TIconProps & {
-		onClick?: (e: MouseEvent<HTMLButtonElement>) => void
+		onClick?: (e: MouseEvent) => void
 		className?: string
+		animatedRotation?: boolean
 	}
 
 export const ButtonIcon: FC<TProps> = ({
 	iconData,
 	iconColorRevert = true,
+	animatedRotation,
 	size,
 	className = 'undefined',
 	onClick,
@@ -22,7 +24,11 @@ export const ButtonIcon: FC<TProps> = ({
 		{
 			[className]: className !== 'undefined',
 		},
-		style.button_icon
+		style.button_icon,
+		{
+			[style.animated_hover]: !animatedRotation,
+			[style.animated_rotation]: animatedRotation,
+		}
 	)
 
 	return (

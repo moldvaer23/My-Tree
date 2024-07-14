@@ -3,20 +3,13 @@ import { FC, MouseEvent, useEffect, useRef, useState } from 'react'
 import { Tooltip } from 'react-tooltip'
 
 import { ICON_ARROW_DOWN } from '@assets/index'
-import { TIconData, TSize } from '@utils/ui-kit-types'
+import { TDropDownMenuProps } from '@utils/ui-kit-types'
 
 import { Icon } from '../icon'
 import style from './styles.module.scss'
 import { ButtonIcon } from '../button-icon'
 
-type TProps = {
-	activeMenuItem: number
-	size: TSize
-	menuItems: (TIconData & { type: string; text?: string })[]
-	onClickMenuItem: (e: MouseEvent<HTMLButtonElement>) => void
-}
-
-export const DropDownMenu: FC<TProps> = ({
+export const DropDownMenu: FC<TDropDownMenuProps> = ({
 	menuItems,
 	activeMenuItem,
 	size,
@@ -25,7 +18,7 @@ export const DropDownMenu: FC<TProps> = ({
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const rootRef = useRef<HTMLDivElement | null>(null)
 
-	const onClickMenuItemWrapper = (e: MouseEvent<HTMLButtonElement>) => {
+	const onClickMenuItemWrapper = (e: MouseEvent) => {
 		onClickMenuItem(e)
 		setIsOpen(false)
 	}
