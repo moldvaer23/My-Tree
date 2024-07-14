@@ -1,9 +1,11 @@
 @import '../node_modules/normalize.css/normalize.css';
 @import './styles/fonts.css';
+@import '/src/styles/variables';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
 	font-family: 'Open Sans', sans-serif;
+	background-color: $quaternary-color;
 }

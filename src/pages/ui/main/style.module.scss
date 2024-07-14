@@ -1,14 +1,13 @@
 @import '/src/styles/variables';
 
-.red__text {
-	@apply text-red-800 font-bold;
+.page {
+	height: 100vh;
 }
 
-.blue__text {
-	color: $tertiary-color;
-}
+/* TODO: Поправить верстку, убрать 92% */
 
-.app {
-	min-height: 100vh;
-	background-color: $quaternary-color;
+.main {
+	display: grid;
+	grid-template-columns: 1fr 350px;
+	height: 92%;
 }
