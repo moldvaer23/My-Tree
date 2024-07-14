@@ -6,7 +6,7 @@ import { TSize } from '@utils/ui-kit-types'
 import { Button } from '@components/ui-kit/button'
 import { CONFIG_LINE_DROPDOWN } from '@configs/header'
 import { ButtonIcon } from '@components/ui-kit/button-icon'
-import { DropDownMenu } from '@components/ui-kit/Drop-down-menu'
+import { DropDownMenu } from '@components/ui-kit/drop-down-menu'
 import { LayoutWrapper } from '@components/ui-kit/layout-wrapper'
 import {
 	ICON_BLOCK_TEXT,
@@ -16,6 +16,8 @@ import {
 } from '@assets/index'
 
 import style from './style.module.scss'
+import { Link } from 'react-router-dom'
+import { Icon } from '@components/ui-kit/icon'
 
 /* TODO: Убрать баг с tooltip у drop down menu */
 /* TODO: Передавать onClick у каждой кнопки drop down menu */
@@ -77,14 +79,16 @@ export const HeaderUI: FC = () => {
 				</ul>
 			</LayoutWrapper>
 			<div className={style.buttons}>
-				<ButtonIcon
-					iconData={{
-						cdn: ICON_SETTINGS,
-						alt: 'Настройки',
-					}}
-					size='small'
-					animatedRotation
-				/>
+				<Link className={style.link_settings} to={'/settings'}>
+					<Icon
+						iconData={{
+							cdn: ICON_SETTINGS,
+							alt: 'Настройки',
+						}}
+						size='small'
+						iconColorRevert
+					/>
+				</Link>
 				<Button variant='contained' size='small'>
 					Сохранить
 				</Button>

@@ -23,3 +23,11 @@
 	justify-self: self-end;
 	gap: 10px;
 }
+
+.link_settings {
+	transition: all 0.2s;
+
+	&:hover {
+		transform: rotate(360deg) scale(1.1);
+	}
+}
