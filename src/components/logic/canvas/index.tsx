@@ -9,9 +9,16 @@ export const Canvas: FC<TProps> = ({ children }) => {
 	const canvasRef = useRef<HTMLDivElement | null>(null)
 	const [scale, setScale] = useState(1)
 
+	const maxScale = 1.5
+	const minScale = 0.5
+	const stepScale = -0.001
+
 	const handleWheel = (e: WheelEvent) => {
 		e.preventDefault()
-		const newScale = Math.min(Math.max(scale + e.deltaY * -0.01, 0.5), 2) // Ограничение масштаба
+		const newScale = Math.min(
+			Math.max(scale + e.deltaY * stepScale, minScale),
+			maxScale
+		) // Ограничение масштаба
 		setScale(newScale)
 	}
 
