@@ -19,6 +19,7 @@
 .menu {
 	position: absolute;
 	left: 0;
+	z-index: 2;
 	background-color: $primary-color;
 	border-radius: 5px;
 }
