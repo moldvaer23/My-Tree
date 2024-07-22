@@ -4,30 +4,28 @@ import { FC } from 'react'
 import style from './style.module.scss'
 import { Canvas } from '@components/logic/canvas'
 import { BlockText } from '@components/logic/block-text'
+import { TBlockStore } from '@utils/types'
 
-export const MainPageUI: FC = () => (
+type TProps = {
+	blocks: TBlockStore[]
+}
+
+export const MainPageUI: FC<TProps> = ({ blocks }) => (
 	<div className={style.page}>
 		<Header />
 		<main className={style.main}>
 			<Canvas>
-				<BlockText
-					onClickBlock={(e) => console.log(e)}
-					onClickGateway={(e) => console.log(e)}
-					title='qwerty'
-					blockPosition={{
-						x: 100,
-						y: 100,
-					}}
-				/>
-				<BlockText
-					onClickBlock={(e) => console.log(e)}
-					onClickGateway={(e) => console.log(e)}
-					title='qwerty'
-					blockPosition={{
-						x: 500,
-						y: 500,
-					}}
-				/>
+				{blocks.length
+					? blocks.map((block, index) => (
+							<BlockText
+								key={index}
+								onClickBlock={(e) => console.log(e)}
+								onClickGateway={(e) => console.log(e)}
+								blockPosition={block.position}
+								title={block.title}
+							/>
+						))
+					: null}
 			</Canvas>
 			<AsideTools />
 		</main>

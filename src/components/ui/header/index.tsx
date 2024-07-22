@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, MouseEvent } from 'react'
 
 import { Tooltip } from 'react-tooltip'
 
@@ -22,7 +22,11 @@ import { Icon } from '@components/ui-kit/icon'
 /* TODO: Убрать баг с tooltip у drop down menu */
 /* TODO: Передавать onClick у каждой кнопки drop down menu */
 
-export const HeaderUI: FC = () => {
+type TProps = {
+	onClickBlockText: (e: MouseEvent) => void
+}
+
+export const HeaderUI: FC<TProps> = ({ onClickBlockText }) => {
 	const buttonSize: TSize = 'small'
 
 	return (
@@ -36,7 +40,7 @@ export const HeaderUI: FC = () => {
 								alt: 'Создать блок с текстом',
 							}}
 							size={buttonSize}
-							onClick={(e) => console.log(e)}
+							onClick={onClickBlockText}
 							data-tooltip-id='btn-block-text'
 							data-tooltip-content='Создать блок с текстом'
 						/>
