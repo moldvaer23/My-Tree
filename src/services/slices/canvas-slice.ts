@@ -1,10 +1,11 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { TBlockStore, TConnectionStore } from '@utils/types'
+import { TBlockStore, TConnectionStore, TCoordinates } from '@utils/types'
 import { TActiveGatewayState } from '@utils/ui-kit-types'
 
 type TInitialState = {
 	blocks: Record<string, TBlockStore>
 	connections: Record<string, TConnectionStore>
+	blockDragging: boolean
 }
 
 const initialState: TInitialState = {
@@ -41,6 +42,7 @@ const initialState: TInitialState = {
 		},
 	},
 	connections: {},
+	blockDragging: false,
 }
 
 const canvasSlice = createSlice({
@@ -74,12 +76,25 @@ const canvasSlice = createSlice({
 			}
 		},
 
+		setBlockDragging: (store, action: PayloadAction<boolean>) => {
+			store.blockDragging = action.payload
+		},
+
 		addBlock: (store, action: PayloadAction<TBlockStore>) => {
 			store.blocks[action.payload.uuid] = action.payload
 		},
 
 		addConnection: (store, action: PayloadAction<TConnectionStore>) => {
 			store.connections[action.payload.uuid] = action.payload
+		},
+
+		updateBlockPosition: (
+			store,
+			action: PayloadAction<{ uuid: string; coordinates: TCoordinates }>
+		) => {
+			if (store.blocks[action.payload.uuid]) {
+				store.blocks[action.payload.uuid].position = action.payload.coordinates
+			}
 		},
 
 		removeBlock: (store, action: PayloadAction<string>) => {
@@ -91,16 +106,20 @@ const canvasSlice = createSlice({
 	selectors: {
 		getBlocks: (store) => store.blocks,
 		getConnections: (store) => store.connections,
+		getBlockDragging: (store) => store.blockDragging,
 	},
 })
 
-export const { getBlocks, getConnections } = canvasSlice.selectors
+export const { getBlocks, getConnections, getBlockDragging } =
+	canvasSlice.selectors
 export const {
 	setBlocks,
 	setBlockParameters,
 	setBlockActiveGateway,
+	setBlockDragging,
 	addBlock,
 	addConnection,
+	updateBlockPosition,
 	removeBlock,
 } = canvasSlice.actions
 export default canvasSlice.reducer

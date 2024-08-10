@@ -5,7 +5,11 @@ import { clsx } from 'clsx'
 import { TBlockStore, TCoordinates } from '@utils/types'
 import { useDispatch } from '@services/store'
 import { TActiveGatewayState } from '@utils/ui-kit-types'
-import { setBlockParameters } from '@services/slices/canvas-slice'
+import {
+	setBlockDragging,
+	setBlockParameters,
+	updateBlockPosition,
+} from '@services/slices/canvas-slice'
 
 import style from './styles.module.scss'
 
@@ -25,6 +29,7 @@ type TProps = {
 /* TODO: Починить баг при отдалении поля перемещение работает криво */
 /* TODO: Починить баг блоки могут налетать друг на друга */
 /* TODO: Разбить компонент что бы сделать меньше */
+/* TODO: Провести оптимизацию компонента */
 
 export const BlockText: FC<TProps> = ({
 	bgColor,
@@ -65,6 +70,7 @@ export const BlockText: FC<TProps> = ({
 
 	const handleMouseDown = (e: MouseEvent) => {
 		setDragging(true)
+		dispatch(setBlockDragging(true))
 		setOffset({ x: e.clientX - position.x, y: e.clientY - position.y })
 	}
 
@@ -74,8 +80,15 @@ export const BlockText: FC<TProps> = ({
 		}
 	}
 
-	const handleMouseUp = () => {
+	const handleMouseUp = (e: MouseEvent) => {
 		setDragging(false)
+		dispatch(setBlockDragging(false))
+		dispatch(
+			updateBlockPosition({
+				uuid: data.uuid,
+				coordinates: { x: e.clientX - offset.x, y: e.clientY - offset.y },
+			})
+		)
 	}
 
 	useEffect(() => {

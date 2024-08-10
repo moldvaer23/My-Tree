@@ -15,14 +15,17 @@ type TProps = {
 	connectionState: TConnectionState
 	connections: Record<string, TConnectionStore>
 	setConnectionState: (T: TConnectionState) => void
+	blockDragging: boolean
 }
 
 /* TODO: Вынести логику отрисовки из Page (Разбить компонент) */
+/* TODO: Не удалять линии а скрывать их видимость во время передвижения блока */
 
 export const MainPageUI: FC<TProps> = ({
 	blocks,
 	connectionState,
 	connections,
+	blockDragging,
 	setConnectionState,
 }) => {
 	const blockArr = Object.values(blocks)
@@ -63,7 +66,7 @@ export const MainPageUI: FC<TProps> = ({
 								/>
 							))
 						: null}
-					{connectionsArr.length ? (
+					{connectionsArr.length && !blockDragging ? (
 						<LineSvgWrapper>
 							{connectionsArr.map((connection, index) => {
 								const blockFrom = blocks[connection.from.uuid]

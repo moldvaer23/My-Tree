@@ -7,6 +7,7 @@ import { TConnectionState } from '@utils/types'
 import { useDispatch, useSelector } from '@services/store'
 import {
 	addConnection,
+	getBlockDragging,
 	getBlocks,
 	getConnections,
 } from '@services/slices/canvas-slice'
@@ -18,6 +19,7 @@ export const MainPage: FC = () => {
 	})
 	const blocks = useSelector(getBlocks)
 	const connections = useSelector(getConnections)
+	const blockDragging = useSelector(getBlockDragging)
 	const dispatch = useDispatch()
 
 	useEffect(() => {
@@ -32,7 +34,7 @@ export const MainPage: FC = () => {
 						uuid: connectionsState.to.uuid,
 						gateway: connectionsState.to.gateway,
 					},
-					type: 'straight',
+					type: 'curved',
 					uuid: uuid(),
 				})
 			)
@@ -46,6 +48,7 @@ export const MainPage: FC = () => {
 
 	return (
 		<MainPageUI
+			blockDragging={blockDragging}
 			blocks={blocks}
 			connectionState={connectionsState}
 			connections={connections}
