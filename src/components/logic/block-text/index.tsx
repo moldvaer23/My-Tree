@@ -1,18 +1,22 @@
 import { FC, MouseEvent, useEffect, useRef, useState } from 'react'
-import { TActiveGatewayState } from '@utils/ui-kit-types'
+
 import { clsx } from 'clsx'
+
+import { TBlockStore, TCoordinates } from '@utils/types'
+import { useDispatch } from '@services/store'
+import { TActiveGatewayState } from '@utils/ui-kit-types'
+import { setBlockParameters } from '@services/slices/canvas-slice'
+
 import style from './styles.module.scss'
 
 type TProps = {
 	bgColor?: string
+	blockPosition: TCoordinates
 	className?: string
+	data: TBlockStore
 	onClickBlock: (e: MouseEvent) => void
-	onClickGateway: (e: MouseEvent) => void
+	onClickGateway: (e: MouseEvent, position: TActiveGatewayState) => void
 	title: string
-	blockPosition: {
-		x: number
-		y: number
-	}
 }
 
 /* TODO: Придумать как будет пользователь вносить title */
@@ -20,13 +24,15 @@ type TProps = {
 /* TODO: Починить баг с быстрым вылетом мышки */
 /* TODO: Починить баг при отдалении поля перемещение работает криво */
 /* TODO: Починить баг блоки могут налетать друг на друга */
+/* TODO: Разбить компонент что бы сделать меньше */
 
 export const BlockText: FC<TProps> = ({
 	bgColor,
+	blockPosition,
 	className = 'undefined',
+	data,
 	onClickBlock,
 	onClickGateway,
-	blockPosition,
 	title,
 }) => {
 	const [isHover, setIsHover] = useState<boolean>(false)
@@ -36,9 +42,10 @@ export const BlockText: FC<TProps> = ({
 		x: blockPosition.x,
 		y: blockPosition.y,
 	})
-	const [offset, setOffset] = useState({ x: 0, y: 0 })
+	const [offset, setOffset] = useState<TCoordinates>({ x: 0, y: 0 })
 
 	const blockRef = useRef<HTMLButtonElement | null>(null)
+	const dispatch = useDispatch()
 
 	const onClickGatewayWrapper = (e: MouseEvent) => {
 		/* Достаем атрибут который хранит в себе позицию шлюза */
@@ -50,7 +57,7 @@ export const BlockText: FC<TProps> = ({
 
 		if (!activeGateway || activeGateway !== position) {
 			setActiveGateway(position)
-			onClickGateway(e)
+			onClickGateway(e, position)
 		} else if (activeGateway === position) {
 			setActiveGateway(null)
 		}
@@ -70,6 +77,20 @@ export const BlockText: FC<TProps> = ({
 	const handleMouseUp = () => {
 		setDragging(false)
 	}
+
+	useEffect(() => {
+		const block = blockRef.current
+
+		if (block) {
+			dispatch(
+				setBlockParameters({
+					uuid: data.uuid,
+					height: block.clientHeight,
+					width: block.clientWidth,
+				})
+			)
+		}
+	}, [blockRef.current])
 
 	useEffect(() => {
 		const block = blockRef.current

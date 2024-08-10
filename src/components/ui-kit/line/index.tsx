@@ -1,16 +1,32 @@
+import { TCoordinates } from '@utils/types'
 import { TLineType } from '@utils/ui-kit-types'
-import React from 'react'
-
-interface Point {
-	x: number
-	y: number
-}
+import React, { FC, ReactElement } from 'react'
 
 interface LineProps {
 	type: TLineType
-	from: Point
-	to: Point
+	from: TCoordinates
+	to: TCoordinates
 }
+
+type TLineSvgWrapperProps = {
+	children: ReactElement[]
+}
+
+export const LineSvgWrapper: FC<TLineSvgWrapperProps> = ({ children }) => (
+	<svg
+		style={{
+			position: 'absolute',
+			top: 0,
+			left: 0,
+			width: '100%',
+			height: '100%',
+			pointerEvents: 'none',
+			color: 'red',
+		}}
+	>
+		{children}
+	</svg>
+)
 
 export const Line: React.FC<LineProps> = ({ type, from, to }) => {
 	const lineElements = {
@@ -45,18 +61,5 @@ export const Line: React.FC<LineProps> = ({ type, from, to }) => {
 		),
 	}
 
-	return (
-		<svg
-			style={{
-				position: 'absolute',
-				top: 0,
-				left: 0,
-				width: '100%',
-				height: '100%',
-				pointerEvents: 'none',
-			}}
-		>
-			{lineElements[type]}
-		</svg>
-	)
+	return lineElements[type]
 }

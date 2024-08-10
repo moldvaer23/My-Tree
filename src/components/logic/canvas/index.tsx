@@ -1,9 +1,11 @@
-import React, { useState, useRef, useEffect, FC } from 'react'
+import { useState, useRef, useEffect, FC, ReactNode } from 'react'
 import style from './style.module.scss'
 
 interface TProps {
-	children: React.ReactNode
+	children: ReactNode
 }
+
+/* TODO: Пофиксить все баги с scale (не видно линии при scale) */
 
 export const Canvas: FC<TProps> = ({ children }) => {
 	const canvasRef = useRef<HTMLDivElement | null>(null)
@@ -37,7 +39,7 @@ export const Canvas: FC<TProps> = ({ children }) => {
 		<div ref={canvasRef} className={style.canvas}>
 			<div
 				style={{
-					transform: `scale(${1 / scale})`, // Обратное масштабирование для вложенных элементов
+					// transform: `scale(${1 / scale})`, // Обратное масштабирование для вложенных элементов
 					transformOrigin: '0 0',
 				}}
 			>
