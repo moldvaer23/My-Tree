@@ -20,6 +20,7 @@ My-Tree — это инструмент для создания деревьев
 - TypeScript
 - Sass
 - StoryBook
+- Cypress
 - Css module
 - Vite
 
