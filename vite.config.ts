@@ -14,13 +14,20 @@ export default defineConfig({
 	},
 	resolve: {
 		alias: {
-			'@app': path.resolve(__dirname, 'src/app/App.tsx'),
-			'@assets': path.resolve(__dirname, 'src/assets'),
-			'@components': path.resolve(__dirname, 'src/components'),
-			'@pages': path.resolve(__dirname, 'src/pages'),
-			'@services': path.resolve(__dirname, 'src/services'),
-			'@utils': path.resolve(__dirname, 'src/utils'),
-			'@configs': path.resolve(__dirname, 'src/configs'),
+			/* Глобальные пути */
+			'@app': path.resolve(__dirname, 'src/00-app/App.tsx'),
+			'@pages': path.resolve(__dirname, 'src/01-pages'),
+			'@widgets': path.resolve(__dirname, 'src/02-widgets'),
+			'@features': path.resolve(__dirname, 'src/03-features'),
+			'@entities': path.resolve(__dirname, 'src/04-entities'),
+
+			/* Все что внутри shared */
+			'@assets': path.resolve(__dirname, 'src/05-shared/assets'),
+			'@services': path.resolve(__dirname, 'src/05-shared/services'),
+			'@styles': path.resolve(__dirname, 'src/05-shared/styles'),
+			'@app-types': path.resolve(__dirname, 'src/05-shared/types'),
+			'@ui-kit': path.resolve(__dirname, 'src/05-shared/ui'),
+			'@utils': path.resolve(__dirname, 'src/05-shared/utils'),
 		},
 	},
 })

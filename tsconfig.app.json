@@ -9,13 +9,17 @@
 		"skipLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
-			"@app": ["src/app/App.tsx"],
-			"@assets/*": ["src/assets/*"],
-			"@components/*": ["src/components/*"],
-			"@pages/*": ["src/pages/*"],
-			"@services/*": ["src/services/*"],
-			"@utils/*": ["src/utils/*"],
-			"@configs/*": ["src/configs/*"]
+			"@app": ["src/00-app/App.tsx"],
+			"@pages/*": ["src/01-pages/*"],
+			"@widgets/*": ["src/02-widgets/*"],
+			"@features/*": ["src/03-features/*"],
+			"@entities/*": ["src/04-entities/*"],
+			"@assets": ["src/05-shared/assets"],
+			"@services/*": ["src/05-shared/services/*"],
+			"@styles/*": ["src/05-shared/styles/*"],
+			"@app-types/*": ["src/05-shared/types/*"],
+			"@ui-kit/*": ["src/05-shared/ui/*"],
+			"@utils/*": ["src/05-shared/utils/*"]
 		},
 
 		/* Bundler mode */

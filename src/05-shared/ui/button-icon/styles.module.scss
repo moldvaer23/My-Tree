@@ -1,0 +1,15 @@
+@import '/src/05-shared/styles/variables';
+
+.button_icon {
+	padding: 5px;
+	border-radius: 5px;
+	transition: all 0.2s;
+
+	&:hover {
+		background-color: $secondary-color;
+	}
+
+	&:active {
+		filter: brightness(110%);
+	}
+}

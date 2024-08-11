@@ -1,0 +1,51 @@
+@import '/src/05-shared/styles/variables';
+
+.input {
+	width: 100%;
+	padding: 8px 12px;
+	font-size: 14px;
+	background-color: $secondary-color;
+	border-radius: 5px;
+
+	&::placeholder {
+		color: $primary-color;
+		font-weight: 500;
+		opacity: 0.6;
+	}
+
+	&:focus {
+		outline: 2px solid $fivefold-color;
+	}
+}
+
+.label {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+
+	& span {
+		color: $secondary-color;
+	}
+}
+
+/* Types */
+
+.text {
+	min-width: 150px;
+}
+
+.color {
+	max-width: 100px;
+	padding: 0;
+	cursor: pointer;
+}
+
+.number {
+	max-width: 70px;
+}
+
+.checkbox {
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+}

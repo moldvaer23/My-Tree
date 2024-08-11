@@ -12,13 +12,17 @@ module.exports = {
 		'import/resolver': {
 			alias: {
 				map: [
-					['@app', './src/app/App.tsx'],
-					['@assets', './src/assets'],
-					['@components', './src/components'],
-					['@pages', './src/pages'],
-					['@services', './src/services'],
-					['@utils', './src/utils'],
-					['@configs', './src/configs'],
+					['@app', 'src/00-app/App.tsx'],
+					['@pages', 'src/01-pages'],
+					['@widgets', 'src/02-widgets'],
+					['@features', 'src/03-features'],
+					['@entities', 'src/04-entities'],
+					['@assets', 'src/05-shared/assets'],
+					['@services', 'src/05-shared/services'],
+					['@styles', 'src/05-shared/styles'],
+					['@app-types', 'src/05-shared/types'],
+					['@ui-kit', 'src/05-shared/ui'],
+					['@utils', 'src/05-shared/utils'],
 				],
 				extensions: ['.ts', '.tsx', '.js', '.jsx'],
 			},
@@ -45,5 +49,6 @@ module.exports = {
 		'react/jsx-uses-react': 'off',
 		'react/react-in-jsx-scope': 'off',
 		'@typescript-eslint/explicit-module-boundary-types': 'off',
+		'import/no-unresolved': 'off',
 	},
 }
