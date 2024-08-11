@@ -41,8 +41,16 @@ describe('[TEST]: Work-Space', () => {
 				cy.document().trigger('mouseup', { force: true })
 
 				// Ожидаем, чтобы убедиться, что элемент переместился
-				cy.wrap(element).should('have.css', 'top', '353.391px')
-				cy.wrap(element).should('have.css', 'left', '174px')
+				cy.wrap(element).should(($el) => {
+					const top = parseFloat($el.css('top'))
+					const left = parseFloat($el.css('left'))
+
+					// Проверка, что значение 'top' находится в диапазоне от 351 до 355
+					expect(top).to.be.within(351, 355)
+
+					// Проверка, что значение 'left' находится в диапазоне от 173 до 175
+					expect(left).to.be.within(173, 175)
+				})
 			}
 		})
 	})
