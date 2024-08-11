@@ -131,6 +131,7 @@ export const BlockText: FC<TProps> = ({
 				top: position.y,
 				left: position.x,
 			}}
+			data-testid='block-text'
 		>
 			<button
 				ref={blockRef}
@@ -158,6 +159,7 @@ export const BlockText: FC<TProps> = ({
 							[style.active_gateway]: activeGateway === 'top',
 						})}
 						data-gateway-position='top'
+						data-testid='gateway-top'
 						onClick={onClickGatewayWrapper}
 					/>
 					<button
@@ -165,6 +167,7 @@ export const BlockText: FC<TProps> = ({
 							[style.active_gateway]: activeGateway === 'right',
 						})}
 						data-gateway-position='right'
+						data-testid='gateway-right'
 						onClick={onClickGatewayWrapper}
 					/>
 					<button
@@ -172,6 +175,7 @@ export const BlockText: FC<TProps> = ({
 							[style.active_gateway]: activeGateway === 'bottom',
 						})}
 						data-gateway-position='bottom'
+						data-testid='gateway-bottom'
 						onClick={onClickGatewayWrapper}
 					/>
 					<button
@@ -179,6 +183,7 @@ export const BlockText: FC<TProps> = ({
 							[style.active_gateway]: activeGateway === 'left',
 						})}
 						data-gateway-position='left'
+						data-testid='gateway-left'
 						onClick={onClickGatewayWrapper}
 					/>
 				</>

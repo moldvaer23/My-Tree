@@ -9,68 +9,7 @@ type TInitialState = {
 }
 
 const initialState: TInitialState = {
-	blocks: {
-		'0': {
-			uuid: '0',
-			position: {
-				x: 700,
-				y: 100,
-			},
-			parameters: null,
-			title: 'React',
-			activeGateway: null,
-		},
-		'1': {
-			uuid: '1',
-			position: {
-				x: 700,
-				y: 300,
-			},
-			parameters: null,
-			title: 'Hooks',
-			activeGateway: null,
-		},
-		'2': {
-			uuid: '2',
-			position: {
-				x: 400,
-				y: 300,
-			},
-			parameters: null,
-			title: 'Redux',
-			activeGateway: null,
-		},
-		'3': {
-			uuid: '3',
-			position: {
-				x: 1000,
-				y: 300,
-			},
-			parameters: null,
-			title: 'Rect-router-dom',
-			activeGateway: null,
-		},
-		'4': {
-			uuid: '4',
-			position: {
-				x: 900,
-				y: 500,
-			},
-			parameters: null,
-			title: 'useState',
-			activeGateway: null,
-		},
-		'5': {
-			uuid: '5',
-			position: {
-				x: 500,
-				y: 500,
-			},
-			parameters: null,
-			title: 'useEffect',
-			activeGateway: null,
-		},
-	},
+	blocks: {},
 	connections: {},
 	blockDragging: false,
 }

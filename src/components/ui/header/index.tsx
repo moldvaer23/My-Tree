@@ -43,6 +43,7 @@ export const HeaderUI: FC<TProps> = ({ onClickBlockText }) => {
 							onClick={onClickBlockText}
 							data-tooltip-id='btn-block-text'
 							data-tooltip-content='Создать блок с текстом'
+							data-testid='button-block-text'
 						/>
 						<Tooltip id='btn-block-text' variant='light' />
 					</li>
