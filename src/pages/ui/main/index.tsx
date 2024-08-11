@@ -32,7 +32,7 @@ export const MainPageUI: FC<TProps> = ({
 	const connectionsArr = Object.values(connections)
 
 	return (
-		<div className={style.page}>
+		<div className={style.page} data-testid='main-page'>
 			<Header />
 			<main className={style.main}>
 				<Canvas>

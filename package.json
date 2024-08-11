@@ -5,6 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
+		"dev:host": "vite --host",
+		"cy:open": "cypress open",
 		"build": "yarn run rm && tsc -b && vite build",
 		"lint": "eslint --fix \"src/**/*.{js,jsx,ts,tsx,json}\"",
 		"preview": "vite preview",
@@ -58,6 +60,8 @@
 		"@vitejs/plugin-react": "^4.3.1",
 		"autoprefixer": "^10.4.19",
 		"commitizen": "^4.3.0",
+		"cypress": "^13.13.2",
+		"cypress-vite": "^1.5.0",
 		"cz-conventional-changelog": "^3.3.0",
 		"eslint": "8.x",
 		"eslint-config-prettier": "^9.1.0",

@@ -23,6 +23,7 @@ export const LineSvgWrapper: FC<TLineSvgWrapperProps> = ({ children }) => (
 			pointerEvents: 'none',
 			color: 'red',
 		}}
+		data-testid='connection-line'
 	>
 		{children}
 	</svg>
