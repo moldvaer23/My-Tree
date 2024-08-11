@@ -15,6 +15,8 @@ export const Header: FC = () => {
 					x: 100,
 					y: 100,
 				},
+				activeGateway: null,
+				parameters: null,
 				title: 'Блок',
 			})
 		)

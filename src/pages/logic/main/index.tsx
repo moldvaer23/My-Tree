@@ -34,7 +34,7 @@ export const MainPage: FC = () => {
 						uuid: connectionsState.to.uuid,
 						gateway: connectionsState.to.gateway,
 					},
-					type: 'curved',
+					type: 'straight',
 					uuid: uuid(),
 				})
 			)

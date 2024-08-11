@@ -74,13 +74,13 @@ export const BlockText: FC<TProps> = ({
 		setOffset({ x: e.clientX - position.x, y: e.clientY - position.y })
 	}
 
-	const handleMouseMove = (e: MouseEvent) => {
+	const handleMouseMove = (e: globalThis.MouseEvent) => {
 		if (dragging) {
 			setPosition({ x: e.clientX - offset.x, y: e.clientY - offset.y })
 		}
 	}
 
-	const handleMouseUp = (e: MouseEvent) => {
+	const handleMouseUp = (e: globalThis.MouseEvent) => {
 		setDragging(false)
 		dispatch(setBlockDragging(false))
 		dispatch(
@@ -108,18 +108,13 @@ export const BlockText: FC<TProps> = ({
 	useEffect(() => {
 		const block = blockRef.current
 
-		if (block) {
-			if (dragging) {
-				block.addEventListener('mousemove', handleMouseMove)
-				block.addEventListener('mouseup', handleMouseUp)
-			} else {
-				block.removeEventListener('mousemove', handleMouseMove)
-				block.removeEventListener('mouseup', handleMouseUp)
-			}
+		if (block && dragging) {
+			document.addEventListener('mousemove', handleMouseMove)
+			document.addEventListener('mouseup', handleMouseUp)
 
 			return () => {
-				block.removeEventListener('mousemove', handleMouseMove)
-				block.removeEventListener('mouseup', handleMouseUp)
+				document.removeEventListener('mousemove', handleMouseMove)
+				document.removeEventListener('mouseup', handleMouseUp)
 			}
 		}
 	}, [dragging])

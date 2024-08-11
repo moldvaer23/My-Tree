@@ -21,6 +21,20 @@ export const Default: Story = {
 		onClickGateway: () => {
 			console.log('Click Gateway')
 		},
+		blockPosition: {
+			x: 100,
+			y: 100,
+		},
+		data: {
+			activeGateway: null,
+			parameters: null,
+			position: {
+				x: 100,
+				y: 100,
+			},
+			title: 'StoryBook',
+			uuid: '0',
+		},
 		title: 'StoryBook',
 	},
 }
@@ -33,6 +47,20 @@ export const AccentColor: Story = {
 		},
 		onClickGateway: () => {
 			console.log('Click Gateway')
+		},
+		blockPosition: {
+			x: 100,
+			y: 100,
+		},
+		data: {
+			activeGateway: null,
+			parameters: null,
+			position: {
+				x: 100,
+				y: 100,
+			},
+			title: 'StoryBook',
+			uuid: '0',
 		},
 		title: 'StoryBook',
 	},
