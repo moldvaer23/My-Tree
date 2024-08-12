@@ -15,7 +15,18 @@ export const Header: FC = () => {
 					x: 100,
 					y: 100,
 				},
-				activeGateway: null,
+				gateways: {
+					activeGateway: null,
+					connectedGateways: {
+						top: false,
+						right: false,
+						bottom: false,
+						left: false,
+					},
+				},
+				styles: {
+					bgColor: null,
+				},
 				parameters: null,
 				title: 'Блок',
 			})

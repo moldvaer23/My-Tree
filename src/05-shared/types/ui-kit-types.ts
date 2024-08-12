@@ -7,7 +7,8 @@ export type TIconData = {
 
 export type TLineType = 'straight' | 'curved' | 'dashed'
 export type TSize = 'small' | 'medium' | 'large'
-export type TActiveGatewayState = 'top' | 'right' | 'bottom' | 'left' | null
+export type TGatewaysNames = 'top' | 'right' | 'bottom' | 'left'
+export type TActiveGatewayState = TGatewaysNames | null
 export type TDropDownMenuItems = TIconData & { type: string; text?: string }
 
 export type TIconProps = {

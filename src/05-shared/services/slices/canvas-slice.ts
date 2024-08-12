@@ -4,7 +4,10 @@ import {
 	TConnectionStore,
 	TCoordinates,
 } from 'src/05-shared/types/types'
-import { TActiveGatewayState } from 'src/05-shared/types/ui-kit-types'
+import {
+	TActiveGatewayState,
+	TGatewaysNames,
+} from 'src/05-shared/types/ui-kit-types'
 
 type TInitialState = {
 	blocks: Record<string, TBlockStore>
@@ -44,13 +47,28 @@ const canvasSlice = createSlice({
 			}>
 		) => {
 			if (store.blocks[action.payload.uuid]) {
-				store.blocks[action.payload.uuid].activeGateway =
+				store.blocks[action.payload.uuid].gateways.activeGateway =
 					action.payload.activeGateway
 			}
 		},
 
 		setBlockDragging: (store, action: PayloadAction<boolean>) => {
 			store.blockDragging = action.payload
+		},
+
+		setConnectedGateway: (
+			store,
+			action: PayloadAction<{
+				uuid: string
+				gatewayName: TGatewaysNames
+				isConnected: boolean
+			}>
+		) => {
+			if (store.blocks[action.payload.uuid]) {
+				store.blocks[action.payload.uuid].gateways.connectedGateways[
+					action.payload.gatewayName
+				] = action.payload.isConnected
+			}
 		},
 
 		addBlock: (store, action: PayloadAction<TBlockStore>) => {
@@ -90,6 +108,7 @@ export const {
 	setBlockParameters,
 	setBlockActiveGateway,
 	setBlockDragging,
+	setConnectedGateway,
 	addBlock,
 	addConnection,
 	updateBlockPosition,

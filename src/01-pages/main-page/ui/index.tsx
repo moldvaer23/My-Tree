@@ -7,6 +7,7 @@ import {
 	getBlockDragging,
 	getBlocks,
 	getConnections,
+	setConnectedGateway,
 } from '@services/slices/canvas-slice'
 import { MainPageUI } from './ui-page'
 
@@ -34,6 +35,24 @@ export const MainPage: FC = () => {
 					},
 					type: 'straight',
 					uuid: uuid(),
+				})
+			)
+
+			/* Устанавливаем для блока From активное подключение */
+			dispatch(
+				setConnectedGateway({
+					uuid: connectionsState.from.uuid,
+					gatewayName: connectionsState.from.gateway,
+					isConnected: true,
+				})
+			)
+
+			/* Устанавливаем для блока To активное подключение */
+			dispatch(
+				setConnectedGateway({
+					uuid: connectionsState.to.uuid,
+					gatewayName: connectionsState.to.gateway,
+					isConnected: true,
 				})
 			)
 

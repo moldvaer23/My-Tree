@@ -64,8 +64,6 @@ export const MainPageUI: FC<TProps> = ({
 											})
 										}
 									}}
-									blockPosition={block.position}
-									title={block.title}
 								/>
 							))
 						: null}

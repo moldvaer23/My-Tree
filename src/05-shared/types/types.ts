@@ -1,25 +1,35 @@
-import { TActiveGatewayState, TLineType } from './ui-kit-types'
+import { TActiveGatewayState, TGatewaysNames, TLineType } from './ui-kit-types'
 
 export type TCoordinates = {
 	x: number
 	y: number
 }
 
+export type TConnectedGateways = {
+	top: boolean
+	right: boolean
+	bottom: boolean
+	left: boolean
+}
+
 export type TConnectionState = {
 	from: {
 		uuid: string
-		gateway: TActiveGatewayState
+		gateway: TGatewaysNames
 	} | null
 	to: {
 		uuid: string
-		gateway: TActiveGatewayState
+		gateway: TGatewaysNames
 	} | null
 }
 
 export type TBlockStore = {
 	uuid: string
 	title: string
-	activeGateway: TActiveGatewayState | null
+	gateways: {
+		activeGateway: TActiveGatewayState
+		connectedGateways: TConnectedGateways
+	}
 	parameters: {
 		width: number
 		height: number
@@ -28,17 +38,20 @@ export type TBlockStore = {
 		x: number
 		y: number
 	}
+	styles: {
+		bgColor: string | null
+	}
 }
 
 export type TConnectionStore = {
 	uuid: string
 	from: {
 		uuid: string
-		gateway: TActiveGatewayState
+		gateway: TGatewaysNames
 	}
 	to: {
 		uuid: string
-		gateway: TActiveGatewayState
+		gateway: TGatewaysNames
 	}
 	type: TLineType
 }

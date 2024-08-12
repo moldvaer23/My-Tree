@@ -2,79 +2,58 @@ import { FC, MouseEvent, useEffect, useRef, useState } from 'react'
 import { clsx } from 'clsx'
 import { useDispatch } from '@services/store'
 import { TBlockStore, TCoordinates } from '@app-types/types'
-import { TActiveGatewayState } from '@app-types/ui-kit-types'
+import { TActiveGatewayState, TGatewaysNames } from '@app-types/ui-kit-types'
 import {
 	setBlockDragging,
 	setBlockParameters,
 	updateBlockPosition,
 } from '@services/slices/canvas-slice'
 
+import { GatewaysUI } from './gateways'
 import style from './styles.module.scss'
 
 type TProps = {
-	bgColor?: string
-	blockPosition: TCoordinates
 	className?: string
 	data: TBlockStore
 	onClickBlock: (e: MouseEvent) => void
-	onClickGateway: (e: MouseEvent, position: TActiveGatewayState) => void
-	title: string
+	onClickGateway: (e: MouseEvent, position: TGatewaysNames) => void
 }
 
 /* TODO: Придумать как будет пользователь вносить title */
-/* TODO: Убрать ошибку с handleMouseMove */
 /* TODO: Починить баг с быстрым вылетом мышки */
 /* TODO: Починить баг при отдалении поля перемещение работает криво */
 /* TODO: Починить баг блоки могут налетать друг на друга */
-/* TODO: Разбить компонент что бы сделать меньше */
 /* TODO: Провести оптимизацию компонента */
 
 export const BlockText: FC<TProps> = ({
-	bgColor,
-	blockPosition,
 	className = 'undefined',
 	data,
 	onClickBlock,
 	onClickGateway,
-	title,
 }) => {
-	const [isHover, setIsHover] = useState<boolean>(false)
 	const [activeGateway, setActiveGateway] = useState<TActiveGatewayState>(null)
-	const [dragging, setDragging] = useState(false)
-	const [position, setPosition] = useState({
-		x: blockPosition.x,
-		y: blockPosition.y,
-	})
+	const [dragging, setDragging] = useState<boolean>(false)
+	const [isHover, setIsHover] = useState<boolean>(false)
 	const [offset, setOffset] = useState<TCoordinates>({ x: 0, y: 0 })
-
+	const [coordinates, setCoordinates] = useState<TCoordinates>({
+		x: data.position.x,
+		y: data.position.y,
+	})
 	const blockRef = useRef<HTMLButtonElement | null>(null)
 	const dispatch = useDispatch()
 
-	const onClickGatewayWrapper = (e: MouseEvent) => {
-		/* Достаем атрибут который хранит в себе позицию шлюза */
-		const position = e.currentTarget.getAttribute(
-			'data-gateway-position'
-		) as TActiveGatewayState
-
-		if (!position) return
-
-		if (!activeGateway || activeGateway !== position) {
-			setActiveGateway(position)
-			onClickGateway(e, position)
-		} else if (activeGateway === position) {
-			setActiveGateway(null)
-		}
-	}
-
+	/*
+	 * Хендлеры для работы с блоком
+	 */
 	const handleMouseDown = (e: MouseEvent) => {
 		setDragging(true)
 		dispatch(setBlockDragging(true))
-		setOffset({ x: e.clientX - position.x, y: e.clientY - position.y })
+		setOffset({ x: e.clientX - coordinates.x, y: e.clientY - coordinates.y })
 	}
 
 	const handleMouseMove = (e: globalThis.MouseEvent) => {
 		if (dragging) {
-			setPosition({ x: e.clientX - offset.x, y: e.clientY - offset.y })
+			setCoordinates({ x: e.clientX - offset.x, y: e.clientY - offset.y })
 		}
 	}
 
@@ -89,6 +68,9 @@ export const BlockText: FC<TProps> = ({
 		)
 	}
 
+	/* Отправляем данные о параметрах блока в Redux, */
+	/* при изменении параметров блока сообщаем о том, */
+	/* что они были изменены */
 	useEffect(() => {
 		const block = blockRef.current
 
@@ -103,6 +85,7 @@ export const BlockText: FC<TProps> = ({
 		}
 	}, [blockRef.current])
 
+	/* Вешаем слушатели для передвижения блока */
 	useEffect(() => {
 		const block = blockRef.current
 
@@ -121,13 +104,11 @@ export const BlockText: FC<TProps> = ({
 		<div
 			className={style.wrapper}
 			onMouseEnter={() => setIsHover(true)}
-			onMouseLeave={() => {
-				if (!activeGateway) setIsHover(false)
-			}}
+			onMouseLeave={() => setIsHover(false)}
 			style={{
 				position: 'absolute',
-				top: position.y,
-				left: position.x,
+				top: coordinates.y,
+				left: coordinates.x,
 			}}
 			data-testid='block-text'
 		>
@@ -135,57 +116,28 @@ export const BlockText: FC<TProps> = ({
 				ref={blockRef}
 				onClick={onClickBlock}
 				onMouseDown={handleMouseDown}
+				className={clsx(
+					{
+						[className]: className !== 'undefined',
+					},
+					style.block_text
+				)}
+				{...(data.styles.bgColor && {
+					style: {
+						backgroundColor: data.styles.bgColor,
+					},
+				})}
 			>
-				<article
-					className={clsx(
-						{
-							[className]: className !== 'undefined',
-						},
-						style.block_text
-					)}
-					style={{
-						backgroundColor: bgColor,
-					}}
-				>
-					<span className={style.title}>{title}</span>
-				</article>
+				<span className={style.title}>{data.title}</span>
 			</button>
-			{isHover && (
-				<>
-					<button
-						className={clsx(style.gateway, style.top, {
-							[style.active_gateway]: activeGateway === 'top',
-						})}
-						data-gateway-position='top'
-						data-testid='gateway-top'
-						onClick={onClickGatewayWrapper}
-					/>
-					<button
-						className={clsx(style.gateway, style.right, {
-							[style.active_gateway]: activeGateway === 'right',
-						})}
-						data-gateway-position='right'
-						data-testid='gateway-right'
-						onClick={onClickGatewayWrapper}
-					/>
-					<button
-						className={clsx(style.gateway, style.bottom, {
-							[style.active_gateway]: activeGateway === 'bottom',
-						})}
-						data-gateway-position='bottom'
-						data-testid='gateway-bottom'
-						onClick={onClickGatewayWrapper}
-					/>
-					<button
-						className={clsx(style.gateway, style.left, {
-							[style.active_gateway]: activeGateway === 'left',
-						})}
-						data-gateway-position='left'
-						data-testid='gateway-left'
-						onClick={onClickGatewayWrapper}
-					/>
-				</>
-			)}
+
+			<GatewaysUI
+				activeGateway={activeGateway}
+				connectedGateways={data.gateways.connectedGateways}
+				isActive={isHover}
+				onClickGateway={onClickGateway}
+				setActiveGateway={setActiveGateway}
+			/>
 		</div>
 	)
 }
