@@ -3,12 +3,7 @@
 	"plugins": ["stylelint-order"],
 	"rules": {
 		"at-rule-no-unknown": null,
-		"scss/at-rule-no-unknown": [
-			true,
-			{
-				"ignoreAtRules": ["tailwind"]
-			}
-		],
+		"scss/at-rule-no-unknown": true,
 		"color-no-invalid-hex": true,
 		"font-family-no-duplicate-names": true,
 		"function-calc-no-unspaced-operator": true,
