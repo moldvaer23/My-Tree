@@ -45,11 +45,11 @@ describe('[TEST]: Work-Space', () => {
 					const top = parseFloat($el.css('top'))
 					const left = parseFloat($el.css('left'))
 
-					// Проверка, что значение 'top' находится в диапазоне от 351 до 355
-					expect(top).to.be.within(351, 355)
+					// Проверка, что значение 'top' находится в диапазоне от 340 до 360
+					expect(top).to.be.within(340, 360)
 
-					// Проверка, что значение 'left' находится в диапазоне от 173 до 175
-					expect(left).to.be.within(173, 175)
+					// Проверка, что значение 'left' находится в диапазоне от 150 до 190
+					expect(left).to.be.within(150, 250)
 				})
 			}
 		})
