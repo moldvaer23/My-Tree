@@ -14,9 +14,6 @@ import { LayoutWrapper } from '@ui-kit/layout-wrapper'
 import style from './style.module.scss'
 import { CONFIG_LINE_DROPDOWN } from '../config/header'
 
-/* TODO: Убрать баг с tooltip у drop down menu */
-/* TODO: Передавать onClick у каждой кнопки drop down menu */
-
 type TProps = {
 	onClickBlockText: (e: MouseEvent) => void
 }
