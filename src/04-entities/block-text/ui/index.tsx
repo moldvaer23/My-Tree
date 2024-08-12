@@ -20,8 +20,6 @@ type TProps = {
 }
 
 /* TODO: Придумать как будет пользователь вносить title */
-/* TODO: Починить баг с быстрым вылетом мышки */
-/* TODO: Починить баг при отдалении поля перемещение работает криво */
 /* TODO: Починить баг блоки могут налетать друг на друга */
 /* TODO: Провести оптимизацию компонента */
 
@@ -46,6 +44,7 @@ export const BlockText: FC<TProps> = ({
 	 * Хендлеры для работы с блоком
 	 */
 	const handleMouseDown = (e: MouseEvent) => {
+		e.stopPropagation()
 		setDragging(true)
 		dispatch(setBlockDragging(true))
 		setOffset({ x: e.clientX - coordinates.x, y: e.clientY - coordinates.y })

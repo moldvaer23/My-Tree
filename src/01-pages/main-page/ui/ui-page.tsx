@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Header } from '@widgets/header'
-import { Canvas } from '@features/canvas'
+import { PanZoomContainer } from '@features/pan-zoom-container'
 import { BlockText } from '@entities/block-text'
 import { AsideTools } from '@widgets/aside-tools'
 import { Line, LineSvgWrapper } from '@ui-kit/line'
@@ -38,7 +38,7 @@ export const MainPageUI: FC<TProps> = ({
 		<div className={style.page} data-testid='main-page'>
 			<Header />
 			<main className={style.main}>
-				<Canvas>
+				<PanZoomContainer isBlockDragging={blockDragging}>
 					{blockArr.length
 						? blockArr.map((block, index) => (
 								<BlockText
@@ -97,13 +97,14 @@ export const MainPageUI: FC<TProps> = ({
 										key={index}
 										from={from}
 										to={to}
+										color='#f8ad00'
 										type={connection.type}
 									/>
 								)
 							})}
 						</LineSvgWrapper>
 					) : null}
-				</Canvas>
+				</PanZoomContainer>
 				<AsideTools />
 			</main>
 		</div>

@@ -51,5 +51,6 @@ module.exports = {
 		'@typescript-eslint/explicit-module-boundary-types': 'off',
 		'import/no-unresolved': 'off',
 		'react-hooks/exhaustive-deps': 'off',
+		'jsx-a11y/no-static-element-interactions': 'off',
 	},
 }
