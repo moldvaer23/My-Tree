@@ -10,7 +10,8 @@ type TProps = {
 	activeGateway: TActiveGatewayState
 	connectedGateways: TConnectedGateways
 	isActive: boolean
-	onClickGateway: (e: MouseEvent, position: TGatewaysNames) => void
+	uuidBlock: string
+	onClickGateway: (e: MouseEvent, t: TGatewaysNames, y: string) => void
 	setActiveGateway: (T: TActiveGatewayState) => void
 }
 
@@ -18,6 +19,7 @@ export const GatewaysUI: FC<TProps> = ({
 	activeGateway,
 	connectedGateways,
 	isActive,
+	uuidBlock,
 	onClickGateway,
 	setActiveGateway,
 }) => {
@@ -33,7 +35,7 @@ export const GatewaysUI: FC<TProps> = ({
 
 		if (!activeGateway || activeGateway !== position) {
 			setActiveGateway(position)
-			onClickGateway(e, position)
+			onClickGateway(e, position, uuidBlock)
 		} else if (activeGateway === position) {
 			setActiveGateway(null)
 		}

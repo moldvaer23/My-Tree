@@ -16,7 +16,7 @@ type TProps = {
 	className?: string
 	data: TBlockStore
 	onClickBlock: (e: MouseEvent) => void
-	onClickGateway: (e: MouseEvent, position: TGatewaysNames) => void
+	onClickGateway: (e: MouseEvent, t: TGatewaysNames, y: string) => void
 }
 
 /* TODO: Придумать как будет пользователь вносить title */
@@ -134,6 +134,7 @@ export const BlockText: FC<TProps> = ({
 				activeGateway={activeGateway}
 				connectedGateways={data.gateways.connectedGateways}
 				isActive={isHover}
+				uuidBlock={data.uuid}
 				onClickGateway={onClickGateway}
 				setActiveGateway={setActiveGateway}
 			/>

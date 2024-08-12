@@ -1,13 +1,10 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { TActiveGatewayState } from 'src/05-shared/types/ui-kit-types'
 import {
 	TBlockStore,
 	TConnectionStore,
 	TCoordinates,
 } from 'src/05-shared/types/types'
-import {
-	TActiveGatewayState,
-	TGatewaysNames,
-} from 'src/05-shared/types/ui-kit-types'
 
 type TInitialState = {
 	blocks: Record<string, TBlockStore>
@@ -56,27 +53,25 @@ const canvasSlice = createSlice({
 			store.blockDragging = action.payload
 		},
 
-		setConnectedGateway: (
-			store,
-			action: PayloadAction<{
-				uuid: string
-				gatewayName: TGatewaysNames
-				isConnected: boolean
-			}>
-		) => {
-			if (store.blocks[action.payload.uuid]) {
-				store.blocks[action.payload.uuid].gateways.connectedGateways[
-					action.payload.gatewayName
-				] = action.payload.isConnected
-			}
-		},
-
 		addBlock: (store, action: PayloadAction<TBlockStore>) => {
 			store.blocks[action.payload.uuid] = action.payload
 		},
 
 		addConnection: (store, action: PayloadAction<TConnectionStore>) => {
-			store.connections[action.payload.uuid] = action.payload
+			const data = action.payload
+			store.connections[data.uuid] = data
+
+			/* Сообщаем блокам об подключении шлюзов */
+			if (store.blocks[data.from.uuid]) {
+				store.blocks[data.from.uuid].gateways.connectedGateways[
+					data.from.gateway
+				] = true
+			}
+
+			if (store.blocks[data.to.uuid]) {
+				store.blocks[data.to.uuid].gateways.connectedGateways[data.to.gateway] =
+					true
+			}
 		},
 
 		updateBlockPosition: (
@@ -108,7 +103,6 @@ export const {
 	setBlockParameters,
 	setBlockActiveGateway,
 	setBlockDragging,
-	setConnectedGateway,
 	addBlock,
 	addConnection,
 	updateBlockPosition,

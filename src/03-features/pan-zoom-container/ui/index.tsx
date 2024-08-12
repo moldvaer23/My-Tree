@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect, FC, ReactNode } from 'react'
 import style from './style.module.scss'
+import { useSelector } from '@services/store'
+import { getBlockDragging } from '@services/slices/canvas-slice'
 
 interface TProps {
 	children: ReactNode
-	isBlockDragging: boolean
 }
 
 /* TODO: Убрать баг с нахлестом элементов на другие элементы страниц */
@@ -15,12 +16,13 @@ interface TProps {
  * У компонента отключен scale при scroll-е
  */
 
-export const PanZoomContainer: FC<TProps> = ({ children, isBlockDragging }) => {
-	const canvasInnerRef = useRef<HTMLDivElement | null>(null)
+export const PanZoomContainer: FC<TProps> = ({ children }) => {
 	/* const [scale, setScale] = useState(1) */
-	const [translate, setTranslate] = useState({ x: 0, y: 0 })
 	const [isDragging, setIsDragging] = useState(false)
 	const [startPoint, setStartPoint] = useState({ x: 0, y: 0 })
+	const [translate, setTranslate] = useState({ x: 0, y: 0 })
+	const canvasInnerRef = useRef<HTMLDivElement | null>(null)
+	const isBlockDragging = useSelector(getBlockDragging)
 
 	/* 	const maxScale = 2
 	const minScale = 1
