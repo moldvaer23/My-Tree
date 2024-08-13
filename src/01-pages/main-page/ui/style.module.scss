@@ -3,20 +3,7 @@
 .page {
 	height: 100vh;
 	overflow: hidden;
-	background: repeating-linear-gradient(
-			transparent,
-			transparent 68px,
-			$primary-color 70px
-		),
-		repeating-linear-gradient(
-			90deg,
-			transparent,
-			transparent 68px,
-			$primary-color 70px
-		);
 }
-
-/* TODO: Поправить верстку, убрать 92% */
 
 .main {
 	display: grid;

@@ -2,6 +2,8 @@ import { FC, MouseEvent, ReactNode, useRef, useState, WheelEvent } from 'react'
 import { useSelector } from '@services/store'
 import { TCoordinates } from '@app-types/types'
 import { getBlockDragging } from '@services/slices/canvas-slice'
+
+import style from './style.module.scss'
 import { CANVAS_SIZES, CANVAS_START_VIEW_POSITION } from '../config/canvas'
 
 type TProps = {
@@ -85,12 +87,12 @@ export const InfiniteCanvas: FC<TProps> = ({ children }) => {
 		>
 			<div
 				ref={canvasRef}
+				className={style.canvas_inner}
 				style={{
 					transform: `translate(${offset.x}px, ${offset.y}px) scale(${scale})`,
 					transformOrigin: '0 0',
 					width: `${CANVAS_SIZES.WIDTH}`,
 					height: `${CANVAS_SIZES.HEIGHT}`,
-					backgroundColor: '#f0f0f0',
 				}}
 			>
 				{children}

@@ -1,0 +1,15 @@
+@import '/src/05-shared/styles/variables';
+
+.canvas_inner {
+	background: repeating-linear-gradient(
+			transparent,
+			transparent 68px,
+			$primary-color 70px
+		),
+		repeating-linear-gradient(
+			90deg,
+			transparent,
+			transparent 68px,
+			$primary-color 70px
+		);
+}
