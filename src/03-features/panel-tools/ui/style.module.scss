@@ -1,0 +1,15 @@
+.tools {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	z-index: 2;
+	grid-column-start: 2;
+	justify-self: center;
+	transform: translateX(-50%);
+}
+
+.list {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
