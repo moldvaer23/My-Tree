@@ -1,10 +1,22 @@
-import { FC, MouseEvent, ReactNode, useRef, useState, WheelEvent } from 'react'
+import {
+	FC,
+	MouseEvent,
+	ReactNode,
+	useEffect,
+	useRef,
+	useState,
+	WheelEvent,
+} from 'react'
 import { useSelector } from '@services/store'
 import { TCoordinates } from '@app-types/types'
 import { getBlockDragging } from '@services/slices/canvas-slice'
 
 import style from './style.module.scss'
-import { CANVAS_SIZES, CANVAS_START_VIEW_POSITION } from '../config/canvas'
+import {
+	CANVAS_SCROLL,
+	CANVAS_SIZES,
+	CANVAS_START_VIEW_POSITION,
+} from '../config/canvas'
 
 type TProps = {
 	children?: ReactNode
@@ -15,14 +27,30 @@ export const InfiniteCanvas: FC<TProps> = ({ children }) => {
 	const [lastMousePos, setLastMousePos] = useState({ x: 0, y: 0 })
 	const [offset, setOffset] = useState<TCoordinates>(CANVAS_START_VIEW_POSITION)
 	const [scale, setScale] = useState(1)
-	const canvasRef = useRef<HTMLDivElement>(null)
 	const isBlockDragging = useSelector(getBlockDragging)
+	const canvasRef = useRef<HTMLDivElement>(null)
+	const canvasSizesRef = useRef({
+		width: CANVAS_SIZES.WIDTH,
+		height: CANVAS_SIZES.HEIGHT,
+	})
 
 	const handleWheel = (e: WheelEvent) => {
 		const scaleAmount = e.deltaY * -0.0001
-		const newScale = Math.min(Math.max(scale + scaleAmount, 0.1), 10)
+		const newScale = Math.min(
+			Math.max(scale + scaleAmount, CANVAS_SCROLL.OUT),
+			CANVAS_SCROLL.IN
+		)
+
+		/* Если произошел scroll удваиваем ширину и высоту поля */
+		if (newScale !== CANVAS_SCROLL.IN) {
+			canvasSizesRef.current.width = CANVAS_SIZES.WIDTH * 2
+			canvasSizesRef.current.height = CANVAS_SIZES.HEIGHT * 2
+		}
+
 		setScale(newScale)
 	}
+
+	useEffect(() => console.log(scale), [scale])
 
 	const handleMouseDown = (e: MouseEvent) => {
 		setIsPanning(true)
@@ -91,8 +119,8 @@ export const InfiniteCanvas: FC<TProps> = ({ children }) => {
 				style={{
 					transform: `translate(${offset.x}px, ${offset.y}px) scale(${scale})`,
 					transformOrigin: '0 0',
-					width: `${CANVAS_SIZES.WIDTH}`,
-					height: `${CANVAS_SIZES.HEIGHT}`,
+					width: `${canvasSizesRef.current.width}px`,
+					height: `${canvasSizesRef.current.height}px`,
 				}}
 			>
 				{children}
