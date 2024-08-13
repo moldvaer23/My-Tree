@@ -37,12 +37,16 @@ export const BlockText: FC<TProps> = ({
 		x: data.position.x,
 		y: data.position.y,
 	})
+
+	/* Используется для синхронного хранения данных о координатах, */
+	/* для того что бы отправить актуальный данные при отпускании мышки */
+	const coordinatesRef = useRef<TCoordinates>({
+		x: data.position.x,
+		y: data.position.y,
+	})
 	const blockRef = useRef<HTMLButtonElement | null>(null)
 	const dispatch = useDispatch()
 
-	/*
-	 * Хендлеры для работы с блоком
-	 */
 	const handleMouseDown = (e: MouseEvent) => {
 		e.stopPropagation()
 		setDragging(true)
@@ -51,18 +55,40 @@ export const BlockText: FC<TProps> = ({
 	}
 
 	const handleMouseMove = (e: globalThis.MouseEvent) => {
-		if (dragging) {
-			setCoordinates({ x: e.clientX - offset.x, y: e.clientY - offset.y })
-		}
+		const canvasRect =
+			blockRef.current?.parentElement?.parentElement?.getBoundingClientRect()
+		const blockRect = blockRef.current?.getBoundingClientRect()
+
+		if (!canvasRect || !blockRect) return
+
+		const newX = e.clientX - offset.x
+		const newY = e.clientY - offset.y
+
+		/* Проверяем, чтобы блок не выходил за границы холста */
+		const clampedX = Math.min(
+			Math.max(newX, 0),
+			canvasRect.width - blockRect.width
+		)
+		const clampedY = Math.min(
+			Math.max(newY, 0),
+			canvasRect.height - blockRect.height
+		)
+
+		/* Обновляем координаты и `useRef` */
+		setCoordinates({ x: clampedX, y: clampedY })
+		coordinatesRef.current = { x: clampedX, y: clampedY }
 	}
 
-	const handleMouseUp = (e: globalThis.MouseEvent) => {
+	const handleMouseUp = () => {
 		setDragging(false)
 		dispatch(setBlockDragging(false))
+
+		/* Обновляем позицию блока в хранилище, */
+		/* отправляя синхронные актуальные координаты */
 		dispatch(
 			updateBlockPosition({
 				uuid: data.uuid,
-				coordinates: { x: e.clientX - offset.x, y: e.clientY - offset.y },
+				coordinates: coordinatesRef.current,
 			})
 		)
 	}

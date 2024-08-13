@@ -12,8 +12,8 @@ export const Header: FC = () => {
 			addBlock({
 				uuid: uuid(),
 				position: {
-					x: 100,
-					y: 100,
+					x: 2700,
+					y: 2700,
 				},
 				gateways: {
 					connectedGateways: {
