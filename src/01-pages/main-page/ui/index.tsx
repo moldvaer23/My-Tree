@@ -4,7 +4,7 @@ import { PanelMenu } from '@features/panel-menu'
 import { AsideTools } from '@widgets/aside-tools'
 import { PanelTools } from '@features/panel-tools'
 import { ConnectionsRender } from '@widgets/connections'
-import { InfiniteCanvas } from '@features/infinite-canvas'
+import { InfiniteCanvas } from '@widgets/infinite-canvas'
 
 import style from './style.module.scss'
 
