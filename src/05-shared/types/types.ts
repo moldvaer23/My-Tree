@@ -1,4 +1,4 @@
-import { TActiveGatewayState, TGatewaysNames, TLineType } from './ui-kit-types'
+import { TGatewaysNames, TLineType } from './ui-kit-types'
 
 export type TCoordinates = {
 	x: number
@@ -27,7 +27,6 @@ export type TBlockStore = {
 	uuid: string
 	title: string
 	gateways: {
-		activeGateway: TActiveGatewayState
 		connectedGateways: TConnectedGateways
 	}
 	parameters: {

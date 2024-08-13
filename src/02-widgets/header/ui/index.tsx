@@ -16,7 +16,6 @@ export const Header: FC = () => {
 					y: 100,
 				},
 				gateways: {
-					activeGateway: null,
 					connectedGateways: {
 						top: false,
 						right: false,

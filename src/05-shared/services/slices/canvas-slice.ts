@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { TActiveGatewayState } from 'src/05-shared/types/ui-kit-types'
 import {
 	TBlockStore,
 	TConnectionStore,
@@ -33,19 +32,6 @@ const canvasSlice = createSlice({
 			store.blocks[action.payload.uuid].parameters = {
 				height: action.payload.height,
 				width: action.payload.width,
-			}
-		},
-
-		setBlockActiveGateway: (
-			store,
-			action: PayloadAction<{
-				uuid: string
-				activeGateway: TActiveGatewayState
-			}>
-		) => {
-			if (store.blocks[action.payload.uuid]) {
-				store.blocks[action.payload.uuid].gateways.activeGateway =
-					action.payload.activeGateway
 			}
 		},
 
@@ -101,7 +87,6 @@ export const { getBlocks, getConnections, getBlockDragging } =
 export const {
 	setBlocks,
 	setBlockParameters,
-	setBlockActiveGateway,
 	setBlockDragging,
 	addBlock,
 	addConnection,
