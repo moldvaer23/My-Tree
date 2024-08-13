@@ -20,4 +20,5 @@ export const CANVAS_START_VIEW_POSITION = {
 export const CANVAS_SCROLL = {
 	IN: 1,
 	OUT: 0.8,
+	STEP: -0.0005,
 }

@@ -35,7 +35,7 @@ export const InfiniteCanvas: FC<TProps> = ({ children }) => {
 	})
 
 	const handleWheel = (e: WheelEvent) => {
-		const scaleAmount = e.deltaY * -0.0001
+		const scaleAmount = e.deltaY * CANVAS_SCROLL.STEP
 		const newScale = Math.min(
 			Math.max(scale + scaleAmount, CANVAS_SCROLL.OUT),
 			CANVAS_SCROLL.IN
