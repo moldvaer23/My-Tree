@@ -34,13 +34,6 @@ export const BlockText: FC<TProps> = ({
 		x: data.position.x,
 		y: data.position.y,
 	})
-
-	/* Используется для синхронного хранения данных о координатах, */
-	/* для того что бы отправить актуальный данные при отпускании мышки */
-	const coordinatesRef = useRef<TCoordinates>({
-		x: data.position.x,
-		y: data.position.y,
-	})
 	const blockRef = useRef<HTMLButtonElement | null>(null)
 	const dispatch = useDispatch()
 
@@ -73,10 +66,9 @@ export const BlockText: FC<TProps> = ({
 
 		/* Обновляем координаты и `useRef` */
 		setCoordinates({ x: clampedX, y: clampedY })
-		coordinatesRef.current = { x: clampedX, y: clampedY }
 	}
 
-	const handleMouseUp = () => {
+	const handleMouseUp = (e: globalThis.MouseEvent) => {
 		setDragging(false)
 		dispatch(setBlockDragging(false))
 
@@ -85,7 +77,7 @@ export const BlockText: FC<TProps> = ({
 		dispatch(
 			updateBlockPosition({
 				uuid: data.uuid,
-				coordinates: coordinatesRef.current,
+				coordinates: { x: e.clientX - offset.x, y: e.clientY - offset.y },
 			})
 		)
 	}
