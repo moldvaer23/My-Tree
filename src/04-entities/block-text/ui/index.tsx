@@ -1,5 +1,4 @@
 import { FC, MouseEvent, useEffect, useRef, useState } from 'react'
-import { clsx } from 'clsx'
 import { useDispatch } from '@services/store'
 import { TBlockStore, TCoordinates } from '@app-types/types'
 import { TActiveGatewayState, TGatewaysNames } from '@app-types/ui-kit-types'
@@ -13,7 +12,6 @@ import { GatewaysUI } from './gateways'
 import style from './styles.module.scss'
 
 type TProps = {
-	className?: string
 	data: TBlockStore
 	onClickBlock: (e: MouseEvent) => void
 	onClickGateway: (e: MouseEvent, t: TGatewaysNames, y: string) => void
@@ -24,7 +22,6 @@ type TProps = {
 /* TODO: Провести оптимизацию компонента */
 
 export const BlockText: FC<TProps> = ({
-	className = 'undefined',
 	data,
 	onClickBlock,
 	onClickGateway,
@@ -141,12 +138,7 @@ export const BlockText: FC<TProps> = ({
 				ref={blockRef}
 				onClick={onClickBlock}
 				onMouseDown={handleMouseDown}
-				className={clsx(
-					{
-						[className]: className !== 'undefined',
-					},
-					style.block_text
-				)}
+				className={style.block_text}
 				{...(data.styles.bgColor && {
 					style: {
 						backgroundColor: data.styles.bgColor,
