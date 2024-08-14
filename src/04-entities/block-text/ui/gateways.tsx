@@ -1,4 +1,4 @@
-import { CSSProperties, FC, MouseEvent } from 'react'
+import { CSSProperties, FC, MouseEvent, useState } from 'react'
 import { clsx } from 'clsx'
 import { TConnectedGateways } from '@app-types/types'
 import { TActiveGatewayState, TGatewaysNames } from '@app-types/ui-kit-types'
@@ -7,23 +7,19 @@ import style from './styles.module.scss'
 import { GATEWAY_VARIANTS } from '../config/gateways'
 
 type TProps = {
-	activeGateway: TActiveGatewayState
 	connectedGateways: TConnectedGateways
 	isActive: boolean
 	uuidBlock: string
 	onClickGateway: (e: MouseEvent, t: TGatewaysNames, y: string) => void
-	setActiveGateway: (T: TActiveGatewayState) => void
 }
 
 export const GatewaysUI: FC<TProps> = ({
-	activeGateway,
 	connectedGateways,
 	isActive,
 	uuidBlock,
 	onClickGateway,
-	setActiveGateway,
 }) => {
-	const tabIndex = isActive ? 0 : 1
+	const [activeGateway, setActiveGateway] = useState<TActiveGatewayState>(null)
 
 	const handleClickGateway = (e: MouseEvent) => {
 		/* Достаем атрибут который хранит в себе позицию шлюза */
@@ -33,7 +29,11 @@ export const GatewaysUI: FC<TProps> = ({
 
 		if (!position) return
 
-		if (!activeGateway || activeGateway !== position) {
+		if (
+			!activeGateway ||
+			activeGateway !== position ||
+			connectedGateways[position]
+		) {
 			setActiveGateway(position)
 			onClickGateway(e, position, uuidBlock)
 		} else if (activeGateway === position) {
@@ -73,7 +73,7 @@ export const GatewaysUI: FC<TProps> = ({
 						data-testid={`gateway-${gatewayName}`}
 						onClick={handleClickGateway}
 						style={inlineStyle}
-						tabIndex={tabIndex}
+						tabIndex={isActive ? 0 : 1}
 					/>
 				)
 			})}

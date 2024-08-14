@@ -1,7 +1,7 @@
 import { FC, MouseEvent, useEffect, useRef, useState } from 'react'
 import { useDispatch } from '@services/store'
 import { TBlockStore, TCoordinates } from '@app-types/types'
-import { TActiveGatewayState, TGatewaysNames } from '@app-types/ui-kit-types'
+import { TGatewaysNames } from '@app-types/ui-kit-types'
 import {
 	setBlockDragging,
 	setBlockParameters,
@@ -26,7 +26,6 @@ export const BlockText: FC<TProps> = ({
 	onClickBlock,
 	onClickGateway,
 }) => {
-	const [activeGateway, setActiveGateway] = useState<TActiveGatewayState>(null)
 	const [dragging, setDragging] = useState<boolean>(false)
 	const [isHover, setIsHover] = useState<boolean>(false)
 	const [offset, setOffset] = useState<TCoordinates>({ x: 0, y: 0 })
@@ -69,7 +68,7 @@ export const BlockText: FC<TProps> = ({
 			canvasRect.height - blockRect.height
 		)
 
-		/* Обновляем координаты и `useRef` */
+		/* Обновляем координаты */
 		setCoordinates({ x: clampedX, y: clampedY })
 	}
 
@@ -82,8 +81,7 @@ export const BlockText: FC<TProps> = ({
 			})
 		)
 
-		/* Обновляем позицию блока в хранилище, */
-		/* отправляя синхронные актуальные координаты */
+		/* Обновляем позицию блока в хранилище */
 		dispatch(
 			updateBlockPosition({
 				uuid: data.uuid,
@@ -151,12 +149,10 @@ export const BlockText: FC<TProps> = ({
 			</button>
 
 			<GatewaysUI
-				activeGateway={activeGateway}
 				connectedGateways={data.gateways.connectedGateways}
 				isActive={isHover}
 				uuidBlock={data.uuid}
 				onClickGateway={onClickGateway}
-				setActiveGateway={setActiveGateway}
 			/>
 		</div>
 	)
