@@ -1,16 +1,19 @@
+import { TCoordinates } from '@app-types/types'
 import { TActiveGatewayState } from '@app-types/ui-kit-types'
 
-export const calculateGatewayOffsets = ({
+type TProps = {
+	coordinates: TCoordinates
+	height: number
+	width: number
+	gatewayName: TActiveGatewayState
+}
+
+export const calculateLineOffsets = ({
 	coordinates,
 	height,
 	width,
 	gatewayName,
-}: {
-	coordinates: { x: number; y: number }
-	height: number
-	width: number
-	gatewayName: TActiveGatewayState
-}) => {
+}: TProps) => {
 	const result = {
 		x: 0,
 		y: 0,

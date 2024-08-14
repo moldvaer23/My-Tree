@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useSelector } from '@services/store'
 import { Line, LineSvgWrapper } from '@ui-kit/line'
-import { calculateGatewayOffsets } from '@utils/calculate-gateway-offset'
+import { calculateLineOffsets } from '@entities/block-text/utils/calculate-line-offset'
 import {
 	getBlockDragging,
 	getBlocks,
@@ -48,15 +48,15 @@ export const ConnectionsRender: FC = () => {
 				let from = { x: 0, y: 0 }
 				let to = { x: 0, y: 0 }
 
-				from = calculateGatewayOffsets({
-					coordinates: blockFrom.position,
+				from = calculateLineOffsets({
+					coordinates: blockFrom.coordinates,
 					gatewayName: connection.from.gateway,
 					height: blockFrom.parameters.height,
 					width: blockFrom.parameters.width,
 				})
 
-				to = calculateGatewayOffsets({
-					coordinates: blockTo.position,
+				to = calculateLineOffsets({
+					coordinates: blockTo.coordinates,
 					gatewayName: connection.to.gateway,
 					height: blockTo.parameters.height,
 					width: blockTo.parameters.width,

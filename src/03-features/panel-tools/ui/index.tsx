@@ -20,7 +20,7 @@ export const PanelTools: FC = () => {
 		dispatch(
 			addBlock({
 				uuid: uuid(),
-				position: {
+				coordinates: {
 					x: 2700,
 					y: 2700,
 				},

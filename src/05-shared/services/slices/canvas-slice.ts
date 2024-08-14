@@ -74,7 +74,8 @@ const canvasSlice = createSlice({
 			action: PayloadAction<{ uuid: string; coordinates: TCoordinates }>
 		) => {
 			if (store.blocks[action.payload.uuid]) {
-				store.blocks[action.payload.uuid].position = action.payload.coordinates
+				store.blocks[action.payload.uuid].coordinates =
+					action.payload.coordinates
 			}
 		},
 

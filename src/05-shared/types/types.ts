@@ -5,7 +5,7 @@ export type TCoordinates = {
 	y: number
 }
 
-export type TConnectedGateways = {
+type TConnectedGateways = {
 	top: boolean
 	right: boolean
 	bottom: boolean
@@ -23,25 +23,34 @@ export type TConnectionState = {
 	} | null
 }
 
-export type TBlockStore = {
+/**
+ * Производный тип для инструментов
+ */
+export type TExampleToolStore = {
 	uuid: string
-	title: string
-	gateways: {
-		connectedGateways: TConnectedGateways
-	}
 	parameters: {
 		width: number
 		height: number
 	} | null
-	position: {
-		x: number
-		y: number
+	coordinates: TCoordinates
+}
+
+/**
+ * Тип объекта для хранения данных о блоке с текстом
+ */
+export type TBlockStore = TExampleToolStore & {
+	title: string
+	gateways: {
+		connectedGateways: TConnectedGateways
 	}
 	styles: {
 		bgColor: string | null
 	}
 }
 
+/**
+ * Тип объекта для хранения данных о подключении
+ */
 export type TConnectionStore = {
 	uuid: string
 	from: {
