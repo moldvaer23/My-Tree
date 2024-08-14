@@ -22,23 +22,23 @@ export const ConnectionsRender: FC = () => {
 				const blockFrom = blocks[connection.from.uuid]
 				const blockTo = blocks[connection.to.uuid]
 
-				/* Если необходимых данных нет то возвращаем пустую заглушку */
+				/* Если необходимых данных нет то возвращаем null */
 				if (
 					!blockFrom ||
 					!blockTo ||
 					!blockFrom.parameters ||
 					!blockTo.parameters
 				) {
-					return <></>
+					return null
 				}
 
 				/* Если блок перетаскивают и uuid совпали с данными в линии, то */
-				/* возвращаем пустую заглушку */
+				/* возвращаем null */
 				if (
 					dragging.active &&
 					(blockFrom.uuid === dragging.uuid || blockTo.uuid === dragging.uuid)
 				) {
-					return <></>
+					return null
 				}
 
 				/*

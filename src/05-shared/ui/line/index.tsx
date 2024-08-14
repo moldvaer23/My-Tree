@@ -10,7 +10,7 @@ interface LineProps {
 }
 
 type TLineSvgWrapperProps = {
-	children: ReactElement[]
+	children: (ReactElement | null)[]
 }
 
 export const LineSvgWrapper: FC<TLineSvgWrapperProps> = ({ children }) => (
