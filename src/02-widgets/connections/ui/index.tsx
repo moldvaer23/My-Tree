@@ -2,12 +2,17 @@ import { FC } from 'react'
 import { useSelector } from '@services/store'
 import { Line, LineSvgWrapper } from '@ui-kit/line'
 import { calculateGatewayOffsets } from '@utils/calculate-gateway-offset'
-import { getBlocks, getConnections } from '@services/slices/canvas-slice'
+import {
+	getBlockDragging,
+	getBlocks,
+	getConnections,
+} from '@services/slices/canvas-slice'
 
 export const ConnectionsRender: FC = () => {
 	const blocks = useSelector(getBlocks)
 	const connectionsArr = useSelector(getConnections)
 	const connections = Object.values(connectionsArr)
+	const dragging = useSelector(getBlockDragging)
 
 	if (!connections.length) return <></>
 
@@ -17,24 +22,45 @@ export const ConnectionsRender: FC = () => {
 				const blockFrom = blocks[connection.from.uuid]
 				const blockTo = blocks[connection.to.uuid]
 
+				/* Если необходимых данных нет то возвращаем пустую заглушку */
+				if (
+					!blockFrom ||
+					!blockTo ||
+					!blockFrom.parameters ||
+					!blockTo.parameters
+				) {
+					return <></>
+				}
+
+				/* Если блок перетаскивают и uuid совпали с данными в линии, то */
+				/* возвращаем пустую заглушку */
+				if (
+					dragging.active &&
+					(blockFrom.uuid === dragging.uuid || blockTo.uuid === dragging.uuid)
+				) {
+					return <></>
+				}
+
+				/*
+				 * Основная логика отрисовки линии
+				 */
+
 				let from = { x: 0, y: 0 }
 				let to = { x: 0, y: 0 }
 
-				if (blockFrom.parameters && blockTo.parameters) {
-					from = calculateGatewayOffsets({
-						coordinates: blockFrom.position,
-						gatewayName: connection.from.gateway,
-						height: blockFrom.parameters.height,
-						width: blockFrom.parameters.width,
-					})
+				from = calculateGatewayOffsets({
+					coordinates: blockFrom.position,
+					gatewayName: connection.from.gateway,
+					height: blockFrom.parameters.height,
+					width: blockFrom.parameters.width,
+				})
 
-					to = calculateGatewayOffsets({
-						coordinates: blockTo.position,
-						gatewayName: connection.to.gateway,
-						height: blockTo.parameters.height,
-						width: blockTo.parameters.width,
-					})
-				}
+				to = calculateGatewayOffsets({
+					coordinates: blockTo.position,
+					gatewayName: connection.to.gateway,
+					height: blockTo.parameters.height,
+					width: blockTo.parameters.width,
+				})
 
 				return (
 					<Line

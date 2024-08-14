@@ -40,7 +40,12 @@ export const BlockText: FC<TProps> = ({
 	const handleMouseDown = (e: MouseEvent) => {
 		e.stopPropagation()
 		setDragging(true)
-		dispatch(setBlockDragging(true))
+		dispatch(
+			setBlockDragging({
+				active: true,
+				uuid: data.uuid,
+			})
+		)
 		setOffset({ x: e.clientX - coordinates.x, y: e.clientY - coordinates.y })
 	}
 
@@ -70,7 +75,12 @@ export const BlockText: FC<TProps> = ({
 
 	const handleMouseUp = (e: globalThis.MouseEvent) => {
 		setDragging(false)
-		dispatch(setBlockDragging(false))
+		dispatch(
+			setBlockDragging({
+				active: false,
+				uuid: null,
+			})
+		)
 
 		/* Обновляем позицию блока в хранилище, */
 		/* отправляя синхронные актуальные координаты */

@@ -1,12 +1,4 @@
-import {
-	FC,
-	MouseEvent,
-	ReactNode,
-	useEffect,
-	useRef,
-	useState,
-	WheelEvent,
-} from 'react'
+import { FC, MouseEvent, ReactNode, useRef, useState, WheelEvent } from 'react'
 import { useSelector } from '@services/store'
 import { TCoordinates } from '@app-types/types'
 import { getBlockDragging } from '@services/slices/canvas-slice'
@@ -27,7 +19,7 @@ export const InfiniteCanvas: FC<TProps> = ({ children }) => {
 	const [lastMousePos, setLastMousePos] = useState({ x: 0, y: 0 })
 	const [offset, setOffset] = useState<TCoordinates>(CANVAS_START_VIEW_POSITION)
 	const [scale, setScale] = useState(1)
-	const isBlockDragging = useSelector(getBlockDragging)
+	const blockDragging = useSelector(getBlockDragging)
 	const canvasRef = useRef<HTMLDivElement>(null)
 	const canvasSizesRef = useRef({
 		width: CANVAS_SIZES.WIDTH,
@@ -50,15 +42,13 @@ export const InfiniteCanvas: FC<TProps> = ({ children }) => {
 		setScale(newScale)
 	}
 
-	useEffect(() => console.log(scale), [scale])
-
 	const handleMouseDown = (e: MouseEvent) => {
 		setIsPanning(true)
 		setLastMousePos({ x: e.clientX, y: e.clientY })
 	}
 
 	const handleMouseMove = (e: MouseEvent) => {
-		if (!isPanning || isBlockDragging) return
+		if (!isPanning || blockDragging.active) return
 
 		const dx = e.clientX - lastMousePos.x
 		const dy = e.clientY - lastMousePos.y

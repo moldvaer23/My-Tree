@@ -8,13 +8,19 @@ import {
 type TInitialState = {
 	blocks: Record<string, TBlockStore>
 	connections: Record<string, TConnectionStore>
-	blockDragging: boolean
+	dragging: {
+		active: boolean
+		uuid: string | null
+	}
 }
 
 const initialState: TInitialState = {
 	blocks: {},
 	connections: {},
-	blockDragging: false,
+	dragging: {
+		active: false,
+		uuid: null,
+	},
 }
 
 const canvasSlice = createSlice({
@@ -35,8 +41,11 @@ const canvasSlice = createSlice({
 			}
 		},
 
-		setBlockDragging: (store, action: PayloadAction<boolean>) => {
-			store.blockDragging = action.payload
+		setBlockDragging: (
+			store,
+			action: PayloadAction<{ uuid: string | null; active: boolean }>
+		) => {
+			store.dragging = action.payload
 		},
 
 		addBlock: (store, action: PayloadAction<TBlockStore>) => {
@@ -78,7 +87,7 @@ const canvasSlice = createSlice({
 	selectors: {
 		getBlocks: (store) => store.blocks,
 		getConnections: (store) => store.connections,
-		getBlockDragging: (store) => store.blockDragging,
+		getBlockDragging: (store) => store.dragging,
 	},
 })
 
