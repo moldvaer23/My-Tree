@@ -1,8 +1,9 @@
 import { FC, MouseEvent, useEffect, useRef, useState } from 'react'
-import { useDispatch } from '@services/store'
+import { useDispatch, useSelector } from '@services/store'
 import { TBlockStore, TCoordinates } from '@app-types/types'
 import { TGatewaysNames } from '@app-types/ui-kit-types'
 import {
+	getBlocks,
 	setBlockDragging,
 	setBlockParameters,
 	updateBlockPosition,
@@ -10,6 +11,7 @@ import {
 
 import { GatewaysUI } from './gateways'
 import style from './styles.module.scss'
+import { checkingBlockOverlay } from '@utils/checking-block-overlay'
 
 type TProps = {
 	data: TBlockStore
@@ -34,6 +36,7 @@ export const BlockText: FC<TProps> = ({
 		y: data.position.y,
 	})
 	const blockRef = useRef<HTMLButtonElement | null>(null)
+	const blocks = useSelector(getBlocks)
 	const dispatch = useDispatch()
 
 	const handleMouseDown = (e: MouseEvent) => {
@@ -81,13 +84,45 @@ export const BlockText: FC<TProps> = ({
 			})
 		)
 
-		/* Обновляем позицию блока в хранилище */
-		dispatch(
-			updateBlockPosition({
+		/* Проверка наложения блоков */
+		const verifiedCoordinates = checkingBlockOverlay({
+			blocks: Object.values(blocks),
+			thisBlock: {
+				position: {
+					x: e.clientX - offset.x,
+					y: e.clientY - offset.y,
+				},
+				parameters: data.parameters,
 				uuid: data.uuid,
-				coordinates: { x: e.clientX - offset.x, y: e.clientY - offset.y },
-			})
-		)
+			},
+		})
+
+		/* Если после проверки на наложение координаты были пересчитаны то */
+		/* обновляет позицию блока с учетом новых данных иначе */
+		/* отправляем данные без пересчета */
+		if (
+			verifiedCoordinates.x !== e.clientX - offset.x ||
+			verifiedCoordinates.y !== e.clientY - offset.y
+		) {
+			setCoordinates(verifiedCoordinates)
+
+			dispatch(
+				updateBlockPosition({
+					uuid: data.uuid,
+					coordinates: verifiedCoordinates,
+				})
+			)
+		} else {
+			dispatch(
+				updateBlockPosition({
+					uuid: data.uuid,
+					coordinates: {
+						x: e.clientX - offset.x,
+						y: e.clientY - offset.y,
+					},
+				})
+			)
+		}
 	}
 
 	/* Отправляем данные о параметрах блока в Redux, */
