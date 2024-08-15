@@ -17,7 +17,7 @@
 			"@assets": ["src/05-shared/assets"],
 			"@services/*": ["src/05-shared/services/*"],
 			"@styles/*": ["src/05-shared/styles/*"],
-			"@app-types/*": ["src/05-shared/types/*"],
+			"@app-types": ["src/05-shared/types"],
 			"@ui-kit/*": ["src/05-shared/ui/*"],
 			"@utils/*": ["src/05-shared/utils/*"]
 		},

@@ -3,7 +3,7 @@ import { FC, MouseEvent, useEffect, useRef, useState } from 'react'
 import { Tooltip } from 'react-tooltip'
 import { ICON_ARROW_DOWN } from '@assets'
 
-import { TDropDownMenuProps } from '@app-types/ui-kit-types'
+import { TDropDownMenuProps } from '@app-types'
 
 import { Icon } from '../icon'
 import style from './styles.module.scss'

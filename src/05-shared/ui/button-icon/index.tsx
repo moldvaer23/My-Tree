@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes, FC, MouseEvent } from 'react'
 import { clsx } from 'clsx'
-import { TIconProps } from '@app-types/ui-kit-types'
+import { TIconProps } from '@app-types'
 import { Icon } from '../icon'
 import style from './styles.module.scss'
 

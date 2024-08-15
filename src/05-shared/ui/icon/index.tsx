@@ -1,6 +1,6 @@
 import { clsx } from 'clsx'
 import { FC } from 'react'
-import { TIconProps } from 'src/05-shared/types/ui-kit-types'
+import { TIconProps } from 'src/05-shared/types'
 import style from './styles.module.scss'
 
 export const Icon: FC<TIconProps> = ({

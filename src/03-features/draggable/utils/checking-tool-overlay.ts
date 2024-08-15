@@ -1,4 +1,4 @@
-import { TCoordinates, TExampleToolStore } from '@app-types/types'
+import { TCoordinates, TExampleToolStore } from '@app-types'
 
 export const checkingToolOverlay = <T extends TExampleToolStore>(
 	thisTool: TExampleToolStore,

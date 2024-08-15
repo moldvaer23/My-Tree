@@ -1,9 +1,9 @@
 import { FC, MouseEvent, useState } from 'react'
-import { TBlockStore } from '@app-types/types'
-import { TGatewaysNames } from '@app-types/ui-kit-types'
+import { TGatewaysNames } from '@app-types'
 
 import { GatewaysUI } from './gateways'
 import style from './styles.module.scss'
+import { TBlockStore } from '../lib/types'
 
 type TProps = {
 	data: TBlockStore

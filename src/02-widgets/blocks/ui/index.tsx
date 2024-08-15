@@ -1,10 +1,15 @@
 import { FC, MouseEvent, useEffect, useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import { useDispatch } from 'react-redux'
+import { TGatewaysNames } from '@app-types'
 import { useSelector } from '@services/store'
 import { BlockText } from '@entities/block-text'
-import { TConnectionState } from '@app-types/types'
-import { TGatewaysNames } from '@app-types/ui-kit-types'
+import {
+	Draggable,
+	TOnSetIsDragging,
+	TOnSetParameters,
+	TOnUpdateCoordinates,
+} from '@features/draggable'
 import {
 	addConnection,
 	getBlocks,
@@ -12,12 +17,8 @@ import {
 	setBlockParameters,
 	updateBlockPosition,
 } from '@services/slices/canvas-slice'
-import {
-	Draggable,
-	TOnSetIsDragging,
-	TOnSetParameters,
-	TOnUpdateCoordinates,
-} from '@features/draggable'
+
+import { TConnectionState } from '../lib/types'
 
 export const BlocksRender: FC = () => {
 	const [connectionsState, setConnectionsState] = useState<TConnectionState>({

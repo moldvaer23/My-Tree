@@ -1,6 +1,5 @@
 import React, { FC, ReactElement } from 'react'
-import { TCoordinates } from '@app-types/types'
-import { TLineType } from '@app-types/ui-kit-types'
+import { TCoordinates, TLineType } from '@app-types'
 
 interface LineProps {
 	type: TLineType

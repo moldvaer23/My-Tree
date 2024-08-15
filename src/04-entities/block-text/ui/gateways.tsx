@@ -1,9 +1,9 @@
 import { CSSProperties, FC, MouseEvent, useState } from 'react'
 import { clsx } from 'clsx'
-import { TConnectedGateways } from '@app-types/types'
-import { TActiveGatewayState, TGatewaysNames } from '@app-types/ui-kit-types'
+import { TActiveGatewayState, TGatewaysNames } from '@app-types'
 
 import style from './styles.module.scss'
+import { TConnectedGateways } from '../lib/types'
 import { GATEWAY_VARIANTS } from '../config/gateways'
 
 type TProps = {

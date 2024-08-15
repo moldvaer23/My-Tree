@@ -1,4 +1,4 @@
-import { TGatewaysNames } from '@app-types/ui-kit-types'
+import { TGatewaysNames } from '@app-types'
 
 export const GATEWAY_VARIANTS: TGatewaysNames[] = [
 	'top',

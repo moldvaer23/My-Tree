@@ -1,9 +1,7 @@
+import { TCoordinates } from '@app-types'
+import { TBlockStore } from '@entities/block-text'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import {
-	TBlockStore,
-	TConnectionStore,
-	TCoordinates,
-} from 'src/05-shared/types/types'
+import { TConnectionStore } from '@widgets/connections'
 
 type TInitialState = {
 	blocks: Record<string, TBlockStore>

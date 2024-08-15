@@ -1,5 +1,5 @@
 import { MouseEvent, ReactNode, useEffect, useRef, useState } from 'react'
-import { TCoordinates, TExampleToolStore } from '@app-types/types'
+import { TCoordinates, TExampleToolStore } from '@app-types'
 
 import style from './style.module.scss'
 import { checkingToolOverlay } from '../utils/checking-tool-overlay'

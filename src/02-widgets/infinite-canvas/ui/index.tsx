@@ -1,6 +1,6 @@
 import { FC, MouseEvent, ReactNode, useRef, useState, WheelEvent } from 'react'
+import { TCoordinates } from '@app-types'
 import { useSelector } from '@services/store'
-import { TCoordinates } from '@app-types/types'
 import { getBlockDragging } from '@services/slices/canvas-slice'
 
 import style from './style.module.scss'

@@ -1,5 +1,4 @@
-import { TCoordinates } from '@app-types/types'
-import { TActiveGatewayState } from '@app-types/ui-kit-types'
+import { TCoordinates, TActiveGatewayState } from '@app-types'
 
 type TProps = {
 	coordinates: TCoordinates
