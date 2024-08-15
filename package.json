@@ -56,7 +56,7 @@
 		"@types/react": "^18.3.3",
 		"@types/react-dom": "^18.3.0",
 		"@typescript-eslint/eslint-plugin": "^7.15.0",
-		"@typescript-eslint/parser": "^7.15.0",
+		"@typescript-eslint/parser": "^8.1.0",
 		"@vitejs/plugin-react": "^4.3.1",
 		"autoprefixer": "^10.4.19",
 		"commitizen": "^4.3.0",
@@ -86,7 +86,8 @@
 		"stylelint-config-standard-scss": "^13.1.0",
 		"stylelint-order": "^6.0.4",
 		"typescript": "^5.2.2",
-		"vite": "^5.3.1"
+		"vite": "^5.3.1",
+		"vite-plugin-checker": "latest"
 	},
 	"eslintConfig": {
 		"extends": [

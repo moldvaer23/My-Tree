@@ -1,5 +1,5 @@
 import { ICON_CURVED_LINE, ICON_DOTTED_LINE, ICON_STRAIGHT_LINE } from '@assets'
-import { TDropDownMenuItems } from '@app-types/ui-kit-types'
+import { TDropDownMenuItems } from '@app-types'
 
 export const CONFIG_LINE_DROPDOWN: TDropDownMenuItems[] = [
 	{
