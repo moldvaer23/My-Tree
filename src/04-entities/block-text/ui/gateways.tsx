@@ -1,4 +1,4 @@
-import { CSSProperties, FC, MouseEvent, useState } from 'react'
+import { CSSProperties, FC, MouseEvent, useEffect, useState } from 'react'
 import { clsx } from 'clsx'
 import { TActiveGatewayState, TGatewaysNames } from '@app-types'
 
@@ -38,8 +38,16 @@ export const GatewaysUI: FC<TProps> = ({
 			onClickGateway(e, position, uuidBlock)
 		} else if (activeGateway === position) {
 			setActiveGateway(null)
+			onClickGateway(e, position, uuidBlock)
 		}
 	}
+
+	/* Синхронизируем данные в Redux и активный шлюз блока */
+	useEffect(() => {
+		if (activeGateway && !connectedGateways[activeGateway]) {
+			setActiveGateway(null)
+		}
+	}, [connectedGateways])
 
 	/* Если показ шлюзов активен или название активного шлюза */
 	/* равно названию этого шлюза или этот шлюз является подключенным */

@@ -17,9 +17,11 @@ export const PanelTools: FC = () => {
 	const dispatch = useDispatch()
 
 	const onClickBlockText = () => {
+		const uuidBlock = uuid()
+
 		dispatch(
 			addBlock({
-				uuid: uuid(),
+				uuid: uuidBlock,
 				coordinates: {
 					x: 2700,
 					y: 2700,
@@ -36,7 +38,7 @@ export const PanelTools: FC = () => {
 					bgColor: null,
 				},
 				parameters: null,
-				title: 'Блок',
+				title: uuidBlock,
 			})
 		)
 	}

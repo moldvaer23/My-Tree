@@ -15,6 +15,7 @@ import {
 	getBlocks,
 	setBlockDragging,
 	setBlockParameters,
+	updateBlockActiveGateway,
 	updateBlockPosition,
 } from '@services/slices/canvas-slice'
 
@@ -32,6 +33,7 @@ export const BlocksRender: FC = () => {
 	/* Добавление нового подключения если два блока были соединены */
 	useEffect(() => {
 		if (connectionsState.from !== null && connectionsState.to !== null) {
+			/* Добавляем подключение */
 			dispatch(
 				addConnection({
 					from: {
@@ -47,6 +49,23 @@ export const BlocksRender: FC = () => {
 				})
 			)
 
+			/* Обновляем у блоков информацию о включенных шлюзах */
+			dispatch(
+				updateBlockActiveGateway({
+					uuid: connectionsState.from.uuid,
+					gatewayName: connectionsState.from.gateway,
+					value: true,
+				})
+			)
+
+			dispatch(
+				updateBlockActiveGateway({
+					uuid: connectionsState.to.uuid,
+					gatewayName: connectionsState.to.gateway,
+					value: true,
+				})
+			)
+
 			setConnectionsState({
 				from: null,
 				to: null,
@@ -54,11 +73,24 @@ export const BlocksRender: FC = () => {
 		}
 	}, [connectionsState])
 
-	const onClickBlock = (
+	const onClickGateway = (
 		_: MouseEvent,
 		gatewayName: TGatewaysNames,
 		uuid: string
 	) => {
+		/* Если был произведен клик по включенному но */
+		/* не подключенному шлюзу то выключаем его */
+		if (connectionsState.from && connectionsState.from.uuid === uuid) {
+			console.log('+')
+			setConnectionsState({
+				...connectionsState,
+				from: null,
+			})
+		}
+
+		/* Если шлюз "от" не включен то */
+		/* включаем его, а если нажали на шлюз "куда" и */
+		/* его uuid не равен uuid "от" то включаем его */
 		if (connectionsState.from === null) {
 			setConnectionsState({
 				...connectionsState,
@@ -67,7 +99,7 @@ export const BlocksRender: FC = () => {
 					gateway: gatewayName,
 				},
 			})
-		} else {
+		} else if (connectionsState.from.uuid !== uuid) {
 			setConnectionsState({
 				...connectionsState,
 				to: {
@@ -80,7 +112,7 @@ export const BlocksRender: FC = () => {
 
 	if (!blocks.length) return null
 
-	return blocks.map((block, index) => {
+	return blocks.map((block) => {
 		const onSetIsDragging: TOnSetIsDragging = (value: boolean) => {
 			dispatch(
 				setBlockDragging({
@@ -116,13 +148,9 @@ export const BlocksRender: FC = () => {
 				onSetParameters={onSetParameters}
 				onUpdateCoordinates={onUpdateCoordinates}
 				childrenStoreArr={blocks}
-				key={index}
+				key={block.uuid}
 			>
-				<BlockText
-					data={block}
-					onClickBlock={(e) => console.log(e)}
-					onClickGateway={onClickBlock}
-				/>
+				<BlockText data={block} onClickGateway={onClickGateway} />
 			</Draggable>
 		)
 	})

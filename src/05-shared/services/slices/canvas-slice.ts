@@ -1,7 +1,9 @@
-import { TCoordinates } from '@app-types'
+import { TCoordinates, TGatewaysNames, TTypeTool } from '@app-types'
 import { TBlockStore } from '@entities/block-text'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { TConnectionStore } from '@widgets/connections'
+
+type TTool = TBlockStore | TConnectionStore // Удалить TConnectionStore
 
 type TInitialState = {
 	blocks: Record<string, TBlockStore>
@@ -10,6 +12,17 @@ type TInitialState = {
 		active: boolean
 		uuid: string | null
 	}
+	toolView: {
+		type: TTypeTool
+		tool: TTool
+	} | null
+	rightContext: {
+		coordinates: TCoordinates
+		edit: {
+			type: TTypeTool
+			tool: TTool
+		}
+	} | null
 }
 
 const initialState: TInitialState = {
@@ -19,6 +32,8 @@ const initialState: TInitialState = {
 		active: false,
 		uuid: null,
 	},
+	toolView: null,
+	rightContext: null,
 }
 
 const canvasSlice = createSlice({
@@ -46,6 +61,26 @@ const canvasSlice = createSlice({
 			store.dragging = action.payload
 		},
 
+		setToolView: (
+			store,
+			action: PayloadAction<{ tool: TTool; type: TTypeTool }>
+		) => {
+			store.toolView = action.payload
+		},
+
+		setRightContext: (
+			store,
+			action: PayloadAction<{
+				coordinates: TCoordinates
+				edit: {
+					type: TTypeTool
+					tool: TTool
+				}
+			} | null>
+		) => {
+			store.rightContext = action.payload
+		},
+
 		addBlock: (store, action: PayloadAction<TBlockStore>) => {
 			store.blocks[action.payload.uuid] = action.payload
 		},
@@ -53,18 +88,6 @@ const canvasSlice = createSlice({
 		addConnection: (store, action: PayloadAction<TConnectionStore>) => {
 			const data = action.payload
 			store.connections[data.uuid] = data
-
-			/* Сообщаем блокам об подключении шлюзов */
-			if (store.blocks[data.from.uuid]) {
-				store.blocks[data.from.uuid].gateways.connectedGateways[
-					data.from.gateway
-				] = true
-			}
-
-			if (store.blocks[data.to.uuid]) {
-				store.blocks[data.to.uuid].gateways.connectedGateways[data.to.gateway] =
-					true
-			}
 		},
 
 		updateBlockPosition: (
@@ -77,28 +100,66 @@ const canvasSlice = createSlice({
 			}
 		},
 
-		removeBlock: (store, action: PayloadAction<string>) => {
-			if (store.blocks[action.payload]) {
-				delete store.blocks[action.payload]
+		updateBlockActiveGateway: (
+			store,
+			action: PayloadAction<{
+				uuid: string
+				gatewayName: TGatewaysNames
+				value: boolean
+			}>
+		) => {
+			const data = action.payload
+
+			if (store.blocks[data.uuid]) {
+				store.blocks[data.uuid].gateways.connectedGateways[data.gatewayName] =
+					data.value
 			}
+		},
+
+		removeToolView: (store) => {
+			store.toolView = null
+		},
+
+		removeBlock: (store, action: PayloadAction<string>) => {
+			const uuid = action.payload
+			if (store.blocks[uuid]) delete store.blocks[uuid]
+		},
+
+		removeConnection: (store, action: PayloadAction<string>) => {
+			const uuid = action.payload
+			if (store.connections[uuid]) delete store.connections[uuid]
 		},
 	},
 	selectors: {
 		getBlocks: (store) => store.blocks,
 		getConnections: (store) => store.connections,
 		getBlockDragging: (store) => store.dragging,
+		getToolView: (store) => store.toolView,
+		getRightContext: (store) => store.rightContext,
 	},
 })
 
-export const { getBlocks, getConnections, getBlockDragging } =
-	canvasSlice.selectors
+export const {
+	getBlocks,
+	getConnections,
+	getBlockDragging,
+	getToolView,
+	getRightContext,
+} = canvasSlice.selectors
+
 export const {
 	setBlocks,
 	setBlockParameters,
 	setBlockDragging,
+	setToolView,
+	setRightContext,
 	addBlock,
 	addConnection,
 	updateBlockPosition,
+	updateBlockActiveGateway,
+	removeToolView,
 	removeBlock,
+	removeConnection,
 } = canvasSlice.actions
+
 export default canvasSlice.reducer

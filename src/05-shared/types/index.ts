@@ -1,5 +1,6 @@
 import { MouseEvent } from 'react'
 
+export type TTypeTool = 'block-text' | 'line'
 export type TLineType = 'straight' | 'curved' | 'dashed'
 export type TSize = 'small' | 'medium' | 'large'
 export type TGatewaysNames = 'top' | 'right' | 'bottom' | 'left'

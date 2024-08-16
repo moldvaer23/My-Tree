@@ -1,11 +1,13 @@
-import { FC } from 'react'
-import { useSelector } from '@services/store'
+import { FC, useEffect } from 'react'
 import { Line, LineSvgWrapper } from '@ui-kit/line'
+import { useDispatch, useSelector } from '@services/store'
 import { calculateLineOffsets } from '@entities/block-text/utils/calculate-line-offset'
 import {
 	getBlockDragging,
 	getBlocks,
 	getConnections,
+	removeConnection,
+	updateBlockActiveGateway,
 } from '@services/slices/canvas-slice'
 
 export const ConnectionsRender: FC = () => {
@@ -13,37 +15,56 @@ export const ConnectionsRender: FC = () => {
 	const connectionsArr = useSelector(getConnections)
 	const connections = Object.values(connectionsArr)
 	const dragging = useSelector(getBlockDragging)
+	const dispatch = useDispatch()
 
-	if (!connections.length) return <></>
+	/* Смотри на изменения листа блоков. */
+	/* Если блок "от" или "куда" был удален то */
+	/* удаляем связанное с ними подключения и оповещаем блоки об отключении */
+	useEffect(() => {
+		connections.forEach((connection) => {
+			const blockFrom = blocks[connection.from.uuid]
+			const blockTo = blocks[connection.to.uuid]
+
+			if (!blockFrom || !blockTo) {
+				dispatch(
+					updateBlockActiveGateway({
+						uuid: connection.from.uuid,
+						gatewayName: connection.from.gateway,
+						value: false,
+					})
+				)
+
+				dispatch(
+					updateBlockActiveGateway({
+						uuid: connection.to.uuid,
+						gatewayName: connection.to.gateway,
+						value: false,
+					})
+				)
+
+				dispatch(removeConnection(connection.uuid))
+			}
+		})
+	}, [connections, blocks])
+
+	if (!connections.length) return null
 
 	return (
 		<LineSvgWrapper>
-			{connections.map((connection, index) => {
+			{connections.map((connection) => {
 				const blockFrom = blocks[connection.from.uuid]
 				const blockTo = blocks[connection.to.uuid]
 
-				/* Если необходимых данных нет то возвращаем null */
-				if (
-					!blockFrom ||
-					!blockTo ||
-					!blockFrom.parameters ||
-					!blockTo.parameters
-				) {
-					return null
-				}
+				/* Если необходимых данных нету то возвращаем null */
+				if (!blockFrom || !blockTo) return null
+				if (!blockFrom.parameters || !blockTo.parameters) return null
 
-				/* Если блок перетаскивают и uuid совпали с данными в линии, то */
-				/* возвращаем null */
 				if (
 					dragging.active &&
 					(blockFrom.uuid === dragging.uuid || blockTo.uuid === dragging.uuid)
 				) {
 					return null
 				}
-
-				/*
-				 * Основная логика отрисовки линии
-				 */
 
 				let from = { x: 0, y: 0 }
 				let to = { x: 0, y: 0 }
@@ -64,7 +85,7 @@ export const ConnectionsRender: FC = () => {
 
 				return (
 					<Line
-						key={index}
+						key={connection.uuid}
 						from={from}
 						to={to}
 						color='#f8ad00'
