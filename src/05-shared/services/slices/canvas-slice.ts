@@ -23,6 +23,11 @@ type TInitialState = {
 			tool: TTool
 		}
 	} | null
+	globalStyleSettings: {
+		color: string
+		textColor: string
+		fontSize: number
+	}
 }
 
 const initialState: TInitialState = {
@@ -34,6 +39,11 @@ const initialState: TInitialState = {
 	},
 	toolView: null,
 	rightContext: null,
+	globalStyleSettings: {
+		color: '#1441c2',
+		textColor: '#ffffff',
+		fontSize: 16,
+	},
 }
 
 const canvasSlice = createSlice({
@@ -63,7 +73,7 @@ const canvasSlice = createSlice({
 
 		setToolView: (
 			store,
-			action: PayloadAction<{ tool: TTool; type: TTypeTool }>
+			action: PayloadAction<{ tool: TTool; type: TTypeTool } | null>
 		) => {
 			store.toolView = action.payload
 		},
@@ -116,6 +126,61 @@ const canvasSlice = createSlice({
 			}
 		},
 
+		updateBlockTitle: (
+			store,
+			action: PayloadAction<{ uuid: string; text: string }>
+		) => {
+			if (store.blocks[action.payload.uuid]) {
+				store.blocks[action.payload.uuid].title = action.payload.text
+			}
+		},
+
+		updateBlockColor: (
+			store,
+			action: PayloadAction<{ uuid: string; color: string }>
+		) => {
+			if (store.blocks[action.payload.uuid]) {
+				store.blocks[action.payload.uuid].styles.color = action.payload.color
+			}
+		},
+
+		updateBlockTextColor: (
+			store,
+			action: PayloadAction<{ uuid: string; color: string }>
+		) => {
+			if (store.blocks[action.payload.uuid]) {
+				store.blocks[action.payload.uuid].styles.textColor =
+					action.payload.color
+			}
+		},
+
+		updateBlockFontSize: (
+			store,
+			action: PayloadAction<{ uuid: string; size: number }>
+		) => {
+			if (store.blocks[action.payload.uuid]) {
+				store.blocks[action.payload.uuid].styles.fontSize = action.payload.size
+			}
+		},
+
+		updateBlockFontBold: (
+			store,
+			action: PayloadAction<{ uuid: string; value: boolean }>
+		) => {
+			if (store.blocks[action.payload.uuid]) {
+				store.blocks[action.payload.uuid].styles.fontBold = action.payload.value
+			}
+		},
+
+		updateBlockCurs: (
+			store,
+			action: PayloadAction<{ uuid: string; value: boolean }>
+		) => {
+			if (store.blocks[action.payload.uuid]) {
+				store.blocks[action.payload.uuid].styles.curs = action.payload.value
+			}
+		},
+
 		removeToolView: (store) => {
 			store.toolView = null
 		},
@@ -136,6 +201,7 @@ const canvasSlice = createSlice({
 		getBlockDragging: (store) => store.dragging,
 		getToolView: (store) => store.toolView,
 		getRightContext: (store) => store.rightContext,
+		getGlobalStyleSettings: (store) => store.globalStyleSettings,
 	},
 })
 
@@ -145,6 +211,7 @@ export const {
 	getBlockDragging,
 	getToolView,
 	getRightContext,
+	getGlobalStyleSettings,
 } = canvasSlice.selectors
 
 export const {
@@ -157,6 +224,12 @@ export const {
 	addConnection,
 	updateBlockPosition,
 	updateBlockActiveGateway,
+	updateBlockColor,
+	updateBlockCurs,
+	updateBlockFontBold,
+	updateBlockFontSize,
+	updateBlockTitle,
+	updateBlockTextColor,
 	removeToolView,
 	removeBlock,
 	removeConnection,

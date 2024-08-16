@@ -48,14 +48,23 @@ export const BlockText: FC<TProps> = ({ data, onClickGateway }) => {
 			onMouseLeave={() => setIsHover(false)}
 			onContextMenu={onClickRightContext}
 			onMouseDown={onMouseDown}
-			{...(data.styles.bgColor && {
-				style: {
-					backgroundColor: data.styles.bgColor,
-				},
-			})}
+			style={{
+				backgroundColor: data.styles.color,
+				color: data.styles.textColor,
+				fontSize: `${data.styles.fontSize}px`,
+				fontWeight: data.styles.fontBold ? 700 : 400,
+				fontStyle: data.styles.curs ? 'italic' : 'normal',
+			}}
 			data-testid='block-text'
 		>
-			<span className={style.title}>{data.title}</span>
+			<span
+				className={style.title}
+				/* style={{
+					mixBlendMode: data.styles.textColor ? 'normal' : 'difference',
+				}} */
+			>
+				{data.title}
+			</span>
 
 			<GatewaysUI
 				connectedGateways={data.gateways.connectedGateways}

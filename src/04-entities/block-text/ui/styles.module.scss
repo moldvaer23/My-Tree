@@ -12,8 +12,8 @@ $offset-gateway: -7px;
 }
 
 .title {
-	color: $block-text-color;
-	mix-blend-mode: difference;
+	color: inherit;
+	pointer-events: none;
 }
 
 .gateway {

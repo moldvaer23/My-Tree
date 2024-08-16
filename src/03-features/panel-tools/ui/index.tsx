@@ -3,17 +3,18 @@ import { v4 as uuid } from 'uuid'
 import { TSize } from '@app-types'
 import { Tooltip } from 'react-tooltip'
 import { ICON_BLOCK_TEXT, ICON_GROUP, ICON_TEXT } from '@assets'
-import { useDispatch } from '@services/store'
+import { useDispatch, useSelector } from '@services/store'
 import { ButtonIcon } from '@ui-kit/button-icon'
 import { DropDownMenu } from '@ui-kit/drop-down-menu'
 import { LayoutWrapper } from '@ui-kit/layout-wrapper'
-import { addBlock } from '@services/slices/canvas-slice'
+import { addBlock, getGlobalStyleSettings } from '@services/slices/canvas-slice'
 
 import style from './style.module.scss'
 import { CONFIG_LINE_DROPDOWN } from '../config/panel-tools'
 
 export const PanelTools: FC = () => {
 	const buttonSize: TSize = 'small'
+	const globalStyleSettings = useSelector(getGlobalStyleSettings)
 	const dispatch = useDispatch()
 
 	const onClickBlockText = () => {
@@ -35,7 +36,11 @@ export const PanelTools: FC = () => {
 					},
 				},
 				styles: {
-					bgColor: null,
+					color: globalStyleSettings.color,
+					curs: false,
+					fontBold: false,
+					fontSize: globalStyleSettings.fontSize,
+					textColor: globalStyleSettings.textColor,
 				},
 				parameters: null,
 				title: uuidBlock,

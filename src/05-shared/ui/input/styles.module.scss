@@ -5,6 +5,7 @@
 	padding: 8px 12px;
 	font-size: 14px;
 	background-color: $secondary-color;
+	border: 0;
 	border-radius: 5px;
 
 	&::placeholder {
@@ -31,17 +32,16 @@
 /* Types */
 
 .text {
-	min-width: 150px;
+	min-width: 50px;
 }
 
 .color {
-	max-width: 100px;
 	padding: 0;
 	cursor: pointer;
 }
 
 .number {
-	max-width: 70px;
+	min-width: 30px;
 }
 
 .checkbox {

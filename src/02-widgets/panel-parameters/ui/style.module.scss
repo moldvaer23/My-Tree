@@ -1,7 +1,26 @@
+@import '/src/05-shared/styles/variables';
+
 .parameters {
 	position: fixed;
 	top: 50%;
 	right: 0;
 	z-index: 10;
+	min-width: 300px;
+	padding: 20px 10px;
 	transform: translateY(-50%);
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+}
+
+.item {
+	padding: 15px;
+	border-bottom: 1px solid rgba($color: $secondary-color, $alpha: 20%);
+}
+
+.icon {
+	width: 20px;
+	height: 20px;
 }

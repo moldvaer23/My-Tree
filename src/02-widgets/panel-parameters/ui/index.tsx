@@ -16,7 +16,7 @@ export const PanelParameters: FC = () => {
 	switch (toolView.type) {
 		case 'block-text': {
 			return (
-				<LayoutWrapper className={style.parameters}>
+				<LayoutWrapper className={style.parameters} borderRadius='5px 0 0 5px'>
 					<BlockTextParameters block={toolView.tool as TBlockStore} />
 				</LayoutWrapper>
 			)

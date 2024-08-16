@@ -109,14 +109,25 @@ export const Draggable = <T extends TExampleToolStore>({
 	/* что они были изменены */
 	useEffect(() => {
 		const root = rootRef.current
-
 		if (root) {
-			onSetParameters({
-				height: root.clientHeight,
-				width: root.clientWidth,
-			})
+			const handleResize = () => {
+				onSetParameters({
+					height: root.clientHeight,
+					width: root.clientWidth,
+				})
+			}
+
+			const resizeObserver = new ResizeObserver(handleResize)
+			resizeObserver.observe(root)
+
+			// Вызываем для отправки начальных размеров
+			handleResize()
+
+			return () => {
+				resizeObserver.disconnect()
+			}
 		}
-	}, [rootRef.current])
+	}, [rootRef])
 
 	/* Вешаем слушатели для передвижения инструмента */
 	useEffect(() => {

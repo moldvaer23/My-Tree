@@ -16,6 +16,10 @@ export type TBlockStore = TExampleToolStore & {
 		connectedGateways: TConnectedGateways
 	}
 	styles: {
-		bgColor: string | null
+		color: string
+		textColor: string
+		fontSize: number
+		fontBold: boolean
+		curs: boolean
 	}
 }
