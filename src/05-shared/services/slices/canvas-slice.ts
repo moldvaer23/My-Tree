@@ -1,4 +1,9 @@
-import { TCoordinates, TGatewaysNames, TTypeTool } from '@app-types'
+import {
+	TCoordinates,
+	TGatewaysNames,
+	TGlobalSettings,
+	TTypeTool,
+} from '@app-types'
 import { TBlockStore } from '@entities/block-text'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { TConnectionStore } from '@widgets/connections'
@@ -23,11 +28,7 @@ type TInitialState = {
 			tool: TTool
 		}
 	} | null
-	globalStyleSettings: {
-		color: string
-		textColor: string
-		fontSize: number
-	}
+	globalStyleSettings: TGlobalSettings
 }
 
 const initialState: TInitialState = {
@@ -43,6 +44,7 @@ const initialState: TInitialState = {
 		color: '#1441c2',
 		textColor: '#ffffff',
 		fontSize: 16,
+		lineColor: '#fed500',
 	},
 }
 
@@ -181,6 +183,10 @@ const canvasSlice = createSlice({
 			}
 		},
 
+		updateGlobalSettings: (store, action: PayloadAction<TGlobalSettings>) => {
+			store.globalStyleSettings = action.payload
+		},
+
 		removeToolView: (store) => {
 			store.toolView = null
 		},
@@ -230,6 +236,7 @@ export const {
 	updateBlockFontSize,
 	updateBlockTitle,
 	updateBlockTextColor,
+	updateGlobalSettings,
 	removeToolView,
 	removeBlock,
 	removeConnection,

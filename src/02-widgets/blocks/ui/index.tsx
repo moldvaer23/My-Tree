@@ -13,6 +13,7 @@ import {
 import {
 	addConnection,
 	getBlocks,
+	getGlobalStyleSettings,
 	setBlockDragging,
 	setBlockParameters,
 	updateBlockActiveGateway,
@@ -28,6 +29,7 @@ export const BlocksRender: FC = () => {
 	})
 	const blocksArr = useSelector(getBlocks)
 	const blocks = Object.values(blocksArr)
+	const globalStyleSettings = useSelector(getGlobalStyleSettings)
 	const dispatch = useDispatch()
 
 	/* Добавление нового подключения если два блока были соединены */
@@ -45,6 +47,9 @@ export const BlocksRender: FC = () => {
 						gateway: connectionsState.to.gateway,
 					},
 					type: 'straight',
+					style: {
+						lineColor: globalStyleSettings.lineColor,
+					},
 					uuid: uuid(),
 				})
 			)

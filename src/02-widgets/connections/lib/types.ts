@@ -13,5 +13,8 @@ export type TConnectionStore = {
 		uuid: string
 		gateway: TGatewaysNames
 	}
+	style: {
+		lineColor: string
+	}
 	type: TLineType
 }

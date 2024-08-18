@@ -42,3 +42,10 @@ export type TDropDownMenuProps = {
 	menuItems: TDropDownMenuItems[]
 	onClickMenuItem: (e: MouseEvent) => void
 }
+
+export type TGlobalSettings = {
+	color: string
+	lineColor: string
+	textColor: string
+	fontSize: number
+}

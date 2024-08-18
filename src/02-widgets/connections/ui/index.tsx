@@ -88,7 +88,7 @@ export const ConnectionsRender: FC = () => {
 						key={connection.uuid}
 						from={from}
 						to={to}
-						color='#f8ad00'
+						color={connection.style.lineColor}
 						type={connection.type}
 					/>
 				)
