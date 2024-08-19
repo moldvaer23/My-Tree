@@ -6,6 +6,7 @@ import { getToolView } from '@services/slices/canvas-slice'
 import { TBlockStore } from '@entities/block-text'
 import { LayoutWrapper } from '@ui-kit/layout-wrapper'
 import style from './style.module.scss'
+import { TConnectionStore } from '@widgets/connections'
 
 export const PanelParameters: FC = () => {
 	const toolView = useSelector(getToolView)
@@ -25,7 +26,7 @@ export const PanelParameters: FC = () => {
 		case 'line': {
 			return (
 				<LayoutWrapper className={style.parameters}>
-					<LineParameters />
+					<LineParameters line={toolView.tool as TConnectionStore} />
 				</LayoutWrapper>
 			)
 		}

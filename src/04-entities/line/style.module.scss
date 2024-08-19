@@ -1,0 +1,8 @@
+.line {
+	cursor: pointer;
+	pointer-events: all;
+}
+
+.line:hover {
+	filter: brightness(500%);
+}

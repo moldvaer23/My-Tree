@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from '@services/store'
 import {
 	getRightContext,
 	removeBlock,
+	removeConnection,
 	setRightContext,
 	setToolView,
 } from '@services/slices/canvas-slice'
@@ -43,7 +44,7 @@ export const RightContext: FC = () => {
 				break
 			}
 			case 'line': {
-				console.log('line')
+				dispatch(removeConnection(contextData.edit.tool.uuid))
 				break
 			}
 			default: {

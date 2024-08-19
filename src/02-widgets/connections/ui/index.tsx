@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react'
-import { Line, LineSvgWrapper } from '@ui-kit/line'
+import { Line, LineSvgWrapper } from '@entities/line'
 import { useDispatch, useSelector } from '@services/store'
 import { calculateLineOffsets } from '@entities/block-text/utils/calculate-line-offset'
 import {
@@ -86,10 +86,9 @@ export const ConnectionsRender: FC = () => {
 				return (
 					<Line
 						key={connection.uuid}
-						from={from}
-						to={to}
-						color={connection.style.lineColor}
-						type={connection.type}
+						coordinateFrom={from}
+						coordinateTo={to}
+						data={connection}
 					/>
 				)
 			})}
