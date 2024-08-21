@@ -187,6 +187,15 @@ const canvasSlice = createSlice({
 			store.globalStyleSettings = action.payload
 		},
 
+		updateLineColor: (
+			store,
+			action: PayloadAction<{ uuid: string; value: string }>
+		) => {
+			if (store.connections[action.payload.uuid]) {
+				store.connections[action.payload.uuid].style.lineColor =
+					action.payload.value
+			}
+		},
 		removeToolView: (store) => {
 			store.toolView = null
 		},
@@ -237,6 +246,7 @@ export const {
 	updateBlockTitle,
 	updateBlockTextColor,
 	updateGlobalSettings,
+	updateLineColor,
 	removeToolView,
 	removeBlock,
 	removeConnection,

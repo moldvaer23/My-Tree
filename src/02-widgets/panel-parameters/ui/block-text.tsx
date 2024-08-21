@@ -1,11 +1,9 @@
-import { TBlockStore } from '@entities/block-text'
-import { Input } from '@ui-kit/input'
-import { ChangeEvent, FC, FocusEvent, useEffect, useState } from 'react'
-
-import style from './style.module.scss'
-import { Icon } from '@ui-kit/icon'
+import { FC, useEffect, useState } from 'react'
 import { ICON_CLOSE } from '@assets'
+import { Icon } from '@ui-kit/icon'
+import { Input } from '@ui-kit/input'
 import { useDispatch } from '@services/store'
+import { TBlockStore } from '@entities/block-text'
 import {
 	setToolView,
 	updateBlockColor,
@@ -15,7 +13,8 @@ import {
 	updateBlockTextColor,
 	updateBlockTitle,
 } from '@services/slices/canvas-slice'
-import { TIdCheckboxVariants, TIdVariants } from '../lib/types'
+
+import style from './style.module.scss'
 
 type TProps = {
 	block: TBlockStore
@@ -23,103 +22,15 @@ type TProps = {
 
 export const BlockTextParameters: FC<TProps> = ({ block }) => {
 	const [formState, setFormState] = useState({
+		...block.styles,
 		text: '',
-		color: '',
-		textColor: '',
-		fontSize: '',
-		fontBold: false,
-		curs: false,
 	})
 
 	const dispatch = useDispatch()
 
-	const onBlurCapture = (e: FocusEvent) => {
-		const id: TIdVariants | null = e.currentTarget.getAttribute(
-			'id'
-		) as TIdVariants | null
-
-		if (!id) return
-
-		switch (id) {
-			case 'text': {
-				dispatch(updateBlockTitle({ uuid: block.uuid, text: formState.text }))
-				break
-			}
-			case 'color': {
-				dispatch(updateBlockColor({ uuid: block.uuid, color: formState.color }))
-				break
-			}
-			case 'textColor': {
-				dispatch(
-					updateBlockTextColor({ uuid: block.uuid, color: formState.textColor })
-				)
-				break
-			}
-			case 'fontSize': {
-				dispatch(
-					updateBlockFontSize({
-						uuid: block.uuid,
-						size: Number(formState.fontSize),
-					})
-				)
-				break
-			}
-			default: {
-				break
-			}
-		}
-	}
-
-	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-		const id: TIdVariants | null = e.currentTarget.getAttribute(
-			'id'
-		) as TIdVariants | null
-
-		if (!id) return
-
-		setFormState({
-			...formState,
-			[id]: e.target.value,
-		})
-	}
-
-	const onChangeCheckbox = (e: ChangeEvent<HTMLInputElement>) => {
-		const id: TIdCheckboxVariants | null = e.currentTarget.getAttribute(
-			'id'
-		) as TIdCheckboxVariants | null
-
-		if (!id) return
-
-		switch (id) {
-			case 'fontBold': {
-				dispatch(
-					updateBlockFontBold({ uuid: block.uuid, value: e.target.checked })
-				)
-				break
-			}
-			case 'curs': {
-				dispatch(updateBlockCurs({ uuid: block.uuid, value: e.target.checked }))
-				break
-			}
-		}
-
-		setFormState({
-			...formState,
-			[id]: e.target.checked,
-		})
-	}
-
-	const onClickClose = () => {
-		dispatch(setToolView(null))
-	}
-
 	useEffect(() => {
 		setFormState({
-			color: block.styles.color,
-			curs: block.styles.curs,
-			fontBold: block.styles.fontBold,
-			fontSize: block.styles.fontSize.toString(),
-			textColor: block.styles.textColor,
+			...block.styles,
 			text: block.title,
 		})
 	}, [block])
@@ -129,7 +40,7 @@ export const BlockTextParameters: FC<TProps> = ({ block }) => {
 			<button
 				className={style.close__button}
 				type='button'
-				onClick={onClickClose}
+				onClick={() => dispatch(setToolView(null))}
 			>
 				<Icon
 					className={style.icon}
@@ -147,8 +58,17 @@ export const BlockTextParameters: FC<TProps> = ({ block }) => {
 						inputType='text'
 						id='text'
 						labelText='Текст блока'
-						onBlurCapture={onBlurCapture}
-						onChange={onChange}
+						onBlurCapture={() =>
+							dispatch(
+								updateBlockTitle({ uuid: block.uuid, text: formState.text })
+							)
+						}
+						onChange={(e) =>
+							setFormState({
+								...formState,
+								text: e.target.value,
+							})
+						}
 						autoComplete='off'
 						value={formState.text}
 					/>
@@ -158,8 +78,17 @@ export const BlockTextParameters: FC<TProps> = ({ block }) => {
 						inputType='color'
 						id='color'
 						labelText='Цвет блока'
-						onBlurCapture={onBlurCapture}
-						onChange={onChange}
+						onBlurCapture={() =>
+							dispatch(
+								updateBlockColor({ uuid: block.uuid, color: formState.color })
+							)
+						}
+						onChange={(e) =>
+							setFormState({
+								...formState,
+								color: e.target.value,
+							})
+						}
 						value={formState.color}
 					/>
 				</li>
@@ -168,8 +97,20 @@ export const BlockTextParameters: FC<TProps> = ({ block }) => {
 						inputType='color'
 						id='textColor'
 						labelText='Цвет текста'
-						onBlurCapture={onBlurCapture}
-						onChange={onChange}
+						onBlurCapture={() =>
+							dispatch(
+								updateBlockTextColor({
+									uuid: block.uuid,
+									color: formState.textColor,
+								})
+							)
+						}
+						onChange={(e) =>
+							setFormState({
+								...formState,
+								textColor: e.target.value,
+							})
+						}
 						value={formState.textColor}
 					/>
 				</li>
@@ -178,8 +119,20 @@ export const BlockTextParameters: FC<TProps> = ({ block }) => {
 						inputType='number'
 						id='fontSize'
 						labelText='Размер шрифта'
-						onBlurCapture={onBlurCapture}
-						onChange={onChange}
+						onBlurCapture={() =>
+							dispatch(
+								updateBlockFontSize({
+									uuid: block.uuid,
+									size: Number(formState.fontSize),
+								})
+							)
+						}
+						onChange={(e) =>
+							setFormState({
+								...formState,
+								fontSize: Number(e.target.value),
+							})
+						}
 						value={formState.fontSize}
 					/>
 				</li>
@@ -188,8 +141,18 @@ export const BlockTextParameters: FC<TProps> = ({ block }) => {
 						inputType='checkbox'
 						id='fontBold'
 						labelText='Жирный текст'
-						onBlurCapture={onBlurCapture}
-						onChange={onChangeCheckbox}
+						onChange={(e) => {
+							dispatch(
+								updateBlockFontBold({
+									uuid: block.uuid,
+									value: e.target.checked,
+								})
+							)
+							setFormState({
+								...formState,
+								fontBold: e.target.checked,
+							})
+						}}
 						checked={formState.fontBold}
 					/>
 				</li>
@@ -198,8 +161,15 @@ export const BlockTextParameters: FC<TProps> = ({ block }) => {
 						inputType='checkbox'
 						id='curs'
 						labelText='Курсив'
-						onBlurCapture={onBlurCapture}
-						onChange={onChangeCheckbox}
+						onChange={(e) => {
+							dispatch(
+								updateBlockCurs({ uuid: block.uuid, value: e.target.checked })
+							)
+							setFormState({
+								...formState,
+								curs: e.target.checked,
+							})
+						}}
 						checked={formState.curs}
 					/>
 				</li>
