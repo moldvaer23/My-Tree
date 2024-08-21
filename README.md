@@ -26,8 +26,8 @@ My-Tree — это инструмент для создания деревьев
 
 ### Демонстрация проекта
 
-Главная страница приложения:
-![image](https://github.com/user-attachments/assets/83128303-c422-4b84-a5da-5e9d2ed89b51)
+Пример создания Road-map:
+![image](https://github.com/user-attachments/assets/17bcaa09-b7c6-4c91-95e7-a5924c5abbb9)
 
 ## ✅ Инструкция по использованию
 
