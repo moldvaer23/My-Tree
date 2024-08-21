@@ -49,7 +49,7 @@ export const PanelTools: FC = () => {
 	}
 
 	return (
-		<LayoutWrapper className={style.tools} borderRadius='0 0 5px 5px'>
+		<LayoutWrapper className={style.tools} borderRadius='2px'>
 			<ul className={style.list}>
 				<li>
 					<ButtonIcon

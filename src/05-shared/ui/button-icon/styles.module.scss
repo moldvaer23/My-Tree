@@ -1,8 +1,12 @@
 @import '/src/05-shared/styles/variables';
 
 .button_icon {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	padding: 5px;
 	border-radius: 5px;
+	transform: scale(1);
 	transition: all 0.2s;
 
 	&:hover {

@@ -8,7 +8,7 @@ import { LayoutWrapper } from '@ui-kit/layout-wrapper'
 import style from './style.module.scss'
 
 export const PanelMenu: FC = () => (
-	<LayoutWrapper className={style.menu} borderRadius='0 0 0 5px'>
+	<LayoutWrapper className={style.menu} borderRadius='2px'>
 		<Link className={style.link_settings} to={'/settings'}>
 			<Icon
 				iconData={{
@@ -19,7 +19,7 @@ export const PanelMenu: FC = () => (
 				iconColorRevert
 			/>
 		</Link>
-		<Button variant='contained' size='small'>
+		<Button variant='contained' size='medium'>
 			Сохранить
 		</Button>
 	</LayoutWrapper>
