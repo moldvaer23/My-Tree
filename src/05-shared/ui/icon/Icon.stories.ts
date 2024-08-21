@@ -1,4 +1,4 @@
-import { ICON_BLOCK_TEXT } from '@assets'
+import IconBlockText from '@assets/icon-block-text.svg?react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { Icon } from './index'
 
@@ -16,10 +16,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	args: {
-		iconData: {
-			cdn: ICON_BLOCK_TEXT,
-			alt: 'Создать блок с информацией',
-		},
+		Icon: IconBlockText,
 		size: 'small',
 	},
 }

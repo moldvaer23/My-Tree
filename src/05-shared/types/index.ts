@@ -1,11 +1,16 @@
-import { MouseEvent } from 'react'
+import { FunctionComponent } from 'react'
 
+export type TIcon = FunctionComponent<
+	React.SVGProps<SVGSVGElement> & {
+		title?: string | undefined
+	}
+>
 export type TTypeTool = 'block-text' | 'line'
 export type TLineType = 'straight' | 'curved' | 'dashed'
 export type TSize = 'small' | 'medium' | 'large'
 export type TGatewaysNames = 'top' | 'right' | 'bottom' | 'left'
 export type TActiveGatewayState = TGatewaysNames | null
-export type TDropDownMenuItems = TIconData & { type: string; text?: string }
+export type TDropDownMenuItems = { Icon: TIcon; type: string; text: string }
 
 export type TCoordinates = {
 	x: number
@@ -22,25 +27,6 @@ export type TExampleToolStore = {
 		height: number
 	} | null
 	coordinates: TCoordinates
-}
-
-export type TIconData = {
-	cdn: string
-	alt: string
-}
-
-export type TIconProps = {
-	iconData: TIconData
-	size: TSize
-	iconColorRevert?: boolean
-	className?: string
-}
-
-export type TDropDownMenuProps = {
-	activeMenuItem: number
-	size: TSize
-	menuItems: TDropDownMenuItems[]
-	onClickMenuItem: (e: MouseEvent) => void
 }
 
 export type TGlobalSettings = {

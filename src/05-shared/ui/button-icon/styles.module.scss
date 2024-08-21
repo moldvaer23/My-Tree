@@ -8,9 +8,13 @@
 	border-radius: 5px;
 	transform: scale(1);
 	transition: all 0.2s;
+	fill: $secondary-color;
+	stroke: $secondary-color;
 
 	&:hover {
-		background-color: $secondary-color;
+		background-color: rgba($color: $sixfold-color, $alpha: 30%);
+		fill: $sixfold-color;
+		stroke: $sixfold-color;
 	}
 
 	&:active {

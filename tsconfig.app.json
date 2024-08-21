@@ -14,7 +14,7 @@
 			"@widgets/*": ["src/02-widgets/*"],
 			"@features/*": ["src/03-features/*"],
 			"@entities/*": ["src/04-entities/*"],
-			"@assets": ["src/05-shared/assets"],
+			"@assets/*": ["src/05-shared/assets/*"],
 			"@services/*": ["src/05-shared/services/*"],
 			"@styles/*": ["src/05-shared/styles/*"],
 			"@app-types": ["src/05-shared/types"],

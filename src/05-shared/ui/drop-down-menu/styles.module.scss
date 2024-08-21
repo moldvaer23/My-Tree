@@ -14,11 +14,14 @@
 	bottom: 0;
 	width: 20px;
 	pointer-events: none;
+	fill: $secondary-color;
+	stroke: $secondary-color;
 }
 
 .menu {
 	position: absolute;
-	left: 0;
+	top: 0;
+	left: 150%;
 	z-index: 2;
 	background-color: $primary-color;
 	border-radius: 5px;
@@ -26,6 +29,5 @@
 
 .list {
 	display: flex;
-	flex-direction: column;
 	gap: 5px;
 }

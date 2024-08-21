@@ -1,3 +1,5 @@
+@import '/src/05-shared/styles/variables';
+
 .menu {
 	position: absolute;
 	top: 10px;
@@ -12,6 +14,7 @@
 
 .link_settings {
 	transition: all 0.2s;
+	fill: $secondary-color;
 
 	&:hover {
 		transform: rotate(360deg) scale(1.1);

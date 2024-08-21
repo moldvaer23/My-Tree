@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react'
-import { ICON_CLOSE } from '@assets'
+import IconBackArrow from '@assets/icon-back-arrow.svg?react'
 import { Icon } from '@ui-kit/icon'
 import { Input } from '@ui-kit/input'
 import { useDispatch } from '@services/store'
@@ -32,15 +32,7 @@ export const LineParameters: FC<TProps> = ({ line }) => {
 				type='button'
 				onClick={() => dispatch(setToolView(null))}
 			>
-				<Icon
-					className={style.icon}
-					iconData={{
-						alt: 'Закрыть',
-						cdn: ICON_CLOSE,
-					}}
-					size='small'
-					iconColorRevert={true}
-				/>
+				<Icon className={style.icon} Icon={IconBackArrow} size='small' />
 			</button>
 			<ul className={style.list}>
 				<li className={style.item}>

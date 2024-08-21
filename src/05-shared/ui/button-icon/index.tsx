@@ -1,18 +1,19 @@
 import { ButtonHTMLAttributes, FC, MouseEvent } from 'react'
 import { clsx } from 'clsx'
-import { TIconProps } from '@app-types'
-import { Icon } from '../icon'
-import style from './styles.module.scss'
 
-type TProps = ButtonHTMLAttributes<HTMLButtonElement> &
-	TIconProps & {
-		onClick?: (e: MouseEvent) => void
-		className?: string
-	}
+import { Icon as IconUiKit } from '../icon'
+import style from './styles.module.scss'
+import { TIcon, TSize } from '@app-types'
+
+type TProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+	Icon: TIcon
+	size: TSize
+	onClick?: (e: MouseEvent) => void
+	className?: string
+}
 
 export const ButtonIcon: FC<TProps> = ({
-	iconData,
-	iconColorRevert = true,
+	Icon,
 	size,
 	className = 'undefined',
 	onClick,
@@ -32,7 +33,7 @@ export const ButtonIcon: FC<TProps> = ({
 			onClick={onClick}
 			{...args}
 		>
-			<Icon iconData={iconData} size={size} iconColorRevert={iconColorRevert} />
+			<IconUiKit size={size} Icon={Icon} />
 		</button>
 	)
 }

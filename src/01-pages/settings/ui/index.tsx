@@ -1,22 +1,16 @@
-import { LayoutWrapper } from '@ui-kit/layout-wrapper'
-import { GlobalParameters } from '@widgets/panel-parameters'
 import { FC } from 'react'
-
-import style from './style.module.scss'
 import { Link } from 'react-router-dom'
 import { Icon } from '@ui-kit/icon'
-import { ICON_BACK_ARROW } from '@assets'
+import { LayoutWrapper } from '@ui-kit/layout-wrapper'
+import { GlobalParameters } from '@widgets/panel-parameters'
+import IconBackArrow from '@assets/icon-back-arrow.svg?react'
+
+import style from './style.module.scss'
 
 export const SettingsPage: FC = () => (
 	<div className={style.page}>
 		<Link to='/'>
-			<Icon
-				iconData={{
-					alt: 'Назад',
-					cdn: ICON_BACK_ARROW,
-				}}
-				size='small'
-			/>
+			<Icon Icon={IconBackArrow} size='small' />
 		</Link>
 		<LayoutWrapper>
 			<GlobalParameters />

@@ -1,15 +1,21 @@
 import { FC, MouseEvent, useEffect, useRef, useState } from 'react'
 
 import { Tooltip } from 'react-tooltip'
-import { ICON_ARROW_DOWN } from '@assets'
-
-import { TDropDownMenuProps } from '@app-types'
+import IconArrowDown from '@assets/icon-arrow-down.svg?react'
 
 import { Icon } from '../icon'
 import style from './styles.module.scss'
 import { ButtonIcon } from '../button-icon'
+import { TDropDownMenuItems, TSize } from '@app-types'
 
-export const DropDownMenu: FC<TDropDownMenuProps> = ({
+export type TProps = {
+	activeMenuItem: number
+	size: TSize
+	menuItems: TDropDownMenuItems[]
+	onClickMenuItem: (e: MouseEvent) => void
+}
+
+export const DropDownMenu: FC<TProps> = ({
 	menuItems,
 	activeMenuItem,
 	size,
@@ -44,21 +50,13 @@ export const DropDownMenu: FC<TDropDownMenuProps> = ({
 	return (
 		<div className={style.wrapper} ref={rootRef}>
 			<ButtonIcon
-				iconData={{
-					cdn: menuItems[activeMenuItem].cdn,
-					alt: menuItems[activeMenuItem].alt,
-				}}
+				Icon={menuItems[activeMenuItem].Icon}
 				size={size}
 				onClick={() => setIsOpen((prev) => !prev)}
 				data-tooltip-id={`button-${menuItems[activeMenuItem].type}`}
-				data-tooltip-content={menuItems[activeMenuItem].alt}
+				data-tooltip-content={menuItems[activeMenuItem].text}
 			/>
-			<Icon
-				className={style.icon_arrow}
-				iconData={{ cdn: ICON_ARROW_DOWN, alt: 'Развернуть меню' }}
-				size='small'
-				iconColorRevert
-			/>
+			<Icon className={style.icon_arrow} Icon={IconArrowDown} size='small' />
 			<Tooltip
 				id={`button-${menuItems[activeMenuItem].type}`}
 				variant='light'
@@ -71,16 +69,14 @@ export const DropDownMenu: FC<TDropDownMenuProps> = ({
 							index !== activeMenuItem ? (
 								<li className={style.item} key={index}>
 									<ButtonIcon
-										iconData={{ cdn: item.cdn, alt: item.alt }}
+										Icon={item.Icon}
 										size={size}
-										iconColorRevert
 										onClick={onClickMenuItemWrapper}
 										data-item-type={item.type}
 										data-tooltip-id={`button-${item.type}`}
-										data-tooltip-content={item.alt}
+										data-tooltip-content={item.text}
 									/>
 									<Tooltip id={`button-${item.type}`} variant='light' />
-									{item.text && <span>{item.text}</span>}
 								</li>
 							) : null
 						)}
