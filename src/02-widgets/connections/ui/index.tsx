@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { Line, LineSvgWrapper } from '@entities/line'
 import { useDispatch, useSelector } from '@services/store'
-import { calculateLineOffsets } from '@entities/block-text/utils/calculate-line-offset'
+import { calculateLineOffsets } from '@widgets/connections/utils/calculate-line-offset'
 import {
 	getBlockDragging,
 	getBlocks,
@@ -17,7 +17,7 @@ export const ConnectionsRender: FC = () => {
 	const dragging = useSelector(getBlockDragging)
 	const dispatch = useDispatch()
 
-	/* Смотри на изменения листа блоков. */
+	/* Смотрим на изменения листа блоков. */
 	/* Если блок "от" или "куда" был удален то */
 	/* удаляем связанное с ними подключения и оповещаем блоки об отключении */
 	useEffect(() => {
