@@ -1,10 +1,10 @@
 import { FC, MouseEvent, ReactElement } from 'react'
 import { TCoordinates } from '@app-types'
+import { useDispatch } from '@services/store'
+import { TConnectionStore } from '@widgets/connections'
+import { setRightContext } from '@features/right-context'
 
 import style from './style.module.scss'
-import { useDispatch } from '@services/store'
-import { setRightContext } from '@services/slices/canvas-slice'
-import { TConnectionStore } from '@widgets/connections'
 
 interface LineProps {
 	data: TConnectionStore

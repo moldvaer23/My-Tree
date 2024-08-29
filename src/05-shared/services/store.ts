@@ -5,10 +5,19 @@ import {
 } from 'react-redux'
 
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import canvasReducer from './slices/canvas-slice'
+
+import { globalReducer } from './slices/global-slice'
+import { blocksReducer } from '../../02-widgets/blocks/lib/blocks-slice'
+import { connectionsReducer } from '@widgets/connections'
+import { rightContextReducer } from '@features/right-context'
+import { panelParametersReducer } from '@widgets/panel-parameters'
 
 export const rootReducer = combineReducers({
-	canvas: canvasReducer,
+	global: globalReducer,
+	blocks: blocksReducer,
+	connections: connectionsReducer,
+	rightContext: rightContextReducer,
+	panelParameters: panelParametersReducer,
 })
 
 const store = configureStore({

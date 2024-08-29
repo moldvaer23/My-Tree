@@ -5,16 +5,16 @@ import { calculateLineOffsets } from '@widgets/connections/utils/calculate-line-
 import {
 	getBlockDragging,
 	getBlocks,
-	getConnections,
-	removeConnection,
 	updateBlockActiveGateway,
-} from '@services/slices/canvas-slice'
+} from '@widgets/blocks'
+
+import { getConnections, removeConnection } from '../lib/connections-slice'
 
 export const ConnectionsRender: FC = () => {
 	const blocks = useSelector(getBlocks)
 	const connectionsArr = useSelector(getConnections)
 	const connections = Object.values(connectionsArr)
-	const dragging = useSelector(getBlockDragging)
+	const uuidBlockDragging = useSelector(getBlockDragging)
 	const dispatch = useDispatch()
 
 	/* Смотрим на изменения листа блоков. */
@@ -60,8 +60,9 @@ export const ConnectionsRender: FC = () => {
 				if (!blockFrom.parameters || !blockTo.parameters) return null
 
 				if (
-					dragging.active &&
-					(blockFrom.uuid === dragging.uuid || blockTo.uuid === dragging.uuid)
+					uuidBlockDragging &&
+					(blockFrom.uuid === uuidBlockDragging ||
+						blockTo.uuid === uuidBlockDragging)
 				) {
 					return null
 				}

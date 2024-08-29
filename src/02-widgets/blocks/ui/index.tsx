@@ -4,23 +4,23 @@ import { useDispatch } from 'react-redux'
 import { TGatewaysNames } from '@app-types'
 import { useSelector } from '@services/store'
 import { BlockText } from '@entities/block-text'
+import { addConnection } from '@widgets/connections'
+import { getGlobalStyleSettings } from '@services/slices/global-slice'
 import {
 	Draggable,
 	TOnSetIsDragging,
 	TOnSetParameters,
 	TOnUpdateCoordinates,
 } from '@features/draggable'
+
+import { TConnectionState } from '../lib/types'
 import {
-	addConnection,
 	getBlocks,
-	getGlobalStyleSettings,
 	setBlockDragging,
 	setBlockParameters,
 	updateBlockActiveGateway,
 	updateBlockPosition,
-} from '@services/slices/canvas-slice'
-
-import { TConnectionState } from '../lib/types'
+} from '../lib/blocks-slice'
 
 export const BlocksRender: FC = () => {
 	const [connectionsState, setConnectionsState] = useState<TConnectionState>({
@@ -86,7 +86,6 @@ export const BlocksRender: FC = () => {
 		/* Если был произведен клик по включенному но */
 		/* не подключенному шлюзу то выключаем его */
 		if (connectionsState.from && connectionsState.from.uuid === uuid) {
-			console.log('+')
 			setConnectionsState({
 				...connectionsState,
 				from: null,
@@ -119,12 +118,11 @@ export const BlocksRender: FC = () => {
 
 	return blocks.map((block) => {
 		const onSetIsDragging: TOnSetIsDragging = (value: boolean) => {
-			dispatch(
-				setBlockDragging({
-					active: value,
-					uuid: block.uuid,
-				})
-			)
+			if (value) {
+				dispatch(setBlockDragging(block.uuid))
+			} else {
+				dispatch(setBlockDragging(null))
+			}
 		}
 
 		const onSetParameters: TOnSetParameters = ({ height, width }) => {

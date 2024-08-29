@@ -1,20 +1,20 @@
 import { FC, useEffect, useState } from 'react'
-import IconBackArrow from '@assets/icon-back-arrow.svg?react'
 import { Icon } from '@ui-kit/icon'
 import { Input } from '@ui-kit/input'
 import { useDispatch } from '@services/store'
 import { TBlockStore } from '@entities/block-text'
+import IconBackArrow from '@assets/icon-back-arrow.svg?react'
 import {
-	setToolView,
 	updateBlockColor,
 	updateBlockCurs,
 	updateBlockFontBold,
 	updateBlockFontSize,
 	updateBlockTextColor,
 	updateBlockTitle,
-} from '@services/slices/canvas-slice'
+} from '@widgets/blocks'
 
 import style from './style.module.scss'
+import { setToolView } from '../lib/panel-parameters-slice'
 
 type TProps = {
 	block: TBlockStore

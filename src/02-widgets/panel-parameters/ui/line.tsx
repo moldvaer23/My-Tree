@@ -1,12 +1,12 @@
 import { FC, useEffect, useState } from 'react'
-import IconBackArrow from '@assets/icon-back-arrow.svg?react'
 import { Icon } from '@ui-kit/icon'
 import { Input } from '@ui-kit/input'
 import { useDispatch } from '@services/store'
-import { TConnectionStore } from '@widgets/connections'
-import { setToolView, updateLineColor } from '@services/slices/canvas-slice'
+import IconBackArrow from '@assets/icon-back-arrow.svg?react'
+import { TConnectionStore, updateLineColor } from '@widgets/connections'
 
 import style from './style.module.scss'
+import { setToolView } from '../lib/panel-parameters-slice'
 
 type TProps = {
 	line: TConnectionStore

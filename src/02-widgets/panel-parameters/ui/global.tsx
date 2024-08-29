@@ -1,15 +1,14 @@
-import { Input } from '@ui-kit/input'
 import { ChangeEvent, FC, FormEvent, useState } from 'react'
-
-import style from './style.module.scss'
+import { TGlobalSettings } from '@app-types'
+import { Input } from '@ui-kit/input'
 import { Button } from '@ui-kit/button'
-
 import { useDispatch, useSelector } from '@services/store'
 import {
 	getGlobalStyleSettings,
 	updateGlobalSettings,
-} from '@services/slices/canvas-slice'
-import { TGlobalSettings } from '@app-types'
+} from '@services/slices/global-slice'
+
+import style from './style.module.scss'
 
 export type TIdVariants = 'color' | 'textColor' | 'fontSize'
 

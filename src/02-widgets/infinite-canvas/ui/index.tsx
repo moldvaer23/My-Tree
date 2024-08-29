@@ -1,7 +1,6 @@
 import { FC, MouseEvent, ReactNode, useRef, useState, WheelEvent } from 'react'
 import { TCoordinates } from '@app-types'
 import { useSelector } from '@services/store'
-import { getBlockDragging } from '@services/slices/canvas-slice'
 
 import style from './style.module.scss'
 import {
@@ -9,6 +8,7 @@ import {
 	CANVAS_SIZES,
 	CANVAS_START_VIEW_POSITION,
 } from '../config/canvas'
+import { getBlockDragging } from '@widgets/blocks'
 
 type TProps = {
 	children?: ReactNode
@@ -19,7 +19,7 @@ export const InfiniteCanvas: FC<TProps> = ({ children }) => {
 	const [lastMousePos, setLastMousePos] = useState({ x: 0, y: 0 })
 	const [offset, setOffset] = useState<TCoordinates>(CANVAS_START_VIEW_POSITION)
 	const [scale, setScale] = useState(1)
-	const blockDragging = useSelector(getBlockDragging)
+	const uuidBlockDragging = useSelector(getBlockDragging)
 	const canvasRef = useRef<HTMLDivElement>(null)
 	const canvasSizesRef = useRef({
 		width: CANVAS_SIZES.WIDTH,
@@ -48,7 +48,7 @@ export const InfiniteCanvas: FC<TProps> = ({ children }) => {
 	}
 
 	const handleMouseMove = (e: MouseEvent) => {
-		if (!isPanning || blockDragging.active) return
+		if (!isPanning || uuidBlockDragging) return
 
 		const dx = e.clientX - lastMousePos.x
 		const dy = e.clientY - lastMousePos.y

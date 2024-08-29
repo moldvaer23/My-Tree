@@ -1,12 +1,13 @@
 import { FC } from 'react'
-import { LineParameters } from './line'
-import { BlockTextParameters } from './block-text'
 import { useSelector } from '@services/store'
-import { getToolView } from '@services/slices/canvas-slice'
 import { TBlockStore } from '@entities/block-text'
 import { LayoutWrapper } from '@ui-kit/layout-wrapper'
-import style from './style.module.scss'
 import { TConnectionStore } from '@widgets/connections'
+
+import { LineParameters } from './line'
+import style from './style.module.scss'
+import { BlockTextParameters } from './block-text'
+import { getToolView } from '../lib/panel-parameters-slice'
 
 export const PanelParameters: FC = () => {
 	const toolView = useSelector(getToolView)

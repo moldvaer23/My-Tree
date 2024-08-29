@@ -1,3 +1,5 @@
+import { TBlockStore } from '@entities/block-text'
+import { TConnectionStore } from '@widgets/connections'
 import { FunctionComponent } from 'react'
 
 export type TIcon = FunctionComponent<
@@ -11,6 +13,7 @@ export type TSize = 'small' | 'medium' | 'large'
 export type TGatewaysNames = 'top' | 'right' | 'bottom' | 'left'
 export type TActiveGatewayState = TGatewaysNames | null
 export type TDropDownMenuItems = { Icon: TIcon; type: string; text: string }
+export type TTool = TBlockStore | TConnectionStore
 
 export type TCoordinates = {
 	x: number

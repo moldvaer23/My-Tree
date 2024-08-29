@@ -1,7 +1,7 @@
 import { FC, MouseEvent, useRef, useState } from 'react'
 import { TGatewaysNames } from '@app-types'
 import { useDispatch } from '@services/store'
-import { setRightContext } from '@services/slices/canvas-slice'
+import { setRightContext } from '@features/right-context'
 
 import { GatewaysUI } from './gateways'
 import style from './styles.module.scss'
