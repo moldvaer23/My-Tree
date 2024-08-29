@@ -8,6 +8,7 @@ import { InfiniteCanvas } from '@widgets/infinite-canvas'
 import { PanelParameters } from '@widgets/panel-parameters'
 
 import style from './style.module.scss'
+import { TextsRender } from '@widgets/texts'
 
 export const MainPage: FC = () => (
 	<div className={style.page} data-testid='main-page'>
@@ -24,6 +25,7 @@ export const MainPage: FC = () => (
 			<InfiniteCanvas>
 				<BlocksRender />
 				<ConnectionsRender />
+				<TextsRender />
 			</InfiniteCanvas>
 		</main>
 	</div>

@@ -14,6 +14,7 @@ import { getGlobalStyleSettings } from '@services/slices/global-slice'
 
 import style from './style.module.scss'
 import { CONFIG_LINE_DROPDOWN } from '../config/panel-tools'
+import { addText } from '@widgets/texts'
 
 export const PanelTools: FC = () => {
 	const buttonSize: TSize = 'small'
@@ -51,6 +52,23 @@ export const PanelTools: FC = () => {
 		)
 	}
 
+	const onClickText = () => {
+		dispatch(
+			addText({
+				content: 'Hello',
+				coordinates: {
+					x: 2500,
+					y: 2500,
+				},
+				parameters: null,
+				styles: {
+					color: '#ffffff',
+				},
+				uuid: uuid(),
+			})
+		)
+	}
+
 	return (
 		<LayoutWrapper className={style.tools} borderRadius='2px'>
 			<ul className={style.list}>
@@ -77,7 +95,7 @@ export const PanelTools: FC = () => {
 					<ButtonIcon
 						Icon={IconText}
 						size={buttonSize}
-						onClick={(e) => console.log(e)}
+						onClick={onClickText}
 						data-tooltip-id='btn-text'
 						data-tooltip-content='Создать область с текстом'
 					/>

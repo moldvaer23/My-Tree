@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react'
-import { Line, LineSvgWrapper } from '@entities/line'
+import { Line, LineSvgWrapper } from '@entities/line/ui'
 import { useDispatch, useSelector } from '@services/store'
 import { calculateLineOffsets } from '@widgets/connections/utils/calculate-line-offset'
 import {
