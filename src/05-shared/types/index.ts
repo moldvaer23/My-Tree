@@ -1,4 +1,5 @@
 import { TBlockStore } from '@entities/block-text'
+import { TBlockTextGroupStore } from '@entities/block-text-group'
 import { TConnectionStore } from '@widgets/connections'
 import { FunctionComponent } from 'react'
 
@@ -7,14 +8,14 @@ export type TIcon = FunctionComponent<
 		title?: string | undefined
 	}
 >
-export type TTypeTool = 'block-text' | 'line'
+export type TTypeTool = 'block-text' | 'line' | 'block-text-group'
 export type TConnectingTools = 'block-text' | 'block-text-group'
 export type TLineType = 'straight' | 'curved' | 'dashed'
 export type TSize = 'small' | 'medium' | 'large'
 export type TGatewaysNames = 'top' | 'right' | 'bottom' | 'left'
 export type TActiveGatewayState = TGatewaysNames | null
 export type TDropDownMenuItems = { Icon: TIcon; type: string; text: string }
-export type TTool = TBlockStore | TConnectionStore
+export type TTool = TBlockStore | TConnectionStore | TBlockTextGroupStore
 
 export type TCoordinates = {
 	x: number

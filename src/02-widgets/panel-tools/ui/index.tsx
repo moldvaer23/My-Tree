@@ -86,6 +86,11 @@ export const PanelTools: FC = () => {
 						top: false,
 					},
 				},
+				styles: {
+					borderColor: '#ffffff',
+					childBgColor: '#ffffff',
+					childTextColor: '#000000',
+				},
 				parameters: null,
 				uuid: uuid(),
 			})

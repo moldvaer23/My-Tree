@@ -1,3 +1,3 @@
 export { BlockTextGroup } from './ui'
 
-export * from './lib/types'
+export type { TBlockTextGroupStore, TOnClickAddChild } from './lib/types'

@@ -2,7 +2,6 @@
 	position: relative;
 	z-index: 5;
 	padding: 10px;
-	border: 2px solid white;
 }
 
 .list {
@@ -16,4 +15,22 @@
 	height: 20px;
 	margin-top: 10px;
 	background-color: wheat;
+}
+
+.child {
+	position: relative;
+	padding: 15px;
+}
+
+.delete__button {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.delete__icon {
+	width: 10px;
+	height: 10px;
+	fill: black;
+	stroke: black;
 }

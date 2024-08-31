@@ -1,6 +1,6 @@
 import { TCoordinates, TGatewaysNames } from '@app-types'
-import { TBlockStore } from '@entities/block-text'
 import { TBlockTextGroupStore } from '@entities/block-text-group'
+import { TChildBlockTextGroup } from '@entities/block-text-group/lib/types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type TInitialState = {
@@ -24,7 +24,10 @@ const blocksGroupsSlice = createSlice({
 
 		addBlockToGroup: (
 			store,
-			action: PayloadAction<{ uuidGroup: string; blockText: TBlockStore }>
+			action: PayloadAction<{
+				uuidGroup: string
+				blockText: TChildBlockTextGroup
+			}>
 		) => {
 			store.blockGroups[action.payload.uuidGroup].children.push(
 				action.payload.blockText
@@ -34,6 +37,22 @@ const blocksGroupsSlice = createSlice({
 		removeBlockGroup: (store, action: PayloadAction<string>) => {
 			const uuid = action.payload
 			if (store.blockGroups[uuid]) delete store.blockGroups[uuid]
+		},
+
+		removeBlockGroupChild: (
+			store,
+			action: PayloadAction<{ uuidGroup: string; uuidChild: string }>
+		) => {
+			const group = store.blockGroups[action.payload.uuidGroup]
+
+			if (group) {
+				const index = group.children.findIndex(
+					(child) => child.uuid === action.payload.uuidChild
+				)
+
+				if (index !== -1)
+					store.blockGroups[action.payload.uuidGroup].children.splice(index, 1)
+			}
 		},
 
 		setBlockGroupParameters: (
@@ -83,14 +102,19 @@ const blocksGroupsSlice = createSlice({
 			}
 		},
 
-		/* updateBlockGroupColor: (
+		updateBlockGroupColors: (
 			store,
-			action: PayloadAction<{ uuid: string; value: string }>
+			action: PayloadAction<{
+				uuid: string
+				type: 'childBgColor' | 'childTextColor' | 'borderColor'
+				value: string
+			}>
 		) => {
-			if (store.BlockGroups[action.payload.uuid]) {
-				store.BlockGroups[action.payload.uuid].styles.color = action.payload.value
+			if (store.blockGroups[action.payload.uuid]) {
+				store.blockGroups[action.payload.uuid].styles[action.payload.type] =
+					action.payload.value
 			}
-		}, */
+		},
 	},
 
 	selectors: {
@@ -106,10 +130,12 @@ export const {
 	addBlockGroup,
 	addBlockToGroup,
 	removeBlockGroup,
+	removeBlockGroupChild,
 	setBlockGroupDragging,
 	setBlockGroupParameters,
 	updateBlockGroupPosition,
 	updateBlockGroupActiveGateway,
+	updateBlockGroupColors,
 } = blocksGroupsSlice.actions
 
 export const blocksGroupsReducer = blocksGroupsSlice.reducer

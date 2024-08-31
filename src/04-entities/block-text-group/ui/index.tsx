@@ -1,61 +1,73 @@
-import { FC, MouseEvent, ReactNode, useState } from 'react'
+import { FC, MouseEvent, useState } from 'react'
 import style from './style.module.scss'
-import { TBlockTextGroupStore, TOnClickAddChild } from '../lib/types'
-import { TBlockStore } from '@entities/block-text/lib/types'
+import {
+	TBlockTextGroupStore,
+	TChildBlockTextGroup,
+	TOnClickAddChild,
+} from '../lib/types'
 import { v4 as uuid } from 'uuid'
 import { Gateways } from '@ui-kit/gateways'
 import { TGatewaysNames } from '@app-types'
+import { useDispatch } from '@services/store'
+import { setRightContext } from '@features/right-context'
+import { ChildBlockTextGroup } from './child'
 
 type TProps = {
 	data: TBlockTextGroupStore
-	children: ReactNode[] // Блоки текста в виде JSX
 	onClickAddChild: TOnClickAddChild
 	onClickGateway: (e: MouseEvent, t: TGatewaysNames, y: string) => void
 }
 
 export const BlockTextGroup: FC<TProps> = ({
 	data,
-	children,
 	onClickAddChild,
 	onClickGateway,
 }) => {
 	const [isHover, setIsHover] = useState<boolean>(false)
+	const dispatch = useDispatch()
 
 	/* Заготовка блока */
-	const block: TBlockStore = {
-		coordinates: {
-			x: 0,
-			y: 0,
-		},
-		gateways: {
-			connectedGateways: {
-				bottom: false,
-				left: false,
-				right: false,
-				top: false,
-			},
-		},
-		parameters: null,
-		styles: {
-			color: '#ffffff',
-			curs: false,
-			fontBold: false,
-			fontSize: 16,
-			textColor: '#000000',
-		},
-		title: 'Новый блок',
+	const block: TChildBlockTextGroup = {
+		text: 'Новый блок',
 		uuid: uuid(),
+	}
+
+	const onClickRightContext = (e: MouseEvent) => {
+		e.preventDefault()
+		dispatch(
+			setRightContext({
+				coordinates: {
+					x: e.clientX,
+					y: e.clientY,
+				},
+				edit: {
+					tool: data,
+					type: 'block-text-group',
+				},
+			})
+		)
 	}
 
 	return (
 		<div
 			className={style.wrapper}
+			onContextMenu={onClickRightContext}
 			onMouseEnter={() => setIsHover(true)}
 			onMouseLeave={() => setIsHover(false)}
+			style={{
+				border: `2px solid ${data.styles.borderColor}`,
+			}}
 		>
 			<ul className={style.list}>
-				{children.map((child, index) => (
-					<li key={index}>{child}</li>
+				{data.children.map((child, index) => (
+					<li key={index}>
+						<ChildBlockTextGroup
+							data={child}
+							uuidGroup={data.uuid}
+							bgColor={data.styles.childBgColor}
+							textColor={data.styles.childTextColor}
+						/>
+					</li>
 				))}
 			</ul>
 

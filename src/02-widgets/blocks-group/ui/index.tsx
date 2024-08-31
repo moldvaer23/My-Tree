@@ -1,5 +1,18 @@
-import { useDispatch, useSelector } from '@services/store'
 import { FC, MouseEvent } from 'react'
+import { TGatewaysNames } from '@app-types'
+import { useDispatch, useSelector } from '@services/store'
+import { BlockTextGroup, TOnClickAddChild } from '@entities/block-text-group'
+import {
+	getConnectionsState,
+	setConnectionState,
+} from '@services/slices/global-slice'
+import {
+	Draggable,
+	TOnSetIsDragging,
+	TOnSetParameters,
+	TOnUpdateCoordinates,
+} from '@features/draggable'
+
 import {
 	addBlockToGroup,
 	getBlockGroups,
@@ -7,19 +20,6 @@ import {
 	setBlockGroupParameters,
 	updateBlockGroupPosition,
 } from '../lib/blocks-group-slice'
-import {
-	Draggable,
-	TOnSetIsDragging,
-	TOnSetParameters,
-	TOnUpdateCoordinates,
-} from '@features/draggable'
-import { BlockTextGroup, TOnClickAddChild } from '@entities/block-text-group'
-import { BlockText } from '@entities/block-text'
-import {
-	getConnectionsState,
-	setConnectionState,
-} from '@services/slices/global-slice'
-import { TGatewaysNames } from '@app-types'
 
 export const BlocksTextGroupsRender: FC = () => {
 	const blockGroupsStore = useSelector(getBlockGroups)
@@ -120,12 +120,7 @@ export const BlocksTextGroupsRender: FC = () => {
 					data={blockGroup}
 					onClickAddChild={onClickAddChild}
 					onClickGateway={onClickGateway}
-				>
-					{blockGroup.children &&
-						blockGroup.children.map((child) => (
-							<BlockText key={child.uuid} data={child} hideGateways={true} />
-						))}
-				</BlockTextGroup>
+				/>
 			</Draggable>
 		)
 	})

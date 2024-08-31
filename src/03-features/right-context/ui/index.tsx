@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from '@services/store'
 
 import style from './style.module.scss'
 import { getRightContext, setRightContext } from '../lib/right-context-slice'
+import { removeBlockGroup } from '@widgets/blocks-group'
 
 export const RightContext: FC = () => {
 	const contextData = useSelector(getRightContext)
@@ -42,6 +43,10 @@ export const RightContext: FC = () => {
 			}
 			case 'line': {
 				dispatch(removeConnection(contextData.edit.tool.uuid))
+				break
+			}
+			case 'block-text-group': {
+				dispatch(removeBlockGroup(contextData.edit.tool.uuid))
 				break
 			}
 			default: {
