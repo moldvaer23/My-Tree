@@ -1,6 +1,7 @@
 import { FC, MouseEvent, ReactNode, useRef, useState, WheelEvent } from 'react'
 import { TCoordinates } from '@app-types'
 import { useSelector } from '@services/store'
+import { getBlockDragging } from '@widgets/blocks'
 
 import style from './style.module.scss'
 import {
@@ -8,7 +9,6 @@ import {
 	CANVAS_SIZES,
 	CANVAS_START_VIEW_POSITION,
 } from '../config/canvas'
-import { getBlockDragging } from '@widgets/blocks'
 
 type TProps = {
 	children?: ReactNode

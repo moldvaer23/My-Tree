@@ -6,3 +6,6 @@ export const globalStyleSettings: TGlobalSettings = {
 	fontSize: 16,
 	lineColor: '#fed500',
 }
+
+/* Жирность шрифта для жирного выделения */
+export const boldVariable = 700

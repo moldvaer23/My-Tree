@@ -1,11 +1,10 @@
 import { FC, useEffect, useState } from 'react'
-
 import { Input } from '@ui-kit/input'
 import { useDispatch } from '@services/store'
+import { updateBlockGroupColors } from '@widgets/blocks-group'
+import { TBlockTextGroupStore } from '@entities/block-text-group'
 
 import style from './style.module.scss'
-import { TBlockTextGroupStore } from '@entities/block-text-group'
-import { updateBlockGroupColors } from '@widgets/blocks-group'
 
 type TProps = {
 	group: TBlockTextGroupStore

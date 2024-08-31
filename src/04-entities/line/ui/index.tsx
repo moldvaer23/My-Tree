@@ -1,4 +1,4 @@
-import { FC, MouseEvent, ReactElement } from 'react'
+import { FC, MouseEvent } from 'react'
 import { TCoordinates } from '@app-types'
 import { useDispatch } from '@services/store'
 import { TConnectionStore } from '@widgets/connections'
@@ -6,37 +6,13 @@ import { setRightContext } from '@features/right-context'
 
 import style from './style.module.scss'
 
-interface LineProps {
+type TProps = {
 	data: TConnectionStore
 	coordinateFrom: TCoordinates
 	coordinateTo: TCoordinates
 }
 
-type TLineSvgWrapperProps = {
-	children: (ReactElement | null)[]
-}
-
-export const LineSvgWrapper: FC<TLineSvgWrapperProps> = ({ children }) => (
-	<svg
-		style={{
-			position: 'absolute',
-			top: 0,
-			left: 0,
-			width: '100%',
-			height: '100%',
-			pointerEvents: 'none',
-		}}
-		data-testid='connection-line'
-	>
-		{children}
-	</svg>
-)
-
-export const Line: React.FC<LineProps> = ({
-	data,
-	coordinateFrom,
-	coordinateTo,
-}) => {
+export const Line: FC<TProps> = ({ data, coordinateFrom, coordinateTo }) => {
 	const dispatch = useDispatch()
 
 	const onRightContext = (e: MouseEvent) => {

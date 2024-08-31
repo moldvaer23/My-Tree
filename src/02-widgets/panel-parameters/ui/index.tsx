@@ -1,18 +1,18 @@
 import { FC } from 'react'
+import { TTextStore } from '@entities/text'
 import { useSelector } from '@services/store'
 import { TBlockStore } from '@entities/block-text'
 import { LayoutWrapper } from '@ui-kit/layout-wrapper'
 import { TConnectionStore } from '@widgets/connections'
+import { TBlockTextGroupStore } from '@entities/block-text-group'
 
 import { LineParameters } from './line'
 import style from './style.module.scss'
+import { TextParameters } from './text'
+import { FormWrapper } from './form-wrapper'
 import { BlockTextParameters } from './block-text'
 import { getToolView } from '../lib/panel-parameters-slice'
-import { FormWrapper } from './form-wrapper'
 import { BlockTextGroupParameters } from './block-text-group'
-import { TBlockTextGroupStore } from '@entities/block-text-group'
-import { TextParameters } from './text'
-import { TTextStore } from '@entities/text'
 
 export const PanelParameters: FC = () => {
 	const toolView = useSelector(getToolView)

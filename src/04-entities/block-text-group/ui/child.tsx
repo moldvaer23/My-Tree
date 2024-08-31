@@ -1,12 +1,11 @@
 import { FC, useState } from 'react'
-
 import { Icon } from '@ui-kit/icon'
+import { useDispatch } from '@services/store'
 import IconClose from '@assets/icon-close.svg?react'
+import { removeBlockGroupChild } from '@widgets/blocks-group'
 
 import style from './style.module.scss'
 import { TChildBlockTextGroup } from '../lib/types'
-import { useDispatch } from '@services/store'
-import { removeBlockGroupChild } from '@widgets/blocks-group'
 
 type TProps = {
 	data: TChildBlockTextGroup

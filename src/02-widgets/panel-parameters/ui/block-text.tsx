@@ -1,9 +1,7 @@
 import { FC, useEffect, useState } from 'react'
-
 import { Input } from '@ui-kit/input'
 import { useDispatch } from '@services/store'
 import { TBlockStore } from '@entities/block-text'
-
 import {
 	updateBlockColor,
 	updateBlockCurs,

@@ -1,5 +1,5 @@
 import { TExampleToolStore } from '@app-types'
-import { TGatewaysProperty } from '@ui-kit/gateways/lib/types'
+import { TGatewaysProperty } from '@ui-kit/gateways'
 
 /**
  * Тип объекта для хранения данных о блоке с текстом

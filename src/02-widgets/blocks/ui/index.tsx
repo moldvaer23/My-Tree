@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux'
 import { TGatewaysNames } from '@app-types'
 import { useSelector } from '@services/store'
 import { BlockText } from '@entities/block-text'
-
 import {
 	getConnectionsState,
 	setConnectionState,
@@ -24,8 +23,8 @@ import {
 
 export const BlocksRender: FC = () => {
 	const connectionsState = useSelector(getConnectionsState)
-	const blocksArr = useSelector(getBlocks)
-	const blocks = Object.values(blocksArr)
+	const blocksStore = useSelector(getBlocks)
+	const blocks = Object.values(blocksStore)
 
 	const dispatch = useDispatch()
 

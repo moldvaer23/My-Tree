@@ -1,15 +1,15 @@
 import { FC, useEffect, useRef } from 'react'
 import { Button } from '@ui-kit/button'
+import { removeText } from '@widgets/texts'
 import { removeBlock } from '@widgets/blocks'
 import { LayoutWrapper } from '@ui-kit/layout-wrapper'
 import { removeConnection } from '@widgets/connections'
 import { setToolView } from '@widgets/panel-parameters'
+import { removeBlockGroup } from '@widgets/blocks-group'
 import { useDispatch, useSelector } from '@services/store'
 
 import style from './style.module.scss'
 import { getRightContext, setRightContext } from '../lib/right-context-slice'
-import { removeBlockGroup } from '@widgets/blocks-group'
-import { removeText } from '@widgets/texts'
 
 export const RightContext: FC = () => {
 	const contextData = useSelector(getRightContext)

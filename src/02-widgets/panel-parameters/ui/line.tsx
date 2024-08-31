@@ -1,8 +1,6 @@
 import { FC, useEffect, useState } from 'react'
-
 import { Input } from '@ui-kit/input'
 import { useDispatch } from '@services/store'
-
 import { TConnectionStore, updateLineColor } from '@widgets/connections'
 
 import style from './style.module.scss'
@@ -12,16 +10,12 @@ type TProps = {
 }
 
 export const LineParameters: FC<TProps> = ({ line }) => {
-	const [formState, setFormState] = useState({
-		...line.style,
-	})
+	const [formState, setFormState] = useState(line.style)
 
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		setFormState({
-			...line.style,
-		})
+		setFormState(line.style)
 	}, [line])
 
 	return (

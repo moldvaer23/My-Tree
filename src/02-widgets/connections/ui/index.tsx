@@ -1,39 +1,44 @@
 import { FC, useEffect } from 'react'
-import { Line, LineSvgWrapper } from '@entities/line/ui'
+import { v4 as uuid } from 'uuid'
+import { Line } from '@entities/line/ui'
+import { LineSvgWrapper } from '@entities/line'
 import { useDispatch, useSelector } from '@services/store'
 import { calculateLineOffsets } from '@widgets/connections/utils/calculate-line-offset'
-import { v4 as uuid } from 'uuid'
 import {
 	getBlockDragging,
 	getBlocks,
 	updateBlockActiveGateway,
 } from '@widgets/blocks'
+import {
+	getBlockGroupDragging,
+	getBlockGroups,
+	updateBlockGroupActiveGateway,
+} from '@widgets/blocks-group'
+import {
+	clearConnectionsState,
+	getConnectionsState,
+	getGlobalStyleSettings,
+} from '@services/slices/global-slice'
 
 import {
 	addConnection,
 	getConnections,
 	removeConnection,
 } from '../lib/connections-slice'
-import {
-	clearConnectionsState,
-	getConnectionsState,
-	getGlobalStyleSettings,
-} from '@services/slices/global-slice'
-import {
-	getBlockGroupDragging,
-	getBlockGroups,
-	updateBlockGroupActiveGateway,
-} from '@widgets/blocks-group'
 
 export const ConnectionsRender: FC = () => {
 	const blocks = useSelector(getBlocks)
-	const connectionsArr = useSelector(getConnections)
-	const connections = Object.values(connectionsArr)
+	const blockGroups = useSelector(getBlockGroups)
+
+	const connectionsStore = useSelector(getConnections)
+	const connections = Object.values(connectionsStore)
+
 	const uuidBlockDragging = useSelector(getBlockDragging)
 	const uuidBlockGroupDragging = useSelector(getBlockGroupDragging)
+
 	const connectionsState = useSelector(getConnectionsState)
 	const globalStyleSettings = useSelector(getGlobalStyleSettings)
-	const blockGroups = useSelector(getBlockGroups)
+
 	const dispatch = useDispatch()
 
 	/* Смотрим на изменения листа блоков. */

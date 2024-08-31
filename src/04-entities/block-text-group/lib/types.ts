@@ -17,7 +17,4 @@ export type TBlockTextGroupStore = TExampleToolStore & {
 	}
 }
 
-export type TOnClickAddChild = (
-	e: MouseEvent,
-	blockText: TChildBlockTextGroup
-) => void
+export type TOnClickAddChild = (e: MouseEvent, t: TChildBlockTextGroup) => void

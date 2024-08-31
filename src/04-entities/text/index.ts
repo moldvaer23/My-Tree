@@ -1,3 +1,3 @@
 export { Text } from './ui'
 
-export * from './lib/types'
+export type { TTextStore } from './lib/types'

@@ -23,6 +23,7 @@ module.exports = {
 					['@app-types', 'src/05-shared/types'],
 					['@ui-kit', 'src/05-shared/ui'],
 					['@utils', 'src/05-shared/utils'],
+					['@app-config', 'src/05-shared/config'],
 				],
 				extensions: ['.ts', '.tsx', '.js', '.jsx'],
 			},

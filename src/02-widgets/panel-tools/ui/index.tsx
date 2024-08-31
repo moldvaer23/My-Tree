@@ -1,12 +1,13 @@
 import { FC } from 'react'
 import { v4 as uuid } from 'uuid'
-import { TSize } from '@app-types'
 import { Tooltip } from 'react-tooltip'
+import { addText } from '@widgets/texts'
 import { addBlock } from '@widgets/blocks'
 import { ButtonIcon } from '@ui-kit/button-icon'
 import IconText from '@assets/icon-text.svg?react'
 import IconGroup from '@assets/icon-group.svg?react'
 import { DropDownMenu } from '@ui-kit/drop-down-menu'
+import { addBlockGroup } from '@widgets/blocks-group'
 import { LayoutWrapper } from '@ui-kit/layout-wrapper'
 import { useDispatch, useSelector } from '@services/store'
 import IconBlockText from '@assets/icon-block-text.svg?react'
@@ -14,11 +15,8 @@ import { getGlobalStyleSettings } from '@services/slices/global-slice'
 
 import style from './style.module.scss'
 import { CONFIG_LINE_DROPDOWN } from '../config/panel-tools'
-import { addText } from '@widgets/texts'
-import { addBlockGroup } from '@widgets/blocks-group'
 
 export const PanelTools: FC = () => {
-	const buttonSize: TSize = 'small'
 	const globalStyleSettings = useSelector(getGlobalStyleSettings)
 	const dispatch = useDispatch()
 
@@ -106,7 +104,7 @@ export const PanelTools: FC = () => {
 				<li>
 					<ButtonIcon
 						Icon={IconBlockText}
-						size={buttonSize}
+						size='small'
 						onClick={onClickBlockText}
 						data-tooltip-id='btn-block-text'
 						data-tooltip-content='Создать блок с текстом'
@@ -125,7 +123,7 @@ export const PanelTools: FC = () => {
 				<li>
 					<ButtonIcon
 						Icon={IconText}
-						size={buttonSize}
+						size='small'
 						onClick={onClickText}
 						data-tooltip-id='btn-text'
 						data-tooltip-content='Создать область с текстом'
@@ -135,7 +133,7 @@ export const PanelTools: FC = () => {
 				<li>
 					<ButtonIcon
 						Icon={IconGroup}
-						size={buttonSize}
+						size='small'
 						onClick={onClickBlockTextGroup}
 						data-tooltip-id='btn-group'
 						data-tooltip-content='Создать группу блоков'

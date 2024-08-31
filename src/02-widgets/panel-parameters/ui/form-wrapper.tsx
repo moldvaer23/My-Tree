@@ -1,5 +1,4 @@
 import { FC, ReactNode } from 'react'
-
 import { Icon } from '@ui-kit/icon'
 import { useDispatch } from '@services/store'
 import IconBackArrow from '@assets/icon-back-arrow.svg?react'

@@ -1,18 +1,19 @@
-import { useDispatch, useSelector } from '@services/store'
 import { FC } from 'react'
-import {
-	getTexts,
-	setTextDragging,
-	setTextParameters,
-	updateTextPosition,
-} from '../lib/texts-slice'
+import { Text } from '@entities/text'
+import { useDispatch, useSelector } from '@services/store'
 import {
 	Draggable,
 	TOnSetIsDragging,
 	TOnSetParameters,
 	TOnUpdateCoordinates,
 } from '@features/draggable'
-import { Text } from '@entities/text'
+
+import {
+	getTexts,
+	setTextDragging,
+	setTextParameters,
+	updateTextPosition,
+} from '../lib/texts-slice'
 
 export const TextsRender: FC = () => {
 	const textsStore = useSelector(getTexts)

@@ -39,6 +39,7 @@ export default defineConfig({
 			'@app-types': path.resolve(__dirname, 'src/05-shared/types'),
 			'@ui-kit': path.resolve(__dirname, 'src/05-shared/ui'),
 			'@utils': path.resolve(__dirname, 'src/05-shared/utils'),
+			'@app-config': path.resolve(__dirname, 'src/05-shared/config'),
 		},
 	},
 })

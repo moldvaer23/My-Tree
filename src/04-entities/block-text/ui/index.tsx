@@ -1,20 +1,17 @@
 import { FC, MouseEvent, useRef, useState } from 'react'
 import { TGatewaysNames } from '@app-types'
+import { Gateways } from '@ui-kit/gateways'
 import { useDispatch } from '@services/store'
 import { setRightContext } from '@features/right-context'
 
 import style from './styles.module.scss'
 import { TBlockStore } from '../lib/types'
-import { Gateways } from '@ui-kit/gateways'
 
 type TProps = {
 	data: TBlockStore
 	hideGateways?: boolean
 	onClickGateway?: (e: MouseEvent, t: TGatewaysNames, y: string) => void
 }
-
-/* TODO: Придумать как будет пользователь вносить title */
-/* TODO: Провести оптимизацию компонента */
 
 export const BlockText: FC<TProps> = ({
 	data,
@@ -62,14 +59,7 @@ export const BlockText: FC<TProps> = ({
 			}}
 			data-testid='block-text'
 		>
-			<span
-				className={style.title}
-				/* style={{
-					mixBlendMode: data.styles.textColor ? 'normal' : 'difference',
-				}} */
-			>
-				{data.title}
-			</span>
+			<span className={style.title}>{data.title}</span>
 
 			{!hideGateways && (
 				<Gateways

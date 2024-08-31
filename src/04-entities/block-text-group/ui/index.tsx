@@ -1,16 +1,17 @@
 import { FC, MouseEvent, useState } from 'react'
+import { v4 as uuid } from 'uuid'
+import { TGatewaysNames } from '@app-types'
+import { Gateways } from '@ui-kit/gateways'
+import { useDispatch } from '@services/store'
+import { setRightContext } from '@features/right-context'
+
 import style from './style.module.scss'
+import { ChildBlockTextGroup } from './child'
 import {
 	TBlockTextGroupStore,
 	TChildBlockTextGroup,
 	TOnClickAddChild,
 } from '../lib/types'
-import { v4 as uuid } from 'uuid'
-import { Gateways } from '@ui-kit/gateways'
-import { TGatewaysNames } from '@app-types'
-import { useDispatch } from '@services/store'
-import { setRightContext } from '@features/right-context'
-import { ChildBlockTextGroup } from './child'
 
 type TProps = {
 	data: TBlockTextGroupStore

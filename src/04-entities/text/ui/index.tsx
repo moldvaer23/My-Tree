@@ -1,8 +1,10 @@
 import { FC, MouseEvent } from 'react'
-import style from './style.module.scss'
-import { TTextStore } from '../lib/types'
 import { useDispatch } from '@services/store'
 import { setRightContext } from '@features/right-context'
+
+import style from './style.module.scss'
+import { TTextStore } from '../lib/types'
+import { boldVariable } from '@app-config'
 
 type TProps = {
 	data: TTextStore
@@ -33,7 +35,7 @@ export const Text: FC<TProps> = ({ data }) => {
 			style={{
 				color: data.styles.color,
 				fontSize: `${data.styles.fontSize}px`,
-				fontWeight: data.styles.bold ? 700 : 400,
+				fontWeight: data.styles.bold ? boldVariable : 400,
 				fontStyle: data.styles.curs ? 'italic' : 'normal',
 			}}
 			onContextMenu={onClickRightContext}

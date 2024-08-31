@@ -1,5 +1,4 @@
-import { ChangeEvent, FC, FormEvent, useState } from 'react'
-import { TGlobalSettings } from '@app-types'
+import { FC, FormEvent, useState } from 'react'
 import { Input } from '@ui-kit/input'
 import { Button } from '@ui-kit/button'
 import { useDispatch, useSelector } from '@services/store'
@@ -10,25 +9,11 @@ import {
 
 import style from './style.module.scss'
 
-export type TIdVariants = 'color' | 'textColor' | 'fontSize'
-
 export const GlobalParameters: FC = () => {
 	const globalStyleSettings = useSelector(getGlobalStyleSettings)
-	const [formState, setFormState] =
-		useState<TGlobalSettings>(globalStyleSettings)
+	const [formState, setFormState] = useState(globalStyleSettings)
 
 	const dispatch = useDispatch()
-
-	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-		const id: TIdVariants = e.target.getAttribute('id') as TIdVariants
-
-		if (!id) return
-
-		setFormState({
-			...formState,
-			[id]: id === 'fontSize' ? Number(e.target.value) : e.target.value,
-		})
-	}
 
 	const onSubmit = (e: FormEvent) => {
 		e.preventDefault()
@@ -43,7 +28,9 @@ export const GlobalParameters: FC = () => {
 						inputType='color'
 						id='color'
 						labelText='Цвет блоков'
-						onChange={onChange}
+						onChange={(e) =>
+							setFormState({ ...formState, color: e.target.value })
+						}
 						value={formState.color}
 					/>
 				</li>
@@ -52,7 +39,9 @@ export const GlobalParameters: FC = () => {
 						inputType='color'
 						id='lineColor'
 						labelText='Цвет Линий'
-						onChange={onChange}
+						onChange={(e) =>
+							setFormState({ ...formState, lineColor: e.target.value })
+						}
 						value={formState.lineColor}
 					/>
 				</li>
@@ -61,7 +50,9 @@ export const GlobalParameters: FC = () => {
 						inputType='color'
 						id='textColor'
 						labelText='Цвет текста'
-						onChange={onChange}
+						onChange={(e) =>
+							setFormState({ ...formState, textColor: e.target.value })
+						}
 						value={formState.textColor}
 					/>
 				</li>
@@ -70,7 +61,9 @@ export const GlobalParameters: FC = () => {
 						inputType='number'
 						id='fontSize'
 						labelText='Размер шрифта'
-						onChange={onChange}
+						onChange={(e) =>
+							setFormState({ ...formState, fontSize: Number(e.target.value) })
+						}
 						value={formState.fontSize}
 					/>
 				</li>
