@@ -64,6 +64,9 @@ export const PanelTools: FC = () => {
 				parameters: null,
 				styles: {
 					color: '#ffffff',
+					bold: false,
+					curs: false,
+					fontSize: 36,
 				},
 				uuid: uuid(),
 			})

@@ -55,7 +55,7 @@ export const TextsRender: FC = () => {
 				onUpdateCoordinates={onUpdateCoordinates}
 				key={text.uuid}
 			>
-				<Text content={text.content} />
+				<Text data={text} />
 			</Draggable>
 		)
 	})

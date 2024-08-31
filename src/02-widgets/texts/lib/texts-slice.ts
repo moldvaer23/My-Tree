@@ -64,6 +64,33 @@ const textsSlice = createSlice({
 				store.texts[action.payload.uuid].styles.color = action.payload.value
 			}
 		},
+
+		updateTextFontSize: (
+			store,
+			action: PayloadAction<{ uuid: string; value: number }>
+		) => {
+			if (store.texts[action.payload.uuid]) {
+				store.texts[action.payload.uuid].styles.fontSize = action.payload.value
+			}
+		},
+
+		updateTextFontCurs: (
+			store,
+			action: PayloadAction<{ uuid: string; value: boolean }>
+		) => {
+			if (store.texts[action.payload.uuid]) {
+				store.texts[action.payload.uuid].styles.curs = action.payload.value
+			}
+		},
+
+		updateTextFontBold: (
+			store,
+			action: PayloadAction<{ uuid: string; value: boolean }>
+		) => {
+			if (store.texts[action.payload.uuid]) {
+				store.texts[action.payload.uuid].styles.bold = action.payload.value
+			}
+		},
 	},
 
 	selectors: {
@@ -80,6 +107,9 @@ export const {
 	setTextDragging,
 	setTextParameters,
 	updateTextPosition,
+	updateTextFontBold,
+	updateTextFontCurs,
+	updateTextFontSize,
 } = textsSlice.actions
 
 export const textsReducer = textsSlice.reducer

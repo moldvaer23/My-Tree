@@ -11,6 +11,8 @@ import { getToolView } from '../lib/panel-parameters-slice'
 import { FormWrapper } from './form-wrapper'
 import { BlockTextGroupParameters } from './block-text-group'
 import { TBlockTextGroupStore } from '@entities/block-text-group'
+import { TextParameters } from './text'
+import { TTextStore } from '@entities/text'
 
 export const PanelParameters: FC = () => {
 	const toolView = useSelector(getToolView)
@@ -46,6 +48,16 @@ export const PanelParameters: FC = () => {
 						<BlockTextGroupParameters
 							group={toolView.tool as TBlockTextGroupStore}
 						/>
+					</FormWrapper>
+				</LayoutWrapper>
+			)
+		}
+
+		case 'text': {
+			return (
+				<LayoutWrapper className={style.parameters}>
+					<FormWrapper>
+						<TextParameters textData={toolView.tool as TTextStore} />
 					</FormWrapper>
 				</LayoutWrapper>
 			)
