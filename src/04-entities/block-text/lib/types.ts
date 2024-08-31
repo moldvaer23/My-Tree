@@ -1,20 +1,12 @@
 import { TExampleToolStore } from '@app-types'
-
-export type TConnectedGateways = {
-	top: boolean
-	right: boolean
-	bottom: boolean
-	left: boolean
-}
+import { TGatewaysProperty } from '@ui-kit/gateways/lib/types'
 
 /**
  * Тип объекта для хранения данных о блоке с текстом
  */
 export type TBlockStore = TExampleToolStore & {
 	title: string
-	gateways: {
-		connectedGateways: TConnectedGateways
-	}
+	gateways: TGatewaysProperty
 	styles: {
 		color: string
 		textColor: string

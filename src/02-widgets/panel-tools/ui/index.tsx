@@ -15,6 +15,7 @@ import { getGlobalStyleSettings } from '@services/slices/global-slice'
 import style from './style.module.scss'
 import { CONFIG_LINE_DROPDOWN } from '../config/panel-tools'
 import { addText } from '@widgets/texts'
+import { addBlockGroup } from '@widgets/blocks-group'
 
 export const PanelTools: FC = () => {
 	const buttonSize: TSize = 'small'
@@ -69,6 +70,28 @@ export const PanelTools: FC = () => {
 		)
 	}
 
+	const onClickBlockTextGroup = () => {
+		dispatch(
+			addBlockGroup({
+				children: [],
+				coordinates: {
+					x: 2500,
+					y: 2500,
+				},
+				gateways: {
+					connectedGateways: {
+						bottom: false,
+						left: false,
+						right: false,
+						top: false,
+					},
+				},
+				parameters: null,
+				uuid: uuid(),
+			})
+		)
+	}
+
 	return (
 		<LayoutWrapper className={style.tools} borderRadius='2px'>
 			<ul className={style.list}>
@@ -105,7 +128,7 @@ export const PanelTools: FC = () => {
 					<ButtonIcon
 						Icon={IconGroup}
 						size={buttonSize}
-						onClick={(e) => console.log(e)}
+						onClick={onClickBlockTextGroup}
 						data-tooltip-id='btn-group'
 						data-tooltip-content='Создать группу блоков'
 					/>

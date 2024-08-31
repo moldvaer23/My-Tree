@@ -1,4 +1,5 @@
 import { CSSProperties, FC, MouseEvent, useEffect, useState } from 'react'
+
 import { clsx } from 'clsx'
 import { TActiveGatewayState, TGatewaysNames } from '@app-types'
 
@@ -9,14 +10,14 @@ import { GATEWAY_VARIANTS } from '../config/gateways'
 type TProps = {
 	connectedGateways: TConnectedGateways
 	isActive: boolean
-	uuidBlock: string
+	uuidTool: string
 	onClickGateway: (e: MouseEvent, t: TGatewaysNames, y: string) => void
 }
 
-export const GatewaysUI: FC<TProps> = ({
+export const Gateways: FC<TProps> = ({
 	connectedGateways,
 	isActive,
-	uuidBlock,
+	uuidTool,
 	onClickGateway,
 }) => {
 	const [activeGateway, setActiveGateway] = useState<TActiveGatewayState>(null)
@@ -35,10 +36,10 @@ export const GatewaysUI: FC<TProps> = ({
 			connectedGateways[position]
 		) {
 			setActiveGateway(position)
-			onClickGateway(e, position, uuidBlock)
+			onClickGateway(e, position, uuidTool)
 		} else if (activeGateway === position) {
 			setActiveGateway(null)
-			onClickGateway(e, position, uuidBlock)
+			onClickGateway(e, position, uuidTool)
 		}
 	}
 

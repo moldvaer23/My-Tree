@@ -3,19 +3,24 @@ import { TGatewaysNames } from '@app-types'
 import { useDispatch } from '@services/store'
 import { setRightContext } from '@features/right-context'
 
-import { GatewaysUI } from './gateways'
 import style from './styles.module.scss'
 import { TBlockStore } from '../lib/types'
+import { Gateways } from '@ui-kit/gateways'
 
 type TProps = {
 	data: TBlockStore
-	onClickGateway: (e: MouseEvent, t: TGatewaysNames, y: string) => void
+	hideGateways?: boolean
+	onClickGateway?: (e: MouseEvent, t: TGatewaysNames, y: string) => void
 }
 
 /* TODO: Придумать как будет пользователь вносить title */
 /* TODO: Провести оптимизацию компонента */
 
-export const BlockText: FC<TProps> = ({ data, onClickGateway }) => {
+export const BlockText: FC<TProps> = ({
+	data,
+	onClickGateway = () => {},
+	hideGateways,
+}) => {
 	const [isHover, setIsHover] = useState<boolean>(false)
 	const rootRef = useRef<HTMLDivElement | null>(null)
 	const dispatch = useDispatch()
@@ -66,12 +71,14 @@ export const BlockText: FC<TProps> = ({ data, onClickGateway }) => {
 				{data.title}
 			</span>
 
-			<GatewaysUI
-				connectedGateways={data.gateways.connectedGateways}
-				isActive={isHover}
-				uuidBlock={data.uuid}
-				onClickGateway={onClickGateway}
-			/>
+			{!hideGateways && (
+				<Gateways
+					connectedGateways={data.gateways.connectedGateways}
+					isActive={isHover}
+					uuidTool={data.uuid}
+					onClickGateway={onClickGateway}
+				/>
+			)}
 		</div>
 	)
 }

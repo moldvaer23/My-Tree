@@ -17,7 +17,7 @@ export const calculateLineOffsets = ({
 		x: 0,
 		y: 0,
 	}
-	const paddingOffset = 4
+	const paddingOffset = 1
 
 	switch (gatewayName) {
 		case 'top': {

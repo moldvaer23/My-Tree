@@ -1,32 +1,29 @@
+import { useDispatch, useSelector } from '@services/store'
 import { FC, MouseEvent } from 'react'
-import { useDispatch } from 'react-redux'
-import { TGatewaysNames } from '@app-types'
-import { useSelector } from '@services/store'
-import { BlockText } from '@entities/block-text'
-
 import {
-	getConnectionsState,
-	setConnectionState,
-} from '@services/slices/global-slice'
+	addBlockToGroup,
+	getBlockGroups,
+	setBlockGroupDragging,
+	setBlockGroupParameters,
+	updateBlockGroupPosition,
+} from '../lib/blocks-group-slice'
 import {
 	Draggable,
 	TOnSetIsDragging,
 	TOnSetParameters,
 	TOnUpdateCoordinates,
 } from '@features/draggable'
-
+import { BlockTextGroup, TOnClickAddChild } from '@entities/block-text-group'
+import { BlockText } from '@entities/block-text'
 import {
-	getBlocks,
-	setBlockDragging,
-	setBlockParameters,
-	updateBlockPosition,
-} from '../lib/blocks-slice'
+	getConnectionsState,
+	setConnectionState,
+} from '@services/slices/global-slice'
+import { TGatewaysNames } from '@app-types'
 
-export const BlocksRender: FC = () => {
+export const BlocksTextGroupsRender: FC = () => {
+	const blockGroupsStore = useSelector(getBlockGroups)
 	const connectionsState = useSelector(getConnectionsState)
-	const blocksArr = useSelector(getBlocks)
-	const blocks = Object.values(blocksArr)
-
 	const dispatch = useDispatch()
 
 	const onClickGateway = (
@@ -55,7 +52,7 @@ export const BlocksRender: FC = () => {
 					state: {
 						uuid: uuid,
 						gateway: gatewayName,
-						typeTool: 'block-text',
+						typeTool: 'block-text-group',
 					},
 				})
 			)
@@ -66,28 +63,26 @@ export const BlocksRender: FC = () => {
 					state: {
 						uuid: uuid,
 						gateway: gatewayName,
-						typeTool: 'block-text',
+						typeTool: 'block-text-group',
 					},
 				})
 			)
 		}
 	}
 
-	if (!blocks.length) return null
-
-	return blocks.map((block) => {
+	return Object.values(blockGroupsStore).map((blockGroup) => {
 		const onSetIsDragging: TOnSetIsDragging = (value: boolean) => {
 			if (value) {
-				dispatch(setBlockDragging(block.uuid))
+				dispatch(setBlockGroupDragging(blockGroup.uuid))
 			} else {
-				dispatch(setBlockDragging(null))
+				dispatch(setBlockGroupDragging(null))
 			}
 		}
 
 		const onSetParameters: TOnSetParameters = ({ height, width }) => {
 			dispatch(
-				setBlockParameters({
-					uuid: block.uuid,
+				setBlockGroupParameters({
+					uuid: blockGroup.uuid,
 					height: height,
 					width: width,
 				})
@@ -96,23 +91,41 @@ export const BlocksRender: FC = () => {
 
 		const onUpdateCoordinates: TOnUpdateCoordinates = (coordinates) => {
 			dispatch(
-				updateBlockPosition({
-					uuid: block.uuid,
+				updateBlockGroupPosition({
+					uuid: blockGroup.uuid,
 					coordinates: coordinates,
+				})
+			)
+		}
+
+		const onClickAddChild: TOnClickAddChild = (_, blockText) => {
+			dispatch(
+				addBlockToGroup({
+					uuidGroup: blockGroup.uuid,
+					blockText: blockText,
 				})
 			)
 		}
 
 		return (
 			<Draggable
-				childrenData={block}
+				key={blockGroup.uuid}
+				childrenData={blockGroup}
+				childrenStoreArr={Object.values(blockGroupsStore)}
 				onSetIsDragging={onSetIsDragging}
 				onSetParameters={onSetParameters}
 				onUpdateCoordinates={onUpdateCoordinates}
-				childrenStoreArr={blocks}
-				key={block.uuid}
 			>
-				<BlockText data={block} onClickGateway={onClickGateway} />
+				<BlockTextGroup
+					data={blockGroup}
+					onClickAddChild={onClickAddChild}
+					onClickGateway={onClickGateway}
+				>
+					{blockGroup.children &&
+						blockGroup.children.map((child) => (
+							<BlockText key={child.uuid} data={child} hideGateways={true} />
+						))}
+				</BlockTextGroup>
 			</Draggable>
 		)
 	})

@@ -12,6 +12,7 @@ import { connectionsReducer } from '@widgets/connections'
 import { rightContextReducer } from '@features/right-context'
 import { panelParametersReducer } from '@widgets/panel-parameters'
 import { textsReducer } from '@widgets/texts'
+import { blocksGroupsReducer } from '@widgets/blocks-group'
 
 export const rootReducer = combineReducers({
 	global: globalReducer,
@@ -20,6 +21,7 @@ export const rootReducer = combineReducers({
 	rightContext: rightContextReducer,
 	panelParameters: panelParametersReducer,
 	texts: textsReducer,
+	blocksGroups: blocksGroupsReducer,
 })
 
 const store = configureStore({

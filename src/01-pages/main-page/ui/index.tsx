@@ -9,6 +9,7 @@ import { PanelParameters } from '@widgets/panel-parameters'
 
 import style from './style.module.scss'
 import { TextsRender } from '@widgets/texts'
+import { BlocksTextGroupsRender } from '@widgets/blocks-group'
 
 export const MainPage: FC = () => (
 	<div className={style.page} data-testid='main-page'>
@@ -26,6 +27,7 @@ export const MainPage: FC = () => (
 				<BlocksRender />
 				<ConnectionsRender />
 				<TextsRender />
+				<BlocksTextGroupsRender />
 			</InfiniteCanvas>
 		</main>
 	</div>

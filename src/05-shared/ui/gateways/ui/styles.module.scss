@@ -1,0 +1,47 @@
+@import '/src/05-shared/styles/variables';
+
+$offset-gateway: -10px;
+
+.gateway {
+	position: absolute;
+	padding: 8px;
+	background-color: $secondary-color;
+	border: 1px solid $primary-color;
+	border-radius: 50%;
+
+	&:hover {
+		filter: brightness(70%);
+	}
+
+	&:active {
+		filter: brightness(40%);
+	}
+}
+
+.active_gateway {
+	background-color: $fivefold-color;
+}
+
+.gateway.top {
+	top: $offset-gateway;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.gateway.right {
+	top: 50%;
+	right: $offset-gateway;
+	transform: translateY(-50%);
+}
+
+.gateway.bottom {
+	bottom: $offset-gateway;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.gateway.left {
+	top: 50%;
+	left: $offset-gateway;
+	transform: translateY(-50%);
+}

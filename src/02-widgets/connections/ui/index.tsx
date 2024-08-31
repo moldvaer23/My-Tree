@@ -2,19 +2,38 @@ import { FC, useEffect } from 'react'
 import { Line, LineSvgWrapper } from '@entities/line/ui'
 import { useDispatch, useSelector } from '@services/store'
 import { calculateLineOffsets } from '@widgets/connections/utils/calculate-line-offset'
+import { v4 as uuid } from 'uuid'
 import {
 	getBlockDragging,
 	getBlocks,
 	updateBlockActiveGateway,
 } from '@widgets/blocks'
 
-import { getConnections, removeConnection } from '../lib/connections-slice'
+import {
+	addConnection,
+	getConnections,
+	removeConnection,
+} from '../lib/connections-slice'
+import {
+	clearConnectionsState,
+	getConnectionsState,
+	getGlobalStyleSettings,
+} from '@services/slices/global-slice'
+import {
+	getBlockGroupDragging,
+	getBlockGroups,
+	updateBlockGroupActiveGateway,
+} from '@widgets/blocks-group'
 
 export const ConnectionsRender: FC = () => {
 	const blocks = useSelector(getBlocks)
 	const connectionsArr = useSelector(getConnections)
 	const connections = Object.values(connectionsArr)
 	const uuidBlockDragging = useSelector(getBlockDragging)
+	const uuidBlockGroupDragging = useSelector(getBlockGroupDragging)
+	const connectionsState = useSelector(getConnectionsState)
+	const globalStyleSettings = useSelector(getGlobalStyleSettings)
+	const blockGroups = useSelector(getBlockGroups)
 	const dispatch = useDispatch()
 
 	/* Смотрим на изменения листа блоков. */
@@ -22,47 +41,174 @@ export const ConnectionsRender: FC = () => {
 	/* удаляем связанное с ними подключения и оповещаем блоки об отключении */
 	useEffect(() => {
 		connections.forEach((connection) => {
-			const blockFrom = blocks[connection.from.uuid]
-			const blockTo = blocks[connection.to.uuid]
+			const toolFrom =
+				connection.from.typeTool === 'block-text'
+					? blocks[connection.from.uuid]
+					: connection.from.typeTool === 'block-text-group' &&
+						blockGroups[connection.from.uuid]
 
-			if (!blockFrom || !blockTo) {
-				dispatch(
-					updateBlockActiveGateway({
-						uuid: connection.from.uuid,
-						gatewayName: connection.from.gateway,
-						value: false,
-					})
-				)
+			const toolTo =
+				connection.to.typeTool === 'block-text'
+					? blocks[connection.to.uuid]
+					: connection.to.typeTool === 'block-text-group' &&
+						blockGroups[connection.to.uuid]
 
-				dispatch(
-					updateBlockActiveGateway({
-						uuid: connection.to.uuid,
-						gatewayName: connection.to.gateway,
-						value: false,
-					})
-				)
+			if (!toolFrom || !toolTo) {
+				if (
+					connection.from.typeTool === 'block-text' ||
+					connection.to.typeTool === 'block-text'
+				) {
+					dispatch(
+						updateBlockActiveGateway({
+							uuid: connection.from.uuid,
+							gatewayName: connection.from.gateway,
+							value: false,
+						})
+					)
+
+					dispatch(
+						updateBlockActiveGateway({
+							uuid: connection.to.uuid,
+							gatewayName: connection.to.gateway,
+							value: false,
+						})
+					)
+				}
+
+				if (
+					connection.from.typeTool === 'block-text-group' ||
+					connection.to.typeTool === 'block-text-group'
+				) {
+					dispatch(
+						updateBlockGroupActiveGateway({
+							uuid: connection.from.uuid,
+							gatewayName: connection.from.gateway,
+							value: false,
+						})
+					)
+
+					dispatch(
+						updateBlockGroupActiveGateway({
+							uuid: connection.to.uuid,
+							gatewayName: connection.to.gateway,
+							value: false,
+						})
+					)
+				}
 
 				dispatch(removeConnection(connection.uuid))
 			}
 		})
-	}, [connections, blocks])
+	}, [connections, blocks, blockGroups])
+
+	/* Добавление нового подключения если два блока были соединены */
+	useEffect(() => {
+		if (connectionsState.from !== null && connectionsState.to !== null) {
+			/* Добавляем подключение */
+			dispatch(
+				addConnection({
+					from: {
+						uuid: connectionsState.from.uuid,
+						gateway: connectionsState.from.gateway,
+						typeTool: connectionsState.from.typeTool,
+					},
+					to: {
+						uuid: connectionsState.to.uuid,
+						gateway: connectionsState.to.gateway,
+						typeTool: connectionsState.to.typeTool,
+					},
+					type: 'straight',
+					style: {
+						lineColor: globalStyleSettings.lineColor,
+					},
+					uuid: uuid(),
+				})
+			)
+
+			/* Обновляем у блоков информацию о включенных шлюзах */
+			if (
+				connectionsState.from.typeTool === 'block-text' ||
+				connectionsState.to.typeTool === 'block-text'
+			) {
+				dispatch(
+					updateBlockActiveGateway({
+						uuid: connectionsState.from.uuid,
+						gatewayName: connectionsState.from.gateway,
+						value: true,
+					})
+				)
+
+				dispatch(
+					updateBlockActiveGateway({
+						uuid: connectionsState.to.uuid,
+						gatewayName: connectionsState.to.gateway,
+						value: true,
+					})
+				)
+			}
+
+			/* Обновляем у групп блоков информацию о включенных шлюзах */
+			if (
+				connectionsState.from.typeTool === 'block-text-group' ||
+				connectionsState.to.typeTool === 'block-text-group'
+			) {
+				dispatch(
+					updateBlockGroupActiveGateway({
+						uuid: connectionsState.from.uuid,
+						gatewayName: connectionsState.from.gateway,
+						value: true,
+					})
+				)
+
+				dispatch(
+					updateBlockGroupActiveGateway({
+						uuid: connectionsState.to.uuid,
+						gatewayName: connectionsState.to.gateway,
+						value: true,
+					})
+				)
+			}
+
+			dispatch(clearConnectionsState())
+		}
+	}, [connectionsState])
 
 	if (!connections.length) return null
 
 	return (
 		<LineSvgWrapper>
 			{connections.map((connection) => {
-				const blockFrom = blocks[connection.from.uuid]
-				const blockTo = blocks[connection.to.uuid]
+				/* Из ходя из типа инструмента смотрим в нужном словаре объект */
+				const toolFrom =
+					connection.from.typeTool === 'block-text'
+						? blocks[connection.from.uuid]
+						: connection.from.typeTool === 'block-text-group' &&
+							blockGroups[connection.from.uuid]
+
+				const toolTo =
+					connection.to.typeTool === 'block-text'
+						? blocks[connection.to.uuid]
+						: connection.to.typeTool === 'block-text-group' &&
+							blockGroups[connection.to.uuid]
 
 				/* Если необходимых данных нету то возвращаем null */
-				if (!blockFrom || !blockTo) return null
-				if (!blockFrom.parameters || !blockTo.parameters) return null
+				if (!toolFrom || !toolTo) return null
+				if (!toolFrom.parameters || !toolTo.parameters) return null
 
+				/* Скрываем соединение если двигают блоки */
 				if (
 					uuidBlockDragging &&
-					(blockFrom.uuid === uuidBlockDragging ||
-						blockTo.uuid === uuidBlockDragging)
+					(toolFrom.uuid === uuidBlockDragging ||
+						toolTo.uuid === uuidBlockDragging)
+				) {
+					return null
+				}
+
+				/* Скрываем соединение если двигают группы блоков */
+				if (
+					uuidBlockGroupDragging &&
+					(toolFrom.uuid === uuidBlockGroupDragging ||
+						toolTo.uuid === uuidBlockGroupDragging)
 				) {
 					return null
 				}
@@ -71,17 +217,17 @@ export const ConnectionsRender: FC = () => {
 				let to = { x: 0, y: 0 }
 
 				from = calculateLineOffsets({
-					coordinates: blockFrom.coordinates,
+					coordinates: toolFrom.coordinates,
 					gatewayName: connection.from.gateway,
-					height: blockFrom.parameters.height,
-					width: blockFrom.parameters.width,
+					height: toolFrom.parameters.height,
+					width: toolFrom.parameters.width,
 				})
 
 				to = calculateLineOffsets({
-					coordinates: blockTo.coordinates,
+					coordinates: toolTo.coordinates,
 					gatewayName: connection.to.gateway,
-					height: blockTo.parameters.height,
-					width: blockTo.parameters.width,
+					height: toolTo.parameters.height,
+					width: toolTo.parameters.width,
 				})
 
 				return (

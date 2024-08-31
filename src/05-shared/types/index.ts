@@ -8,6 +8,7 @@ export type TIcon = FunctionComponent<
 	}
 >
 export type TTypeTool = 'block-text' | 'line'
+export type TConnectingTools = 'block-text' | 'block-text-group'
 export type TLineType = 'straight' | 'curved' | 'dashed'
 export type TSize = 'small' | 'medium' | 'large'
 export type TGatewaysNames = 'top' | 'right' | 'bottom' | 'left'
